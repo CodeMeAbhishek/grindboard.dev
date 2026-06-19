@@ -9,7 +9,8 @@ export const metadata: Metadata = {
  description: "Topics, progress, recent activity, and stats for a module",
 };
 
-export default async function SubjectDetailPage({ params }: { params: { id: string } }) {
+export default async function SubjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
+ const { id } = await params;
  const supabase = await createClient();
  const { data: { user } } = await supabase.auth.getUser();
 
@@ -24,7 +25,7 @@ export default async function SubjectDetailPage({ params }: { params: { id: stri
  if (!dbUser) redirect("/login");
 
  const module = await prisma.module.findUnique({
- where: { id: params.id },
+ where: { id: id },
  include: {
  topics: {
  orderBy: { orderIndex: "asc" }

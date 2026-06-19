@@ -2,9 +2,11 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import PublicProfileClient from "./PublicProfileClient";
 
-export default async function PublicProfilePage({ params }: { params: { id: string } }) {
+export default async function PublicProfilePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  
   const user = await prisma.user.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       activities: {
         orderBy: { date: 'desc' },
