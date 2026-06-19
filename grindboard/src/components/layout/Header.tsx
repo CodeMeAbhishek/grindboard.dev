@@ -23,7 +23,7 @@ interface Notification {
   actor: { name: string; avatarUrl: string | null; username: string | null };
 }
 
-export function Header({ userAvatarUrl, userName }: HeaderProps) {
+export function Header({ userId, userAvatarUrl, userName }: HeaderProps) {
   const [showQuickLog, setShowQuickLog] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
