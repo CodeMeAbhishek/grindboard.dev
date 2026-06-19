@@ -8,6 +8,7 @@ interface AdminUser {
  name: string;
  cfRating: number | null;
  lcRating: number | null;
+ xp: number;
  isAdmin: boolean;
  initials: string;
 }

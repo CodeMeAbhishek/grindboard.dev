@@ -32,6 +32,7 @@ export default async function AdminPage() {
  name: u.name || "Unknown",
  cfRating: u.cfRating,
  lcRating: u.lcRating,
+ xp: u.xpTotal,
  isAdmin: u.role === "ADMIN",
  initials: (u.name || "U").split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase()
  }));
