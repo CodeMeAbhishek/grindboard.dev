@@ -246,7 +246,7 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
                 <input
                   type="text"
                   placeholder="Write a reply..."
-                  className="flex-1 bg-surface-container border-none rounded-lg py-1.5 px-3 text-sm focus:ring-1 focus:ring-primary"
+                  className="flex-1 bg-surface-container text-on-background placeholder:text-on-surface-variant border-none rounded-lg py-1.5 px-3 text-sm focus:ring-1 focus:ring-primary outline-none"
                   value={commentInputs[post.id] || ""}
                   onChange={(e) => setCommentInputs({ ...commentInputs, [post.id]: e.target.value })}
                   onKeyDown={(e) => {
