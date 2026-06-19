@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { createClient } from "@/lib/supabase/client";
+import Link from "next/link";
 
 interface Post {
   id: string;
@@ -233,7 +234,11 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
     return (
       <div key={comment.id} className="w-full">
         <div className={`group flex gap-2 text-sm bg-surface-container rounded-lg p-2 relative ${depth > 0 ? "mt-1 border-l-2 border-primary/20" : ""}`} style={{ marginLeft: depth > 0 ? `${Math.min(depth * 16, 48)}px` : '0px' }}>
-          <div className="font-bold text-on-background shrink-0">{comment.user.name}:</div>
+          <div className="font-bold text-on-background shrink-0">
+            <Link href={`/u/${comment.user.id}`} className="hover:text-primary transition-colors">
+              {comment.user.name}:
+            </Link>
+          </div>
           <div className="text-on-background flex-1 pr-10">{comment.content}</div>
           
           <div className="absolute right-2 top-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -303,16 +308,20 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
             <div key={post.id} className="bg-surface border border-outline rounded-xl p-4 shadow-sm space-y-3">
               <div className="flex justify-between items-start">
                 <div className="flex gap-3 items-center">
-                  {post.user.avatarUrl ? (
-                    <img src={post.user.avatarUrl} alt="Avatar" className="w-10 h-10 rounded-full border border-outline" />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">
-                      {post.user.name[0]}
-                    </div>
-                  )}
+                  <Link href={`/u/${post.user.id}`} className="shrink-0">
+                    {post.user.avatarUrl ? (
+                      <img src={post.user.avatarUrl} alt="Avatar" className="w-10 h-10 rounded-full border border-outline hover:border-primary transition-colors" />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold hover:bg-primary/20 transition-colors">
+                        {post.user.name[0]}
+                      </div>
+                    )}
+                  </Link>
                   <div>
                     <div className="font-bold text-on-background flex items-center gap-2 flex-wrap">
-                      {post.user.name}
+                      <Link href={`/u/${post.user.id}`} className="hover:text-primary transition-colors">
+                        {post.user.name}
+                      </Link>
                       {post.user.cfRating && (
                         <span className="text-[10px] bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 px-1.5 py-0.5 rounded-sm font-label-mono capitalize">
                           CF: {post.user.cfRank || 'Unrated'} ({post.user.cfRating})
