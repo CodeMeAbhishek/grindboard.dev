@@ -233,7 +233,7 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
     const children = allComments.filter(c => c.parentId === comment.id);
     return (
       <div key={comment.id} className="w-full">
-        <div className={`group flex gap-3 text-sm bg-surface-container rounded-lg p-3 relative ${depth > 0 ? "mt-1 border-l-2 border-primary/20" : ""}`} style={{ marginLeft: depth > 0 ? `${Math.min(depth * 16, 48)}px` : '0px' }}>
+        <div className={`group flex gap-2 md:gap-3 text-sm bg-surface-container rounded-lg p-2 md:p-3 relative ${depth > 0 ? "mt-1 border-l-2 border-primary/20" : ""}`} style={{ marginLeft: depth > 0 ? `${Math.min(depth * 8, 24)}px` : '0px' }}>
           <Link href={`/u/${comment.user.id}`} className="shrink-0 mt-0.5">
             {comment.user.avatarUrl ? (
               <img src={comment.user.avatarUrl} alt="Avatar" className="w-8 h-8 rounded-full border border-outline hover:border-primary transition-colors" />

@@ -86,8 +86,8 @@ export function QuickLogModal({ onClose }: QuickLogModalProps) {
  className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#1A1A1A]/40 backdrop-blur-sm animate-fade-in"
  onClick={(e) => e.target === e.currentTarget && onClose()}
  >
- <div className="bg-surface border border-outline rounded-xl w-full max-w-md shadow-modal border-t-2 border-t-primary animate-slide-up">
- {/* Header */}
+  <div className="bg-surface border border-outline rounded-xl w-full max-w-md max-h-[90vh] overflow-y-auto shadow-modal border-t-2 border-t-primary animate-slide-up">
+    {/* Header */}
  <div className="flex justify-between items-center p-6 border-b border-outline">
  <h2 className="font-headline-lg-mobile text-on-background">Log Activity</h2>
  <button
