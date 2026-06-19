@@ -233,13 +233,16 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
     const children = allComments.filter(c => c.parentId === comment.id);
     return (
       <div key={comment.id} className="w-full">
-        <div className={`group flex gap-2 text-sm bg-surface-container rounded-lg p-2 relative ${depth > 0 ? "mt-1 border-l-2 border-primary/20" : ""}`} style={{ marginLeft: depth > 0 ? `${Math.min(depth * 16, 48)}px` : '0px' }}>
-          <div className="font-bold text-on-background shrink-0">
-            <Link href={`/u/${comment.user.id}`} className="hover:text-primary transition-colors">
-              {comment.user.name}:
+        <div className={`group flex flex-col gap-0.5 text-sm bg-surface-container rounded-lg p-3 relative ${depth > 0 ? "mt-1 border-l-2 border-primary/20" : ""}`} style={{ marginLeft: depth > 0 ? `${Math.min(depth * 16, 48)}px` : '0px' }}>
+          <div className="flex items-center gap-2">
+            <Link href={`/u/${comment.user.id}`} className="font-bold text-on-background hover:text-primary transition-colors">
+              {comment.user.name}
             </Link>
+            <span className="text-[10px] text-on-surface-variant font-label-mono">
+              • {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
+            </span>
           </div>
-          <div className="text-on-background flex-1 pr-10">{comment.content}</div>
+          <div className="text-on-background pr-10">{comment.content}</div>
           
           <div className="absolute right-2 top-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             <button 
