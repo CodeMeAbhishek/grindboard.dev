@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Grindboard - Leaderboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&amp;family=JetBrains+Mono:wght@500&amp;family=Geist:wght@700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-low": "#f3f3f3",
+                        "surface-container-highest": "#e3e3e3",
+                        "on-error": "#ffffff",
+                        "on-background": "#191c1b",
+                        "inverse-surface": "#2d312f",
+                        "surface": "#f9f9f9",
+                        "surface-tint": "#006b53",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#002117",
+                        "on-secondary-fixed": "#001f25",
+                        "secondary-fixed": "#bdf0f6",
+                        "tertiary-fixed": "#c0e9fa",
+                        "on-primary-fixed-variant": "#00513e",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#83f8ce",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#83f8ce",
+                        "on-tertiary-container": "#004e60",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "on-secondary-container": "#004f58",
+                        "on-primary-container": "#00513e",
+                        "on-tertiary-fixed": "#001f28",
+                        "inverse-primary": "#65dbb3",
+                        "on-error-container": "#410002",
+                        "secondary-container": "#bdf0f6",
+                        "secondary": "#4a6366",
+                        "outline": "#707974",
+                        "outline-variant": "#bfc9c3",
+                        "surface-bright": "#f9f9f9",
+                        "surface-variant": "#dce5de",
+                        "surface-container": "#eeeeee",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e8e8e8",
+                        "inverse-on-surface": "#eef2ef",
+                        "primary": "#006b53",
+                        "tertiary-container": "#c0e9fa",
+                        "primary-fixed-dim": "#65dbb3",
+                        "secondary-fixed-dim": "#a1d3d9",
+                        "on-surface": "#191c1b",
+                        "tertiary": "#406270",
+                        "error": "#ba1a1a",
+                        "background": "#f9f9f9",
+                        "on-surface-variant": "#404945",
+                        "tertiary-fixed-dim": "#a4cdde"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "margin-mobile": "16px",
+                        "xs": "8px",
+                        "sm": "16px",
+                        "base": "4px",
+                        "gutter": "20px",
+                        "lg": "40px",
+                        "margin-desktop": "48px",
+                        "xl": "64px",
+                        "md": "24px"
+                    },
+                    fontFamily: {
+                        "body-md": ["Geist"],
+                        "label-mono": ["JetBrains Mono"],
+                        "display-xl": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "stat-lg": ["Geist"]
+                    },
+                    fontSize: {
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-mono": ["14px", { lineHeight: "20px", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "display-xl": ["48px", { lineHeight: "56px", letterSpacing: "-0.04em", fontWeight: "800" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "700" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "stat-lg": ["24px", { lineHeight: "24px", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background-color: #ffffff;
+            border: 1px solid #E5E5E5;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+    </style>
+</head>
+<body class="bg-[#FAFAFA] text-[#6B7280] font-body-md min-h-screen overflow-x-hidden selection:bg-primary/30 selection:text-primary">
+<!-- TopNavBar -->
+<nav class="bg-white/80 backdrop-blur-md fixed top-0 w-full z-50 flex justify-between items-center px-sm py-base border-b border-[#E5E5E5] h-16 md:hidden">
+<div class="flex items-center gap-xs">
+<span class="font-display-xl text-display-xl text-primary font-black tracking-tighter text-2xl">Grindboard</span>
+</div>
+<div class="flex items-center gap-sm">
+<button class="text-primary hover:text-secondary transition-colors duration-200 Active: scale-95 transition-transform flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="bg-primary text-white font-label-mono text-label-mono px-3 py-1.5 rounded-DEFAULT hover:bg-primary/90 transition-colors">
+                Quick Log
+            </button>
+</div>
+</nav>
+<!-- TopNavBar Desktop-->
+<nav class="bg-white/80 backdrop-blur-md fixed top-0 w-full z-50 justify-between items-center px-sm py-base border-b border-[#E5E5E5] h-16 hidden md:flex pl-72 pr-lg">
+<div class="flex-1 flex items-center">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#6B7280] text-sm">search</span>
+<input class="w-full bg-white border border-[#E5E5E5] rounded-DEFAULT py-1.5 pl-9 pr-3 text-body-md font-body-md text-[#1A1A1A] focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-[#6B7280]" placeholder="Search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="text-[#6B7280] hover:text-primary transition-colors duration-200 flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="bg-primary text-white font-label-mono text-label-mono px-4 py-2 rounded-DEFAULT hover:bg-primary/90 transition-colors Active: scale-95 transition-transform">
+                Quick Log
+            </button>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-[#E5E5E5] object-cover" data-alt="A small circular avatar of a user profile in a futuristic cyberpunk style, glowing faintly against a dark background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_9fml0WRVyt1GJJrArFLeZna3OkEOJZjbqQOU4n88GNDRsVx4qzbvua2pWpmt3_SVYn5WXpvnQaifA9Fjwsayo02af8efGrMO3kcmxHaUniJjTKNfohHF2eZ-lvXCQ5KrymlMpvfXTrn7PAoETe3e7l4smAtCvCFpLYKKo7-rK8RmA88MBVxVfKtlJbuQZ0vrbfL0DdxFXoLWs6Q0w4V4QpwS50YZ3T1drlKXwKhqIswbHDT6AOwWquAAVNvfs9t3TWrBlxzGJp4"/>
+</div>
+</nav>
+<div class="flex pt-16 md:pt-0">
+<!-- SideNavBar Desktop-->
+<aside class="bg-white fixed left-0 top-0 h-full flex flex-col z-40 border-r border-[#E5E5E5] docked h-screen left-0 w-64 hidden md:flex">
+<div class="p-lg border-b border-[#E5E5E5] flex flex-col gap-xs">
+<div class="flex items-center gap-sm">
+<img alt="Grindboard Logo" class="w-10 h-10 rounded-DEFAULT object-cover" data-alt="A striking minimalist logo for a productivity app named Grindboard. It features sleek, angular geometric shapes in vibrant emerald green and dark slate, embodying a cyber-productivity aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD12SlZijPUdgMUlfchU833Oh0zgeBlX-Xj9ReJz4Mnyn_DoUcufmRPUg50HzS_oGbmD7Yp3ADb-z0vQzQD4l6G5_ingEy6-wPbEi0lNBA23VnxrNhQCFrpWtWSc8Zn_SYjbmctN-NyGIm2MTWOqz35PqYBHYdNThvYdGYv79RRsqroGkA4-r2dwOEJ_kMazHGngYpgFUs1OQXKmttlgY7CSN1jikghFK2r8jhbD_7R8rGGT_7Hol-IDjGsk1OkPB-46-oUxBru2pM"/>
+<h1 class="font-headline-lg text-headline-lg text-[#1A1A1A] uppercase italic text-2xl tracking-tight">Grindboard</h1>
+</div>
+<p class="font-label-mono text-label-mono text-[#6B7280] text-xs">Level 42 Architect</p>
+</div>
+<nav class="flex-1 overflow-y-auto py-sm flex flex-col gap-base w-full">
+<a class="text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-surface-container-highest flex items-center gap-sm font-label-mono text-label-mono" href="#">
+<span class="material-symbols-outlined text-lg">dashboard</span> Dashboard
+                </a>
+<a class="text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-surface-container-highest flex items-center gap-sm font-label-mono text-label-mono" href="#">
+<span class="material-symbols-outlined text-lg">book</span> Subjects
+                </a>
+<a class="text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-surface-container-highest flex items-center gap-sm font-label-mono text-label-mono" href="#">
+<span class="material-symbols-outlined text-lg">target</span> Goals
+                </a>
+<a class="text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-surface-container-highest flex items-center gap-sm font-label-mono text-label-mono" href="#">
+<span class="material-symbols-outlined text-lg">calendar_today</span> Events
+                </a>
+<a class="text-primary bg-[#F0FDF4] border-r-2 border-primary py-3 px-4 flex items-center gap-sm font-label-mono text-label-mono Active: translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined text-lg">leaderboard</span> Leaderboard
+                </a>
+<a class="text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-surface-container-highest flex items-center gap-sm font-label-mono text-label-mono" href="#">
+<span class="material-symbols-outlined text-lg">person</span> Profile
+                </a>
+<a class="text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-surface-container-highest flex items-center gap-sm font-label-mono text-label-mono" href="#">
+<span class="material-symbols-outlined text-lg">admin_panel_settings</span> Admin Panel
+                </a>
+</nav>
+<div class="p-4 mt-auto border-t border-[#E5E5E5]">
+<button class="w-full bg-transparent border border-[#E5E5E5] text-[#6B7280] font-label-mono text-label-mono py-2 rounded-DEFAULT hover:text-primary hover:border-primary transition-colors">
+                    Upgrade to Pro
+                </button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 min-h-screen md:ml-64 p-margin-mobile md:p-margin-desktop md:pt-24 max-w-[1440px] mx-auto w-full">
+<header class="mb-lg">
+<h2 class="font-display-xl text-display-xl text-[#1A1A1A] mb-xs">Global Rankings</h2>
+<p class="font-body-md text-body-md text-[#6B7280]">See where you stand in the grind. Climb the ranks to earn exclusive badges.</p>
+</header>
+<!-- Filters -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-sm mb-lg border-b border-[#E5E5E5] pb-sm">
+<div class="flex flex-wrap gap-xs font-label-mono text-label-mono">
+<button class="px-4 py-2 bg-[#F0FDF4] text-primary border border-primary/30 rounded-DEFAULT transition-colors">Global</button>
+<button class="px-4 py-2 bg-white text-[#6B7280] border border-[#E5E5E5] rounded-DEFAULT hover:text-[#1A1A1A] hover:bg-surface-container-highest transition-colors flex items-center gap-1">
+                        Subject <span class="material-symbols-outlined text-sm">arrow_drop_down</span>
+</button>
+</div>
+<div class="flex flex-wrap gap-xs font-label-mono text-label-mono bg-white p-1 rounded-lg border border-[#E5E5E5]">
+<button class="px-3 py-1.5 bg-surface-container-highest text-[#1A1A1A] rounded-DEFAULT transition-colors">Weekly</button>
+<button class="px-3 py-1.5 text-[#6B7280] hover:text-[#1A1A1A] rounded-DEFAULT transition-colors">Monthly</button>
+<button class="px-3 py-1.5 text-[#6B7280] hover:text-[#1A1A1A] rounded-DEFAULT transition-colors">All-time</button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Leaderboard Table -->
+<div class="lg:col-span-8 space-y-xs">
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-4 px-4 py-3 font-label-mono text-label-mono text-[#6B7280] text-xs uppercase tracking-wider border-b border-[#E5E5E5]">
+<div class="col-span-1 text-center">Rank</div>
+<div class="col-span-5">Grinder</div>
+<div class="col-span-3 text-right">Total XP</div>
+<div class="col-span-3 text-right">Current Streak</div>
+</div>
+<!-- Rank 1 -->
+<div class="grid grid-cols-12 gap-4 items-center px-4 py-3 glass-panel rounded-lg hover:bg-surface-container-highest transition-colors group relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<div class="col-span-1 text-center font-stat-lg text-stat-lg text-tertiary font-black">1</div>
+<div class="col-span-5 flex items-center gap-sm">
+<img alt="User Avatar" class="w-10 h-10 rounded-full border border-tertiary object-cover" data-alt="A highly detailed, cyberpunk-style avatar of a top-ranking user. The character wears high-tech gear with subtle glowing amber accents, set against a dark, moody background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx8WTu81WPL1Dtz3YaHccDjS8p_0bfeqNz-prrvsDlOReqq_RBKvkGvHxT6py2B1L9iMDCALO1YSAXnaUwsUJBPIeN2qU6WEV_yKP1sYPbEj3lqCsoAWraF6C5ayn26gMSxWw3YnhCK5KNanr3eFX24AbiA03ALjy-Hfux_3OASEZDdPV18XH6IzrxO3Pgw63qg5gojmqqmAviUhlecaUiLZVoCDs8HpDqdAUbR4nL5It8lmUYkOjfjQndOHYAfC_0hscOOj3ER74"/>
+<div>
+<p class="font-body-md text-body-md font-bold text-[#1A1A1A]">Alex Chen</p>
+<span class="font-label-mono text-label-mono text-[10px] px-2 py-0.5 bg-tertiary/10 text-tertiary rounded-full border border-tertiary/20">Legend</span>
+</div>
+</div>
+<div class="col-span-3 text-right font-label-mono text-label-mono text-primary">
+                            124,500 <span class="text-[#6B7280] text-xs">XP</span>
+</div>
+<div class="col-span-3 text-right font-label-mono text-label-mono text-primary flex justify-end items-center gap-1">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span> 142
+                        </div>
+</div>
+<!-- Rank 2 -->
+<div class="grid grid-cols-12 gap-4 items-center px-4 py-3 glass-panel rounded-lg hover:bg-surface-container-highest transition-colors group">
+<div class="col-span-1 text-center font-stat-lg text-stat-lg text-[#1A1A1A] font-bold opacity-90">2</div>
+<div class="col-span-5 flex items-center gap-sm">
+<img alt="User Avatar" class="w-10 h-10 rounded-full border border-[#E5E5E5] object-cover" data-alt="A stylized digital portrait of a user avatar in a sleek, minimalist sci-fi style. The character is illuminated by cool white and slate lighting, conveying focus and determination." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ30OnvHYJUmapN9p3EAIh817D0GEYLM_Orn3J7JTJQ_KAB3RDWjPqczgggKnzBMhsXXskQIJvbZBpzHs5HNhi9LdK6C_ixzche4kXQ6LT_16y3Qp28BqVcZeJRWZZ_iLkSGrnVDtMyjfR-Yx_UBy62BGkgQQCaLQ93tTOy-cIjHGD5xatcLBUyL-tJ2SMvWPWRHe43va-Nf--yMswxrENb1Zn5XcjlOngUaM34zkxB1ufvGmTjPsU_dvEtOelKO5I2mBjv4cJkfI"/>
+<div>
+<p class="font-body-md text-body-md font-bold text-[#1A1A1A]">Sam Taylor</p>
+<span class="font-label-mono text-label-mono text-[10px] px-2 py-0.5 bg-secondary/10 text-secondary rounded-full border border-secondary/20">Legend</span>
+</div>
+</div>
+<div class="col-span-3 text-right font-label-mono text-label-mono text-primary">
+                            118,200 <span class="text-[#6B7280] text-xs">XP</span>
+</div>
+<div class="col-span-3 text-right font-label-mono text-label-mono text-primary flex justify-end items-center gap-1">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span> 89
+                        </div>
+</div>
+<!-- Rank 3 -->
+<div class="grid grid-cols-12 gap-4 items-center px-4 py-3 glass-panel rounded-lg hover:bg-surface-container-highest transition-colors group">
+<div class="col-span-1 text-center font-stat-lg text-stat-lg text-tertiary-fixed-dim font-bold opacity-80">3</div>
+<div class="col-span-5 flex items-center gap-sm">
+<img alt="User Avatar" class="w-10 h-10 rounded-full border border-[#E5E5E5] object-cover" data-alt="A vibrant, modern avatar illustration for a competitive student. The image uses a deep slate palette with sharp, geometric cyan highlights, portraying a sense of calm intensity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfL8jFOkaPl-EpO8-DagoSWfQfxYbU1dAyzL_jtYkh489w22ZdGB-CZZom-khfk6oAkkelWdf2L9whn1z7k1VVavoHLK9kf9p-VpKcYN_E1yKyg1SjF_qwCXynIeTsjvGNO7gp-DK1JZwpy90gf2nj1gRPH548GoORreGV6FlOmLPRJM82akNtrcHXJEFlTZm7uhi8je7djpPp7Or2PUxfO_YSUwJiKrYXToIaMVc8WHXNWBwMcTEPk6tnNCZFoweXU-Jigz1_pGU"/>
+<div>
+<p class="font-body-md text-body-md font-bold text-[#1A1A1A]">Jordan Lee</p>
+<span class="font-label-mono text-label-mono text-[10px] px-2 py-0.5 bg-secondary/10 text-secondary rounded-full border border-secondary/20">Advanced</span>
+</div>
+</div>
+<div class="col-span-3 text-right font-label-mono text-label-mono text-primary">
+                            115,850 <span class="text-[#6B7280] text-xs">XP</span>
+</div>
+<div class="col-span-3 text-right font-label-mono text-label-mono text-primary flex justify-end items-center gap-1">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span> 112
+                        </div>
+</div>
+<!-- Rank 4 (Current User Highlighted) -->
+<div class="grid grid-cols-12 gap-4 items-center px-4 py-3 bg-[#F0FDF4] border border-primary/20 rounded-lg shadow-sm relative overflow-hidden mt-4">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none"></div>
+<div class="col-span-1 text-center font-stat-lg text-stat-lg text-primary font-bold">4</div>
+<div class="col-span-5 flex items-center gap-sm relative z-10">
+<img alt="Current User Avatar" class="w-10 h-10 rounded-full border-2 border-primary object-cover" data-alt="The current user's profile avatar. A sleek, high-contrast digital rendering of a focused individual wearing minimalist augmented reality glasses, bathed in a soft emerald glow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWIkc37j9sXMnVjDr3ZB57M0Nk5BTygWgwZokwDrKjM0qQB7ThNAfn6dgCla05O_DVM0ib1nHN8C9f9BHbxgxwjL47e466ce6EuV5KqEEcpwv8viXAZe9JWkADmudDTX86Cry3E5JPSPQXfshYpnni624bBR23i7IC2DtZ_5YalSqT19pzcT2iwS8tMCUUk3RYiX_SMC45ZkJlYEIrG8z3jXvm3sc8cWBz30AoEzy4aIAwzK1JLBg2Aa6OUq-S_yPWMhDkF_Pbtjo"/>
+<div>
+<p class="font-body-md text-body-md font-bold text-[#1A1A1A]">You (Level 42)</p>
+<span class="font-label-mono text-label-mono text-[10px] px-2 py-0.5 bg-primary/10 text-primary rounded-full border border-primary/20">Expert</span>
+</div>
+</div>
+<div class="col-span-3 text-right font-label-mono text-label-mono text-primary relative z-10">
+                            102,400 <span class="text-[#6B7280] text-xs">XP</span>
+</div>
+<div class="col-span-3 text-right font-label-mono text-label-mono text-primary flex justify-end items-center gap-1 relative z-10">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span> 45
+                        </div>
+</div>
+<!-- Rank 5 -->
+<div class="grid grid-cols-12 gap-4 items-center px-4 py-3 glass-panel rounded-lg hover:bg-surface-container-highest transition-colors group mt-4 opacity-75">
+<div class="col-span-1 text-center font-label-mono text-label-mono text-[#6B7280]">5</div>
+<div class="col-span-5 flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-white border border-[#E5E5E5] flex items-center justify-center font-body-md text-[#6B7280]">CJ</div>
+<div>
+<p class="font-body-md text-body-md text-[#1A1A1A]">Casey Jones</p>
+<span class="font-label-mono text-label-mono text-[10px] px-2 py-0.5 bg-white text-[#6B7280] rounded-full border border-[#E5E5E5]">Expert</span>
+</div>
+</div>
+<div class="col-span-3 text-right font-label-mono text-label-mono text-primary">
+                            98,100 <span class="text-[#6B7280] text-xs">XP</span>
+</div>
+<div class="col-span-3 text-right font-label-mono text-label-mono text-primary flex justify-end items-center gap-1">
+<span class="material-symbols-outlined text-sm">local_fire_department</span> 12
+                        </div>
+</div>
+<!-- Pagination/Load More -->
+<div class="flex justify-center pt-md">
+<button class="font-label-mono text-label-mono text-[#6B7280] hover:text-primary transition-colors flex items-center gap-1">
+                            Load more <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Sidebar / Streak Hall of Fame -->
+<div class="lg:col-span-4 mt-lg lg:mt-0">
+<div class="glass-panel rounded-xl p-md sticky top-24">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-tertiary text-2xl" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-[#1A1A1A]">Streak Hall of Fame</h3>
+</div>
+<p class="font-body-md text-body-md text-[#6B7280] text-sm mb-lg">The most consistent grinders of all time.</p>
+<div class="space-y-sm">
+<!-- HOF 1 -->
+<div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#E5E5E5] hover:border-tertiary/30 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary/10 border border-tertiary/20 flex items-center justify-center font-stat-lg text-tertiary text-sm">1</div>
+<div>
+<p class="font-body-md text-body-md text-[#1A1A1A] text-sm font-bold">Elena R.</p>
+</div>
+</div>
+<div class="flex items-center gap-1 font-label-mono text-label-mono text-tertiary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span> 365 Days
+                                </div>
+</div>
+<!-- HOF 2 -->
+<div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#E5E5E5] hover:border-[#1A1A1A]/30 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-[#1A1A1A]/5 border border-[#1A1A1A]/20 flex items-center justify-center font-stat-lg text-[#1A1A1A] text-sm">2</div>
+<div>
+<p class="font-body-md text-body-md text-[#1A1A1A] text-sm font-bold">Marcus T.</p>
+</div>
+</div>
+<div class="flex items-center gap-1 font-label-mono text-label-mono text-primary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span> 280 Days
+                                </div>
+</div>
+<!-- HOF 3 -->
+<div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#E5E5E5] hover:border-tertiary-fixed-dim/30 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed-dim/10 border border-tertiary-fixed-dim/20 flex items-center justify-center font-stat-lg text-tertiary-fixed-dim text-sm">3</div>
+<div>
+<p class="font-body-md text-body-md text-[#1A1A1A] text-sm font-bold">Sarah K.</p>
+</div>
+</div>
+<div class="flex items-center gap-1 font-label-mono text-label-mono text-primary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span> 215 Days
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

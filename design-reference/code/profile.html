@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Grindboard - Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          theme: {
+            extend: {
+              "colors": {
+                "primary": "#10b981",
+                "secondary": "#14b8a6",
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "base": "4px",
+                      "margin-desktop": "48px",
+                      "lg": "40px",
+                      "sm": "16px",
+                      "md": "24px",
+                      "xs": "8px",
+                      "xl": "64px",
+                      "margin-mobile": "16px",
+                      "gutter": "20px"
+              },
+              "fontFamily": {
+                      "stat-lg": [
+                              "Geist"
+                      ],
+                      "label-mono": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg": [
+                              "Geist"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Geist"
+                      ],
+                      "display-xl": [
+                              "Geist"
+                      ]
+              },
+              "fontSize": {
+                      "stat-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-mono": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-xl": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "800"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #FAFAFA; 
+        }
+        .heatmap-cell {
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            background-color: #E5E5E5;
+        }
+        .heatmap-cell[data-intensity="1"] { background-color: rgba(20, 184, 166, 0.2); }
+        .heatmap-cell[data-intensity="2"] { background-color: rgba(20, 184, 166, 0.5); }
+        .heatmap-cell[data-intensity="3"] { background-color: rgba(20, 184, 166, 0.8); }
+        .heatmap-cell[data-intensity="4"] { background-color: #14b8a6; }
+        
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAFAFA; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E5E5E5; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D1D5DB; 
+        }
+    </style>
+</head>
+<body class="text-[#6B7280] font-body-md antialiased min-h-screen flex flex-col md:flex-row">
+<!-- TopNavBar (Mobile Only) -->
+<nav class="md:hidden bg-white/90 backdrop-blur-md fixed top-0 w-full z-50 flex justify-between items-center px-sm py-base border-b border-[#E5E5E5]">
+<div class="font-display-xl text-display-xl text-primary font-black tracking-tighter" style="font-size: 24px; line-height: 24px;">Grindboard</div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+<img class="w-8 h-8 rounded-full border border-primary object-cover" data-alt="A small circular avatar placeholder image for a high-achieving student in a dark cyber-productivity environment, focusing on neon green and dark slate tones. Sleek and minimal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEzkpYWUffLf5u2zxmH8b-zUzEB_CA5WbaU93VzyGVDmZj9sG6bxSt8iat-DuVwxod-62F5okMENSG4290RqFQg5MdYjLLO6vyz94vVBmdFfnOPr2SmBBGt0vVAga37CMjtdjBhofqKiUUUEQVi5zelDC4SrLc-_NrtiMvzx8IRoSv0fnUKqdlBGcrRLBeJ5-sdL0mZLtymXu-d82SEb1tqWk8usiJ_RpK8Vgtj4AmY52hXlvXjn_dFDzadeqIgodJQBsFIUZVnH8"/>
+</div>
+</nav>
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex bg-white fixed left-0 top-0 h-full flex-col z-40 border-r border-[#E5E5E5] docked h-screen left-0 w-64">
+<div class="p-lg border-b border-[#E5E5E5]">
+<h1 class="font-headline-lg text-headline-lg text-[#1A1A1A] uppercase italic tracking-tighter">Grindboard</h1>
+<p class="font-label-mono text-label-mono text-[#6B7280] mt-xs">Level 42 Architect</p>
+</div>
+<div class="flex-1 py-md flex flex-col gap-xs overflow-y-auto">
+<a class="flex items-center gap-sm font-label-mono text-label-mono text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-gray-50" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-sm font-label-mono text-label-mono text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-gray-50" href="#">
+<span class="material-symbols-outlined" data-icon="book">book</span> Subjects
+            </a>
+<a class="flex items-center gap-sm font-label-mono text-label-mono text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-gray-50" href="#">
+<span class="material-symbols-outlined" data-icon="target">target</span> Goals
+            </a>
+<a class="flex items-center gap-sm font-label-mono text-label-mono text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-gray-50" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span> Events
+            </a>
+<a class="flex items-center gap-sm font-label-mono text-label-mono text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-gray-50" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span> Leaderboard
+            </a>
+<a class="flex items-center gap-sm font-label-mono text-label-mono text-secondary bg-[#F0FDF4] border-r-2 border-secondary py-3 px-4 translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span> Profile
+            </a>
+<a class="flex items-center gap-sm font-label-mono text-label-mono text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-gray-50" href="#">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span> Admin Panel
+            </a>
+</div>
+<div class="p-md mt-auto">
+<button class="w-full bg-[#F0FDF4] text-secondary border border-secondary/30 hover:bg-secondary hover:text-white py-2 rounded font-label-mono transition-colors">Upgrade to Pro</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full md:ml-64 pt-[80px] md:pt-0 p-margin-mobile md:p-margin-desktop overflow-x-hidden">
+<div class="max-w-[1024px] mx-auto space-y-lg">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row items-start md:items-center justify-between gap-md relative bg-white border border-[#E5E5E5] shadow-sm p-lg rounded-xl">
+<div class="flex items-center gap-md">
+<div class="relative">
+<img class="w-24 h-24 rounded-full border-2 border-primary object-cover" data-alt="A striking portrait of a focused individual in a high-tech environment. The lighting is dramatic with deep space blacks and sharp neon cyan accents. Cyber-productivity aesthetic, highly detailed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKn8v-TPS_MHdZmnXT7oSJIrePiyarSFsvWlPy-YMtEMXUMq0pV1yVx7vPz0qQduAwM6Vob6FHaP_kah_cJrrb-M1ugFd2uJbPu9mcmW_nlLy9l3TSBkh2K4m357Svk1RyotC5k7gQaIXMtKudX48Y64LA8KnHXrcZGJ-WXtOlyrbs_AlmxarFONq9O_7g5OLSUFL8bEflFDPThb5Ts3FrYsJEiklH1NpSLMp1UIWZh4lxrSuXDX69GmptAaufJnxtqyim5aeFM1o"/>
+<div class="absolute -bottom-2 -right-2 bg-white text-primary border border-primary font-label-mono text-[10px] px-2 py-1 rounded-full">LVL 42</div>
+</div>
+<div>
+<h2 class="font-display-xl text-display-xl text-[#1A1A1A] tracking-tighter">Alex Chen</h2>
+<p class="font-label-mono text-label-mono text-secondary mt-1 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary inline-block"></span>
+                            Algorithm Architect
+                        </p>
+</div>
+</div>
+<button class="px-6 py-2 border border-[#E5E5E5] hover:border-secondary hover:text-secondary rounded text-[#6B7280] transition-colors font-label-mono flex items-center gap-2 bg-transparent">
+<span class="material-symbols-outlined text-[18px]">edit</span> Edit Profile
+                </button>
+</header>
+<!-- Stats Row -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-sm">
+<div class="bg-white border border-[#E5E5E5] shadow-sm p-md rounded-lg flex flex-col justify-center items-center md:items-start text-center md:text-left relative overflow-hidden group">
+<div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="font-label-mono text-label-mono text-[#6B7280] uppercase tracking-wider mb-2">Rank</span>
+<div class="font-stat-lg text-stat-lg text-primary drop-shadow-sm">Expert</div>
+</div>
+<div class="bg-white border border-[#E5E5E5] shadow-sm p-md rounded-lg flex flex-col justify-center items-center md:items-start text-center md:text-left">
+<span class="font-label-mono text-label-mono text-[#6B7280] uppercase tracking-wider mb-2">Total XP</span>
+<div class="font-stat-lg text-stat-lg text-[#1A1A1A]">142,850</div>
+</div>
+<div class="bg-white border border-[#E5E5E5] shadow-sm p-md rounded-lg flex flex-col justify-center items-center md:items-start text-center md:text-left">
+<span class="font-label-mono text-label-mono text-[#6B7280] uppercase tracking-wider mb-2">Streak</span>
+<div class="font-stat-lg text-stat-lg text-secondary flex items-center gap-2 drop-shadow-sm">
+<span class="material-symbols-outlined" data-icon="local_fire_department" data-weight="fill" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+                        128 <span class="text-sm font-normal text-[#6B7280]">days</span>
+</div>
+</div>
+<div class="bg-white border border-[#E5E5E5] shadow-sm p-md rounded-lg flex flex-col justify-center items-center md:items-start text-center md:text-left">
+<span class="font-label-mono text-label-mono text-[#6B7280] uppercase tracking-wider mb-2">Total Solved</span>
+<div class="font-stat-lg text-stat-lg text-[#1A1A1A]">842</div>
+</div>
+</section>
+<!-- Linked Accounts Section -->
+<section class="bg-white border border-[#E5E5E5] shadow-sm p-lg rounded-xl space-y-md">
+<h3 class="font-headline-lg text-headline-lg text-[#1A1A1A] tracking-tighter">Linked Accounts</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex items-center justify-between p-md bg-gray-50 rounded-lg border border-[#E5E5E5]">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 bg-primary/10 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">terminal</span>
+</div>
+<div>
+<p class="font-label-mono text-[#1A1A1A]">Codeforces</p>
+<p class="text-xs text-primary">Synced</p>
+</div>
+</div>
+<button class="px-4 py-1 text-xs border border-[#E5E5E5] rounded font-label-mono text-[#6B7280] hover:text-primary hover:border-primary transition-colors bg-white">Refresh</button>
+</div>
+<div class="flex items-center justify-between p-md bg-gray-50 rounded-lg border border-[#E5E5E5]">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-[#6B7280]">code</span>
+</div>
+<div>
+<p class="font-label-mono text-[#1A1A1A]">LeetCode</p>
+<p class="text-xs text-[#6B7280]">Not Linked</p>
+</div>
+</div>
+<button class="px-4 py-1 text-xs bg-[#F0FDF4] text-secondary border border-secondary/30 rounded font-label-mono hover:bg-secondary hover:text-white transition-colors">Sync Now</button>
+</div>
+</div>
+</section>
+<!-- Badges Section -->
+<section class="bg-white border border-[#E5E5E5] shadow-sm p-lg rounded-xl space-y-md">
+<h3 class="font-headline-lg text-headline-lg text-[#1A1A1A] tracking-tighter">Badges</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-sm">
+<div class="p-md bg-gray-50 rounded-lg border border-primary/30 flex flex-col items-center text-center gap-xs">
+<span class="material-symbols-outlined text-primary text-display-xl">workspace_premium</span>
+<p class="font-label-mono text-sm text-[#1A1A1A]">First Blood</p>
+<p class="text-[10px] text-[#6B7280]">First problem solved</p>
+</div>
+<div class="p-md bg-gray-50 rounded-lg border border-secondary/30 flex flex-col items-center text-center gap-xs">
+<span class="material-symbols-outlined text-secondary text-display-xl">local_fire_department</span>
+<p class="font-label-mono text-sm text-[#1A1A1A]">Streak Starter</p>
+<p class="text-[10px] text-[#6B7280]">7-day streak achieved</p>
+</div>
+<div class="p-md bg-gray-50 rounded-lg border border-[#E5E5E5] flex flex-col items-center text-center gap-xs opacity-60">
+<span class="material-symbols-outlined text-[#6B7280] text-display-xl">lock</span>
+<p class="font-label-mono text-sm text-[#1A1A1A]">Month Warrior</p>
+<p class="text-[10px] text-[#6B7280]">30-day streak</p>
+</div>
+<div class="p-md bg-gray-50 rounded-lg border border-[#E5E5E5] flex flex-col items-center text-center gap-xs opacity-60">
+<span class="material-symbols-outlined text-[#6B7280] text-display-xl">lock</span>
+<p class="font-label-mono text-sm text-[#1A1A1A]">Century Solver</p>
+<p class="text-[10px] text-[#6B7280]">100 problems solved</p>
+</div>
+</div>
+</section>
+<!-- Activity Section -->
+<section class="bg-white border border-[#E5E5E5] shadow-sm p-lg rounded-xl space-y-md">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-lg text-headline-lg text-[#1A1A1A] tracking-tighter">Activity</h3>
+<div class="flex items-center gap-2 text-[10px] font-label-mono text-[#6B7280]">
+<span>Less</span>
+<div class="w-2 h-2 rounded-sm bg-[#E5E5E5]"></div>
+<div class="w-2 h-2 rounded-sm bg-secondary/20"></div>
+<div class="w-2 h-2 rounded-sm bg-secondary/50"></div>
+<div class="w-2 h-2 rounded-sm bg-secondary/80"></div>
+<div class="w-2 h-2 rounded-sm bg-secondary"></div>
+<span>More</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<div class="grid grid-flow-col grid-rows-7 gap-1 min-w-[600px]" id="activity-heatmap"></div>
+</div>
+</section></div>
+</main>
+<script>
+        // Simple logic for heatmap generation to give it that "grind" look
+        document.addEventListener('DOMContentLoaded', () => {
+            const heatmapGrid = document.getElementById('activity-heatmap');
+            if(heatmapGrid) {
+                // Generate roughly a year of data (52 weeks * 7 days)
+                for(let i = 0; i < 364; i++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'heatmap-cell';
+                    // Randomize intensity heavily weighted towards 0-1, with some higher spikes
+                    let intensity = 0;
+                    const rand = Math.random();
+                    if(rand > 0.95) intensity = 4;
+                    else if(rand > 0.85) intensity = 3;
+                    else if(rand > 0.6) intensity = 2;
+                    else if(rand > 0.4) intensity = 1;
+                    
+                    cell.setAttribute('data-intensity', intensity);
+                    
+                    // Add a tiny tooltip effect
+                    cell.title = `${intensity * 2} hours studied`;
+                    
+                    heatmapGrid.appendChild(cell);
+                }
+            }
+        });
+    </script>
+</body></html>

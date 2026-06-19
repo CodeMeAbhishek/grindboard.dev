@@ -1,0 +1,270 @@
+// Prisma schema for Grindboard
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+}
+
+// ─── ENUMS ────────────────────────────────────────────────────────────────────
+
+enum UserRole {
+  ADMIN
+  MEMBER
+}
+
+enum ActivityType {
+  LEETCODE
+  CODEFORCES
+  STUDY
+  GATE_MOCK
+  TOPIC_COMPLETE
+  EVENT
+}
+
+enum ActivitySource {
+  MANUAL
+  CODEFORCES_API
+  LEETCODE_API
+}
+
+enum LCDifficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum EventType {
+  CP
+  LEETCODE
+  GATE
+  OTHER
+}
+
+// ─── MODELS ───────────────────────────────────────────────────────────────────
+
+model User {
+  id            String   @id @default(uuid())
+  supabaseId    String   @unique @map("supabase_id")
+  email         String   @unique
+  name          String
+  avatarUrl     String?  @map("avatar_url")
+  role          UserRole @default(MEMBER)
+  cfHandle      String?  @map("cf_handle")
+  lcHandle      String?  @map("lc_handle")
+  xpTotal       Int      @default(0) @map("xp_total")
+  globalStreak  Int      @default(0) @map("global_streak")
+  freezeCount   Int      @default(0) @map("freeze_count")
+  lastSyncAt    DateTime? @map("last_sync_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  enrollments   Enrollment[]
+  activities    Activity[]
+  goals         Goal[]
+  streaks       Streak[]
+  eventResults  EventResult[]
+  userBadges    UserBadge[]
+  announcements Announcement[]
+  userTopics    UserTopic[]
+
+  @@map("users")
+}
+
+model Module {
+  id          String  @id @default(uuid())
+  name        String  @unique
+  description String?
+  icon        String  @default("book")
+  color       String  @default("#10B981")
+  orderIndex  Int     @default(0) @map("order_index")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  topics      Topic[]
+  enrollments Enrollment[]
+  activities  Activity[]
+  goals       Goal[]
+  streaks     Streak[]
+
+  @@map("modules")
+}
+
+model Topic {
+  id          String  @id @default(uuid())
+  moduleId    String  @map("module_id")
+  name        String
+  description String?
+  orderIndex  Int     @default(0) @map("order_index")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  module      Module  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  userTopics  UserTopic[]
+
+  @@map("topics")
+}
+
+model UserTopic {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  topicId     String   @map("topic_id")
+  completedAt DateTime @default(now()) @map("completed_at")
+
+  user        User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic       Topic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, topicId])
+  @@map("user_topics")
+}
+
+model Enrollment {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  moduleId    String   @map("module_id")
+  weeklyXpGoal Int     @default(500) @map("weekly_xp_goal")
+  enrolledAt  DateTime @default(now()) @map("enrolled_at")
+
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module      Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, moduleId])
+  @@map("enrollments")
+}
+
+model Activity {
+  id          String         @id @default(uuid())
+  userId      String         @map("user_id")
+  moduleId    String?        @map("module_id")
+  type        ActivityType
+  source      ActivitySource @default(MANUAL)
+  externalId  String?        @map("external_id")
+  xpEarned    Int            @default(0) @map("xp_earned")
+  // LC fields
+  lcDifficulty LCDifficulty? @map("lc_difficulty")
+  lcProblemName String?      @map("lc_problem_name")
+  // CF fields
+  cfRating    Int?           @map("cf_rating")
+  cfContestId Int?           @map("cf_contest_id")
+  // Study fields
+  studyHours  Float?         @map("study_hours")
+  // Generic
+  notes       String?
+  metadata    Json?
+  createdAt   DateTime       @default(now()) @map("created_at")
+
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module      Module? @relation(fields: [moduleId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, source, externalId])
+  @@index([userId, createdAt])
+  @@map("activities")
+}
+
+model Goal {
+  id          String    @id @default(uuid())
+  userId      String    @map("user_id")
+  moduleId    String?   @map("module_id")
+  title       String
+  description String?
+  targetValue Int       @map("target_value")
+  currentValue Int      @default(0) @map("current_value")
+  metricType  String    @default("count") @map("metric_type") // count | hours | topics | pages
+  deadline    DateTime?
+  archived    Boolean   @default(false)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module      Module? @relation(fields: [moduleId], references: [id], onDelete: SetNull)
+
+  @@map("goals")
+}
+
+model Streak {
+  id                String    @id @default(uuid())
+  userId            String    @map("user_id")
+  moduleId          String?   @map("module_id") // null = global streak
+  current           Int       @default(0)
+  longest           Int       @default(0)
+  freezeCount       Int       @default(0) @map("freeze_count")
+  lastActivityDate  DateTime? @map("last_activity_date")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module            Module? @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, moduleId])
+  @@map("streaks")
+}
+
+model Event {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  type        EventType
+  platformUrl String?   @map("platform_url")
+  scheduledAt DateTime  @map("scheduled_at")
+  createdBy   String    @map("created_by")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  results     EventResult[]
+
+  @@map("events")
+}
+
+model EventResult {
+  id         String   @id @default(uuid())
+  eventId    String   @map("event_id")
+  userId     String   @map("user_id")
+  rank       Int?
+  score      Float?
+  xpEarned   Int      @default(0) @map("xp_earned")
+  metadata   Json?    // CF: ratingChange, LC: solved, GATE: percentile
+  loggedAt   DateTime @default(now()) @map("logged_at")
+
+  event      Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user       User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userId])
+  @@map("event_results")
+}
+
+model Badge {
+  id          String @id @default(uuid())
+  key         String @unique
+  name        String
+  description String
+  icon        String @default("workspace_premium")
+  xpReward    Int    @default(0) @map("xp_reward")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  userBadges  UserBadge[]
+
+  @@map("badges")
+}
+
+model UserBadge {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  badgeId   String   @map("badge_id")
+  earnedAt  DateTime @default(now()) @map("earned_at")
+
+  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badge     Badge @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, badgeId])
+  @@map("user_badges")
+}
+
+model Announcement {
+  id          String    @id @default(uuid())
+  title       String
+  body        String
+  createdById String    @map("created_by_id")
+  expiresAt   DateTime? @map("expires_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  createdBy   User @relation(fields: [createdById], references: [id], onDelete: Cascade)
+
+  @@map("announcements")
+}

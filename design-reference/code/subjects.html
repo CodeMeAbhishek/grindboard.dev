@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Grindboard - Subjects</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Geist:wght@400;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "surface-bright": "#f9f9f9",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f3f3f3",
+                        "surface-container": "#ededed",
+                        "surface-container-high": "#e7e7e7",
+                        "surface-container-highest": "#e1e1e1",
+                        "on-surface": "#1A1A1A",
+                        "on-surface-variant": "#6B7280",
+                        "background": "#FAFAFA",
+                        "primary": "#10b981",
+                        "primary-container": "#F0FDF4",
+                        "on-primary-container": "#047857",
+                        "on-primary": "#ffffff",
+                        "secondary": "#0ea5e9",
+                        "secondary-container": "#e0f2fe",
+                        "tertiary": "#f59e0b",
+                        "tertiary-container": "#fef3c7",
+                        "error": "#ef4444",
+                        "outline": "#E5E5E5",
+                        "outline-variant": "#E5E5E5",
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "xs": "8px",
+                        "sm": "16px",
+                        "base": "4px",
+                        "gutter": "20px",
+                        "lg": "40px",
+                        "margin-desktop": "48px",
+                        "xl": "64px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "label-mono": ["JetBrains Mono"],
+                        "display-xl": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "stat-lg": ["Geist"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "display-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "stat-lg": ["24px", { "lineHeight": "24px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FAFAFA;
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface-variant font-body-md text-body-md overflow-x-hidden min-h-screen flex flex-col md:flex-row">
+<!-- TopNavBar (Mobile Only) -->
+<nav class="md:hidden fixed top-0 w-full z-50 flex justify-between items-center px-sm py-base bg-surface border-b border-outline">
+<div class="flex items-center gap-sm">
+<span class="font-display-xl text-display-xl text-primary font-black tracking-tighter text-2xl leading-none">Grindboard</span>
+</div>
+<div class="flex items-center gap-xs">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="bg-primary text-on-primary font-label-mono text-label-mono px-3 py-1.5 rounded-DEFAULT flex items-center gap-1 hover:bg-primary/90">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Quick Log
+            </button>
+</div>
+</nav>
+<!-- SideNavBar (Web Only) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full flex-col z-40 border-r border-outline bg-surface w-64">
+<div class="p-md border-b border-outline flex flex-col gap-1">
+<h1 class="font-headline-lg text-headline-lg text-primary uppercase italic text-2xl leading-none">Grindboard</h1>
+<p class="font-label-mono text-label-mono text-on-surface-variant text-xs">Level 42 Architect</p>
+</div>
+<div class="flex-1 overflow-y-auto py-sm px-xs space-y-1">
+<!-- Tabs -->
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface py-3 px-4 transition-all hover:bg-surface-container rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-mono text-label-mono">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-primary bg-[#F0FDF4] border-r-2 border-primary py-3 px-4 rounded-lg transform translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">book</span>
+<span class="font-label-mono text-label-mono font-bold">Subjects</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface py-3 px-4 transition-all hover:bg-surface-container rounded-lg" href="#">
+<span class="material-symbols-outlined">target</span>
+<span class="font-label-mono text-label-mono">Goals</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface py-3 px-4 transition-all hover:bg-surface-container rounded-lg" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-mono text-label-mono">Events</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface py-3 px-4 transition-all hover:bg-surface-container rounded-lg" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-mono text-label-mono">Leaderboard</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface py-3 px-4 transition-all hover:bg-surface-container rounded-lg" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-mono text-label-mono">Profile</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface py-3 px-4 transition-all hover:bg-surface-container rounded-lg" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-label-mono text-label-mono">Admin Panel</span>
+</a>
+</div>
+<div class="p-md mt-auto">
+<button class="w-full bg-transparent border border-outline text-on-surface-variant font-label-mono text-label-mono py-2 rounded-DEFAULT hover:text-primary hover:border-primary transition-colors">
+                Upgrade to Pro
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full md:pl-64 pt-[72px] md:pt-0 min-h-screen">
+<div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-lg space-y-lg">
+<!-- Page Header -->
+<header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-sm">
+<div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tight">My Subjects</h2>
+<p class="text-on-surface-variant mt-1">Manage your academic and technical grind paths.</p>
+</div>
+<button class="bg-primary text-on-primary font-label-mono text-label-mono px-4 py-2 rounded-DEFAULT font-bold flex items-center gap-2 hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+                    Add Subject
+                </button>
+</header>
+<!-- Search and Filter Bar -->
+<section class="bg-white border border-[#E5E5E5] shadow-sm rounded-xl p-xs flex flex-col sm:flex-row gap-xs items-center">
+<div class="relative flex-1 w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface border border-outline rounded-DEFAULT pl-10 pr-4 py-2 text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-on-surface-variant/50 font-label-mono text-sm" placeholder="Search subjects..." type="text"/>
+</div>
+<div class="flex gap-xs w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-4 py-2 bg-surface border border-outline rounded-DEFAULT text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-2 font-label-mono text-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                        Filter
+                    </button>
+<button class="flex-1 sm:flex-none px-4 py-2 bg-surface border border-outline rounded-DEFAULT text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-2 font-label-mono text-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]">sort</span>
+                        Sort
+                    </button>
+</div>
+</section>
+<!-- Grid of Subject Cards (Bento/Glassmorphism) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Card 1: Competitive Programming -->
+<article class="bg-white border border-[#E5E5E5] shadow-sm rounded-xl p-sm flex flex-col gap-sm relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="flex justify-between items-start z-10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary border border-outline">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<h3 class="font-headline-lg-mobile text-lg font-bold text-on-surface">Competitive Programming</h3>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors cursor-pointer">more_vert</span>
+</div>
+<div class="flex gap-2 font-label-mono text-xs z-10">
+<span class="bg-primary/10 text-primary px-2 py-1 rounded-DEFAULT border border-primary/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+                            7-Day Streak
+                        </span>
+<span class="bg-surface text-on-surface-variant px-2 py-1 rounded-DEFAULT border border-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">military_tech</span>
+                            450 XP This Wk
+                        </span>
+</div>
+<div class="mt-auto pt-sm border-t border-outline flex justify-between items-end z-10">
+<div class="flex flex-col gap-1 w-2/3">
+<div class="flex justify-between text-xs font-label-mono text-on-surface-variant">
+<span>Weekly Goal</span>
+<span>80%</span>
+</div>
+<div class="h-1.5 w-full bg-[#E5E5E5] rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 80%;"></div>
+</div>
+</div>
+<span class="text-xs text-on-surface-variant/70 italic">Active 2h ago</span>
+</div>
+</article>
+<!-- Card 2: LeetCode DSA -->
+<article class="bg-white border border-[#E5E5E5] shadow-sm rounded-xl p-sm flex flex-col gap-sm relative overflow-hidden group hover:border-secondary/50 transition-colors">
+<div class="flex justify-between items-start z-10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-secondary border border-outline">
+<span class="material-symbols-outlined">data_object</span>
+</div>
+<h3 class="font-headline-lg-mobile text-lg font-bold text-on-surface">LeetCode DSA</h3>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-secondary transition-colors cursor-pointer">more_vert</span>
+</div>
+<div class="flex gap-2 font-label-mono text-xs z-10 flex-wrap">
+<span class="bg-secondary/10 text-secondary px-2 py-1 rounded-DEFAULT border border-secondary/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+                            14-Day Streak
+                        </span>
+<span class="bg-surface text-on-surface-variant px-2 py-1 rounded-DEFAULT border border-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">military_tech</span>
+                            800 XP This Wk
+                        </span>
+</div>
+<div class="mt-auto pt-sm border-t border-outline flex justify-between items-end z-10">
+<div class="flex flex-col gap-1 w-2/3">
+<div class="flex justify-between text-xs font-label-mono text-on-surface-variant">
+<span>Weekly Goal</span>
+<span class="text-secondary">100%</span>
+</div>
+<div class="h-1.5 w-full bg-[#E5E5E5] rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<span class="text-xs text-primary/80 font-bold animate-pulse">Active 5m ago</span>
+</div>
+</article>
+<!-- Card 3: GATE Preparation -->
+<article class="bg-white border border-[#E5E5E5] shadow-sm rounded-xl p-sm flex flex-col gap-sm relative overflow-hidden group hover:border-tertiary/50 transition-colors">
+<div class="flex justify-between items-start z-10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-tertiary border border-outline">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h3 class="font-headline-lg-mobile text-lg font-bold text-on-surface">GATE Preparation</h3>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface transition-colors cursor-pointer">more_vert</span>
+</div>
+<div class="flex gap-2 font-label-mono text-xs z-10 flex-wrap">
+<span class="bg-tertiary/10 text-tertiary px-2 py-1 rounded-DEFAULT border border-tertiary/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+                            3-Day Streak
+                        </span>
+<span class="bg-surface text-on-surface-variant px-2 py-1 rounded-DEFAULT border border-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">military_tech</span>
+                            200 XP This Wk
+                        </span>
+</div>
+<div class="mt-auto pt-sm border-t border-outline flex justify-between items-end z-10">
+<div class="flex flex-col gap-1 w-2/3">
+<div class="flex justify-between text-xs font-label-mono text-on-surface-variant">
+<span>Weekly Goal</span>
+<span>35%</span>
+</div>
+<div class="flex gap-[2px] h-2">
+<!-- Mini sparkline blocks -->
+<div class="flex-1 bg-tertiary/80 rounded-sm"></div>
+<div class="flex-1 bg-tertiary/80 rounded-sm"></div>
+<div class="flex-1 bg-tertiary/30 rounded-sm"></div>
+<div class="flex-1 bg-tertiary/30 rounded-sm"></div>
+<div class="flex-1 bg-[#E5E5E5] rounded-sm"></div>
+</div>
+</div>
+<span class="text-xs text-on-surface-variant/70 italic">Active yesterday</span>
+</div>
+</article>
+<!-- Card 4: Machine Learning (Not Enrolled) -->
+<article class="bg-white border border-[#E5E5E5] shadow-sm rounded-xl p-sm flex flex-col gap-sm relative overflow-hidden group hover:border-solid hover:border-primary/50 transition-all hover:opacity-100"><div class="flex justify-between items-start z-10"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary border border-outline"><span class="material-symbols-outlined">psychology</span></div><h3 class="font-headline-lg-mobile text-lg font-bold text-on-surface">Machine Learning</h3></div><span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors cursor-pointer">more_vert</span></div><div class="flex gap-2 font-label-mono text-xs z-10"><span class="bg-primary/10 text-primary px-2 py-1 rounded-DEFAULT border border-primary/20 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">local_fire_department</span>0-Day Streak</span><span class="bg-surface text-on-surface-variant px-2 py-1 rounded-DEFAULT border border-outline flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">military_tech</span>0 XP This Wk</span></div><div class="mt-auto pt-sm border-t border-outline flex justify-between items-end z-10"><div class="flex flex-col gap-1 w-2/3"><div class="flex justify-between text-xs font-label-mono text-on-surface-variant"><span>Weekly Goal</span><span>0%</span></div><div class="h-1.5 w-full bg-[#E5E5E5] rounded-full overflow-hidden"><div class="h-full bg-primary rounded-full" style="width: 0%;"></div></div></div><button class="bg-primary-container text-primary font-label-mono text-[12px] px-3 py-1 rounded-DEFAULT font-bold hover:bg-primary/20 transition-colors">Enroll</button></div></article>
+<!-- Card 5: Web Development -->
+<article class="bg-white border border-[#E5E5E5] shadow-sm rounded-xl p-sm flex flex-col gap-sm relative overflow-hidden group transition-colors">
+<div class="flex justify-between items-start z-10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-on-surface-variant border border-outline">
+<span class="material-symbols-outlined">code_blocks</span>
+</div>
+<h3 class="font-headline-lg-mobile text-lg font-bold text-on-surface">Web Development</h3>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface transition-colors cursor-pointer">more_vert</span>
+</div>
+<div class="flex gap-2 font-label-mono text-xs z-10 flex-wrap">
+<span class="bg-surface text-on-surface-variant px-2 py-1 rounded-DEFAULT border border-outline flex items-center gap-1 opacity-60">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+                            0-Day Streak
+                        </span>
+<span class="bg-surface text-on-surface-variant px-2 py-1 rounded-DEFAULT border border-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">military_tech</span>
+                            50 XP This Wk
+                        </span>
+</div>
+<div class="mt-auto pt-sm border-t border-outline flex justify-between items-end z-10">
+<div class="flex flex-col gap-1 w-2/3">
+<div class="flex justify-between text-xs font-label-mono text-on-surface-variant">
+<span>Weekly Goal</span>
+<span class="text-error">10%</span>
+</div>
+<div class="h-1.5 w-full bg-[#E5E5E5] rounded-full overflow-hidden">
+<div class="h-full bg-error rounded-full" style="width: 10%;"></div>
+</div>
+</div>
+<span class="text-xs text-on-surface-variant/50 italic">Active 3 days ago</span>
+</div>
+</article>
+<!-- Card 6: DSA -->
+<article class="bg-white border border-[#E5E5E5] shadow-sm rounded-xl p-sm flex flex-col gap-sm relative overflow-hidden group hover:border-secondary/50 transition-colors"><div class="flex justify-between items-start z-10"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-secondary border border-outline"><span class="material-symbols-outlined">account_tree</span></div><h3 class="font-headline-lg-mobile text-lg font-bold text-on-surface">DSA</h3></div><span class="material-symbols-outlined text-outline group-hover:text-secondary transition-colors cursor-pointer">more_vert</span></div><div class="flex gap-2 font-label-mono text-xs z-10 flex-wrap"><span class="bg-secondary/10 text-secondary px-2 py-1 rounded-DEFAULT border border-secondary/20 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">local_fire_department</span>5-Day Streak</span><span class="bg-surface text-on-surface-variant px-2 py-1 rounded-DEFAULT border border-outline flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">military_tech</span>300 XP This Wk</span></div><div class="mt-auto pt-sm border-t border-outline flex justify-between items-end z-10"><div class="flex flex-col gap-1 w-2/3"><div class="flex justify-between text-xs font-label-mono text-on-surface-variant"><span>Weekly Goal</span><span class="text-secondary">60%</span></div><div class="h-1.5 w-full bg-[#E5E5E5] rounded-full overflow-hidden"><div class="h-full bg-secondary rounded-full" style="width: 60%;"></div></div></div><span class="text-xs text-on-surface-variant/70 italic">Active 1h ago</span></div></article></section>
+</div>
+</main>
+</body></html>

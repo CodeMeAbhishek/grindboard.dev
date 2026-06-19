@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Grindboard - Dashboard</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@700;800&amp;family=Inter:wght@400&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#FAFAFA",
+                      "surface": "#FFFFFF",
+                      "surface-container-lowest": "#FFFFFF",
+                      "surface-container-low": "#FFFFFF",
+                      "surface-container": "#F9FAFB",
+                      "surface-container-high": "#F3F4F6",
+                      "surface-container-highest": "#E5E7EB",
+                      "on-background": "#1A1A1A",
+                      "on-surface": "#1A1A1A",
+                      "on-surface-variant": "#6B7280",
+                      "primary": "#10b981",
+                      "primary-container": "#d1fae5",
+                      "on-primary": "#ffffff",
+                      "secondary": "#0ea5e9",
+                      "secondary-container": "#e0f2fe",
+                      "on-secondary": "#ffffff",
+                      "tertiary": "#f59e0b",
+                      "error": "#ef4444",
+                      "error-container": "#fee2e2",
+                      "outline": "#E5E5E5",
+                      "outline-variant": "#E5E5E5"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "xs": "8px",
+                      "sm": "16px",
+                      "base": "4px",
+                      "gutter": "20px",
+                      "lg": "40px",
+                      "margin-desktop": "48px",
+                      "xl": "64px",
+                      "md": "24px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "label-mono": [
+                              "JetBrains Mono"
+                      ],
+                      "display-xl": [
+                              "Geist"
+                      ],
+                      "headline-lg-mobile": [
+                              "Geist"
+                      ],
+                      "headline-lg": [
+                              "Geist"
+                      ],
+                      "stat-lg": [
+                              "Geist"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-mono": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-xl": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "stat-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #FAFAFA;
+            color: #1A1A1A;
+        }
+        
+        .glass-panel {
+            background: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        
+        /* Custom Scrollbar for light theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAFAFA; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E5E7EB; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10b981; 
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md bg-background text-on-background min-h-screen flex overflow-x-hidden">
+<!-- TopNavBar (Web Only) -->
+<header class="hidden md:flex bg-surface/90 backdrop-blur-md font-body-md text-body-md docked full-width top-0 border-b border-outline flat no shadows fixed w-full z-50 justify-between items-center px-sm py-base">
+<div class="flex items-center gap-sm">
+<!-- Mobile Menu Toggle (if ever needed on tablet) -->
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+<span class="font-display-xl text-display-xl text-primary font-black tracking-tighter">Grindboard</span>
+</div>
+<div class="flex items-center gap-sm">
+<button class="text-on-surface-variant hover:text-secondary transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="bg-primary text-on-primary px-sm py-xs rounded-DEFAULT font-label-mono text-label-mono uppercase hover:bg-primary-container hover:text-primary transition-colors">
+                Quick Log
+            </button>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-outline object-cover" data-alt="A futuristic, cyber-themed user avatar profile picture. The image features a stylized, neon-lit silhouette of a character wearing high-tech visors. The background is a dark, abstract grid pattern in deep slate gray. Lighting is stark and dramatic, with vibrant emerald green and cyan highlights reflecting off the cybernetic elements. The overall style is high-end digital illustration suitable for a premium gaming dashboard interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRCvIhwLrDwHwX7gqKKpGY4omg3CzRl92RXPLaWiwtBwmKsWSO1RZGprb3LX9f0PP-729GyN5W8rQ5P44bPXhxXtpgMk7iAkWSslBFhEdUFj68SQ9zIiQB-pH71e0hJlWdNCkbIBXl6E-DEm-KarUhjqx_0aeyd2H4Y6_WtxnlSv25EQwZ1yTJkaGfEoxXmaIm5JDSrDZFiN-D4B7fVFlOqA9tPHjBwgviSzkKuEh3pfTreU66FQ6gDegSoDR-KPTKsqgsZUqt2NI"/>
+</div>
+</header>
+<!-- SideNavBar (Web Only) -->
+<nav class="hidden md:flex bg-surface font-label-mono text-label-mono docked h-screen left-0 w-64 flat no shadows fixed flex-col z-40 border-r border-outline pt-[80px]">
+<div class="p-sm flex flex-col gap-xs flex-grow">
+<!-- Active: Dashboard -->
+<a class="text-primary bg-[#F0FDF4] border-r-2 border-primary py-3 px-4 flex items-center gap-sm Active: translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                Dashboard
+            </a>
+<a class="text-on-surface-variant hover:text-on-surface py-3 px-4 transition-all hover:bg-surface-container flex items-center gap-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">book</span>
+                Subjects
+            </a>
+<a class="text-on-surface-variant hover:text-on-surface py-3 px-4 transition-all hover:bg-surface-container flex items-center gap-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">target</span>
+                Goals
+            </a>
+<a class="text-on-surface-variant hover:text-on-surface py-3 px-4 transition-all hover:bg-surface-container flex items-center gap-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">calendar_today</span>
+                Events
+            </a>
+<a class="text-on-surface-variant hover:text-on-surface py-3 px-4 transition-all hover:bg-surface-container flex items-center gap-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">leaderboard</span>
+                Leaderboard
+            </a>
+<a class="text-on-surface-variant hover:text-on-surface py-3 px-4 transition-all hover:bg-surface-container flex items-center gap-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+                Profile
+            </a>
+<a class="text-on-surface-variant hover:text-on-surface py-3 px-4 transition-all hover:bg-surface-container flex items-center gap-sm mt-auto" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">admin_panel_settings</span>
+                Admin Panel
+            </a>
+</div>
+<div class="p-sm border-t border-outline">
+<button class="w-full bg-surface-container border border-outline text-secondary py-xs rounded-DEFAULT font-label-mono text-label-mono uppercase hover:text-primary transition-colors">
+                Upgrade to Pro
+            </button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow md:ml-64 pt-[80px] md:pt-[100px] p-sm md:p-lg max-w-[1440px] mx-auto w-full relative">
+<!-- Background Ambient Glow -->
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+<!-- Header Section -->
+<section class="mb-lg flex flex-col md:flex-row justify-between items-start md:items-end gap-sm">
+<div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-on-background mb-xs">Welcome back, Commander</h1>
+<p class="text-on-surface-variant font-label-mono text-label-mono flex items-center gap-xs">
+<span class="text-secondary bg-secondary-container px-xs py-base rounded-DEFAULT border border-secondary/30">Expert</span>
+</p>
+</div>
+<div class="flex items-center gap-sm glass-panel p-xs rounded-lg w-full md:w-auto">
+<div class="flex flex-wrap items-center justify-end gap-xs">
+<div class="flex items-center gap-xs bg-surface-container px-xs py-base rounded-DEFAULT border border-outline">
+<span class="text-[10px] font-label-mono uppercase text-secondary">CP</span>
+<div class="flex items-center gap-1 text-tertiary font-label-mono text-xs">
+            7 <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+</div>
+<div class="flex items-center gap-xs bg-surface-container px-xs py-base rounded-DEFAULT border border-outline">
+<span class="text-[10px] font-label-mono uppercase text-secondary">LC</span>
+<div class="flex items-center gap-1 text-tertiary font-label-mono text-xs">
+            14 <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+</div>
+<div class="flex items-center gap-xs bg-surface-container px-xs py-base rounded-DEFAULT border border-outline">
+<span class="text-[10px] font-label-mono uppercase text-secondary">GATE</span>
+<div class="flex items-center gap-1 text-tertiary font-label-mono text-xs">
+            3 <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+</div>
+</div>
+<div class="h-10 w-px bg-outline mx-xs"></div>
+<div class="flex-grow md:w-48">
+<div class="flex justify-between text-xs text-on-surface-variant mb-base font-label-mono">
+<span>XP Progress</span>
+<span class="text-primary">850 / 1000</span>
+</div>
+<div class="h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 85%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Announcement Banner -->
+<section class="mb-lg">
+<div class="bg-surface border-l-4 border-secondary p-sm rounded-r-lg flex items-center justify-between shadow-sm relative overflow-hidden glass-panel border-y-0 border-r-0">
+<div class="flex items-center gap-sm relative z-10">
+<div class="bg-secondary-container p-xs rounded-DEFAULT text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">campaign</span>
+</div>
+<div>
+<h3 class="font-label-mono text-label-mono text-on-background">New LeetCode Weekly Contest starts in 4 hours!</h3>
+</div>
+</div>
+<button class="relative z-10 bg-surface border border-secondary/50 text-secondary px-sm py-xs rounded-DEFAULT font-label-mono text-xs uppercase hover:bg-secondary-container transition-colors">
+                    Join Group
+                </button>
+</div>
+</section>
+<!-- Main Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Today's Agenda -->
+<div class="lg:col-span-8 flex flex-col gap-sm">
+<h2 class="font-headline-lg-mobile text-on-surface flex items-center gap-xs border-b border-outline pb-xs">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">view_list</span>
+                    Today's Agenda
+                </h2>
+<div class="glass-panel rounded-lg p-sm flex flex-col gap-xs">
+<!-- Goal Item -->
+<div class="group flex items-center gap-sm p-xs hover:bg-surface-container rounded-DEFAULT transition-colors border border-transparent hover:border-outline cursor-pointer">
+<div class="w-5 h-5 rounded-sm border-2 border-outline flex items-center justify-center group-hover:border-primary transition-colors">
+<!-- empty checkbox state -->
+</div>
+<div class="flex-grow">
+<h4 class="text-on-background font-body-md">Solve 5 DP problems</h4>
+<p class="text-xs text-on-surface-variant font-label-mono">Algorithms • High Priority</p>
+</div>
+<div class="text-xs text-primary bg-primary-container px-xs py-base rounded-DEFAULT font-label-mono border border-primary/20">
+                            +50 XP
+                        </div>
+</div>
+<div class="h-px w-full bg-outline"></div>
+<!-- Goal Item -->
+<div class="group flex items-center gap-sm p-xs hover:bg-surface-container rounded-DEFAULT transition-colors border border-transparent hover:border-outline cursor-pointer">
+<div class="w-5 h-5 rounded-sm border-2 border-outline flex items-center justify-center group-hover:border-primary transition-colors">
+</div>
+<div class="flex-grow">
+<h4 class="text-on-background font-body-md">Read OS Scheduling</h4>
+<p class="text-xs text-on-surface-variant font-label-mono">Operating Systems</p>
+</div>
+<div class="text-xs text-primary bg-primary-container px-xs py-base rounded-DEFAULT font-label-mono border border-primary/20">
+                            +30 XP
+                        </div>
+</div>
+<div class="h-px w-full bg-outline"></div>
+<!-- Goal Item -->
+<div class="group flex items-center gap-sm p-xs hover:bg-surface-container rounded-DEFAULT transition-colors border border-transparent hover:border-outline cursor-pointer">
+<div class="w-5 h-5 rounded-sm border-2 border-outline flex items-center justify-center group-hover:border-primary transition-colors">
+</div>
+<div class="flex-grow">
+<h4 class="text-on-background font-body-md">ML Linear Regression Video</h4>
+<p class="text-xs text-on-surface-variant font-label-mono">Machine Learning</p>
+</div>
+<div class="text-xs text-primary bg-primary-container px-xs py-base rounded-DEFAULT font-label-mono border border-primary/20">
+                            +20 XP
+                        </div>
+</div>
+</div>
+<!-- Streak Warnings -->
+<div class="mt-sm glass-panel border-error/50 bg-error-container p-sm rounded-lg flex items-start gap-sm">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+<div>
+<h4 class="text-error font-label-mono text-label-mono mb-base">Streak Risk</h4>
+<p class="text-on-surface-variant text-sm">0 activity today in <strong>System Design</strong>. Log activity soon to maintain your 5-day streak.</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Recent Activity -->
+<div class="lg:col-span-4 flex flex-col gap-sm">
+<h2 class="font-headline-lg-mobile text-on-surface flex items-center gap-xs border-b border-outline pb-xs">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">group</span>
+                    Group Activity
+                </h2>
+<div class="glass-panel rounded-lg p-sm flex flex-col gap-sm h-full max-h-[400px] overflow-y-auto">
+<!-- Feed Item -->
+<div class="flex gap-sm">
+<img alt="Rahul avatar" class="w-8 h-8 rounded-full border border-outline flex-shrink-0 object-cover" data-alt="A small, stylized avatar image of a person representing a user profile. The style is neon cyber-punk, featuring glowing edges and a dark background. The avatar depicts a generic male figure with bright cyan accents, fitting a dark mode gaming aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC26cK8O09HvqbY6AALFkEJLwu0wKDkc6VNHMo7YlI61kTM-N6yfO5N5bvu0fFdMqQGHDvBFZqcGBXQqWAtNxzAZbWkaIZan2N3oXfp4yqEk-57oclLfd6SpcJzZTznYpqdHXM8uE-deQLtcwwQyP6hn9Leq9u5X8lLKjS8obZ6Fh9qel84IOR2Qw8d_2K5N4zljMGbwX2I4ani4jPILzlfouOgUhf40blXA8n2O5N8Nhxlhotzv9a0Nm8dfvVv9VotHO73ISEKjc"/>
+<div>
+<p class="text-sm text-on-background"><strong>Rahul</strong> earned <span class="text-primary font-label-mono">60 XP</span> on LeetCode.</p>
+<span class="text-xs text-on-surface-variant">2 mins ago</span>
+</div>
+</div>
+<!-- Feed Item -->
+<div class="flex gap-sm">
+<img alt="Priya avatar" class="w-8 h-8 rounded-full border border-outline flex-shrink-0 object-cover" data-alt="A small, stylized avatar image representing a female user profile. Designed in a neon cyber-punk aesthetic with glowing edges against a dark slate background. The avatar depicts a female figure with emerald green highlights, maintaining the high-contrast gaming interface style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChJjdUmmPmJ8ILUHlDLxTTtH1FtFV-QdPkrebSp7dRMfti1B0NCx79Q-01pAyMeoE1AyANlXFF7cLYzCKFwC6ylsNr-DaN9EYRPufNclRrXlseyQWPGQVzQiBOhy97gPUqr7ldwKkF9F6k9_9yqZxgc-HAYegmiuSV04LX2v4gzPGClEif1lMz-IBzQWY3jeYdh6vhVa7m0IeWhRDVsQOz1K47iV0gsqBgiqQj5ft-KAYLWwJJtKqlTQZWAebenbFDAkutEk6fvqw"/>
+<div>
+<p class="text-sm text-on-background"><strong>Priya</strong> unlocked <span class="text-tertiary font-label-mono">'Month Warrior'</span> badge.</p>
+<span class="text-xs text-on-surface-variant">15 mins ago</span>
+</div>
+</div>
+<!-- Feed Item -->
+<div class="flex gap-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container border border-outline flex items-center justify-center flex-shrink-0 text-xs font-label-mono text-on-surface">
+                            AS
+                        </div>
+<div>
+<p class="text-sm text-on-background"><strong>Alex</strong> completed a 2-hour study block.</p>
+<span class="text-xs text-on-surface-variant">1 hour ago</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Quick Log Action (Mobile focused, but acts as a prominent call to action) -->
+<div class="mt-lg flex justify-center md:hidden">
+<button class="bg-primary text-on-primary w-full py-sm rounded-lg font-headline-lg-mobile uppercase hover:bg-primary-container hover:text-primary transition-colors flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+                Quick Log
+            </button>
+</div>
+</main>
+</body></html>

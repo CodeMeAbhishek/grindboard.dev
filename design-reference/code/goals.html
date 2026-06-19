@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Grindboard - Goals</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          theme: {
+            extend: {
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "base": "4px",
+                      "margin-desktop": "48px",
+                      "lg": "40px",
+                      "sm": "16px",
+                      "md": "24px",
+                      "xs": "8px",
+                      "xl": "64px",
+                      "margin-mobile": "16px",
+                      "gutter": "20px"
+              },
+              "fontFamily": {
+                      "stat-lg": [
+                              "Geist"
+                      ],
+                      "label-mono": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg": [
+                              "Geist"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Geist"
+                      ],
+                      "display-xl": [
+                              "Geist"
+                      ]
+              },
+              "fontSize": {
+                      "stat-lg": [
+                              "24px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-mono": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-xl": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "800"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #FAFAFA;
+            color: #1A1A1A;
+        }
+        
+        .glass-panel {
+            background-color: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .progress-bar-bg {
+            background-color: #E5E5E5;
+        }
+        
+        .progress-bar-fill {
+            background-color: #10B981;
+        }
+        
+        /* Modal Animation */
+        #add-goal-modal {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        #add-goal-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.95);
+        }
+        #add-goal-modal.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md min-h-screen flex flex-col md:flex-row antialiased selection:bg-[#10B981]/30 selection:text-[#10B981] bg-[#FAFAFA] text-[#1A1A1A]">
+<!-- Mobile Top Navigation (Visible only on md:hidden) -->
+<nav class="md:hidden fixed top-0 w-full z-50 flex justify-between items-center px-sm py-base bg-white/90 backdrop-blur-md border-b border-[#E5E5E5] flat no shadows">
+<div class="flex items-center gap-2">
+<span class="font-display-xl text-display-xl text-[#10B981] font-black tracking-tighter">Grindboard</span>
+</div>
+<div class="flex items-center gap-md text-[#10B981]">
+<button class="hover:text-[#059669] transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">search</span>
+</button>
+<button class="hover:text-[#059669] transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">notifications</span>
+</button>
+<button class="bg-[#10B981] text-white px-3 py-1 rounded font-bold hover:bg-[#059669] transition-colors text-sm">Quick Log</button>
+</div>
+</nav>
+<!-- Desktop Side Navigation (Visible on hidden md:flex) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full flex flex-col z-40 border-r border-[#E5E5E5] bg-white docked h-screen left-0 w-64 shadow-sm">
+<div class="p-lg flex flex-col gap-sm">
+<h1 class="font-headline-lg text-headline-lg text-[#1A1A1A] uppercase italic">Grindboard</h1>
+<div class="flex items-center gap-3 mt-4">
+<img alt="Grindboard Logo" class="w-10 h-10 rounded-full border border-[#E5E5E5] object-cover" data-alt="A small, stylized avatar image of a futuristic character wearing a high-tech visor, set against a dark cyan background. The lighting is neon and cinematic, highlighting metallic textures. Highly detailed, cyberpunk aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBT8L_l1vtnApsPZAR-LrlgDl_CrIPdIQ_tuWli4d2TbJmZtXZ5abPdl4opP82b9B1PGfKEzeChTIBrsOERBoPTMOfO_YNYV1O9wKAIzgnF9Xp09Ugh5rzqh64AzKFc_3dp1gjLNDqi2Fz3g5cM8EpGDcY9kXZQDD8_OfYXj9fU_1AB2N1uHKMUXtggVo6iEun5MEqrskXquR5I7cRafODYMIOrC-CY5eIUvRBP7uJVPGg8no5ZNBxBVSFg93kPvWpInVMRoSFd9vo"/>
+<div class="flex flex-col">
+<span class="text-[#1A1A1A] font-bold text-sm">User</span>
+<span class="text-[#6B7280] text-xs">Level 42 Architect</span>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-2 mt-md px-sm font-label-mono text-label-mono">
+<a class="flex items-center gap-3 text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-[#FAFAFA] transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-[#FAFAFA] transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">book</span>
+                Subjects
+            </a>
+<a class="flex items-center gap-3 text-[#10B981] bg-[#F0FDF4] border-r-2 border-[#10B981] py-3 px-4 rounded-l-lg translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">target</span>
+                Goals
+            </a>
+<a class="flex items-center gap-3 text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-[#FAFAFA] transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+                Events
+            </a>
+<a class="flex items-center gap-3 text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-[#FAFAFA] transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+                Leaderboard
+            </a>
+<a class="flex items-center gap-3 text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-[#FAFAFA] transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">person</span>
+                Profile
+            </a>
+<a class="flex items-center gap-3 text-[#6B7280] hover:text-[#1A1A1A] py-3 px-4 transition-all hover:bg-[#FAFAFA] transition-colors rounded-lg mt-auto mb-4" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+                Admin Panel
+            </a>
+</nav>
+<div class="p-sm">
+<button class="w-full py-2 border border-[#E5E5E5] text-[#1A1A1A] rounded hover:bg-[#FAFAFA] transition-colors font-label-mono text-xs text-center uppercase">Upgrade to Pro</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 pt-20 md:pt-0 p-margin-mobile md:p-margin-desktop min-h-screen flex flex-col gap-lg relative bg-[#FAFAFA]">
+<!-- Header & Primary Actions -->
+<header class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-[#E5E5E5] pb-md">
+<div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-[#1A1A1A] mb-2">Active Objectives</h2>
+<p class="text-[#6B7280]">Track your grind across all disciplines.</p>
+</div>
+<button class="bg-[#10B981] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#059669] transition-colors flex items-center gap-2" onclick="toggleModal()">
+<span class="material-symbols-outlined font-bold">add</span>
+                Add Goal
+            </button>
+</header>
+<!-- Goals Grid (Bento Style) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+<!-- Goal Card 1: High Priority / Close to Deadline -->
+<article class="glass-panel p-sm rounded-xl flex flex-col gap-md relative overflow-hidden group border border-[#E5E5E5]">
+<!-- Highlight indicator for urgency -->
+<div class="absolute top-0 left-0 w-full h-1 bg-[#10B981]"></div>
+<div class="flex justify-between items-start">
+<div class="flex gap-2 items-center">
+<span class="font-label-mono text-label-mono text-xs bg-[#10B981]/10 text-[#10B981] px-2 py-1 rounded border border-[#10B981]/30">DSA</span>
+</div>
+<span class="text-[#6B7280] text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">code</span> 2 days left
+                    </span>
+</div>
+<div>
+<h3 class="font-stat-lg text-stat-lg text-[#1A1A1A] mb-1">Master Dynamic Programming</h3>
+<p class="text-[#6B7280] text-sm">Complete 50 hard LeetCode problems.</p>
+</div>
+<div class="flex flex-col gap-2 mt-auto">
+<div class="flex justify-between text-sm">
+<span class="text-[#1A1A1A]">35 / 50 problems</span>
+<span class="text-[#10B981] font-bold">70%</span>
+</div>
+<div class="h-2 w-full progress-bar-bg rounded-full overflow-hidden">
+<div class="h-full bg-[#10B981] rounded-full" style="width: 70%"></div>
+</div>
+<div class="flex justify-between items-center mt-2">
+<span class="font-label-mono text-[10px] text-[#6B7280] uppercase">DSA</span>
+<button class="text-[#10B981] hover:text-[#059669] transition-colors text-sm font-bold flex items-center gap-1">
+                            Log Progress <span class="material-symbols-outlined text-[16px]">code</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Goal Card 2: Consistent Daily -->
+<article class="glass-panel p-sm rounded-xl flex flex-col gap-md border border-[#E5E5E5]">
+<div class="flex justify-between items-start">
+<div class="flex gap-2 items-center">
+<span class="font-label-mono text-label-mono text-xs bg-[#10B981]/10 text-[#10B981] px-2 py-1 rounded border border-[#10B981]/30">LeetCode DSA</span>
+</div>
+<span class="text-[#6B7280] text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">school</span> Reset in 4h
+                    </span>
+</div>
+<div>
+<h3 class="font-stat-lg text-stat-lg text-[#1A1A1A] mb-1">Calculus III Review</h3>
+<p class="text-[#6B7280] text-sm">Study focused topics for upcoming midterm.</p>
+</div>
+<div class="flex flex-col gap-2 mt-auto">
+<div class="flex justify-between text-sm">
+<span class="text-[#1A1A1A]">LeetCode DSA</span>
+<span class="text-[#10B981] font-bold">75%</span>
+</div>
+<div class="h-2 w-full progress-bar-bg rounded-full overflow-hidden">
+<div class="h-full bg-[#10B981] rounded-full" style="width: 75%"></div>
+</div>
+<div class="flex justify-between items-center mt-2">
+<span class="font-label-mono text-[10px] text-[#6B7280] uppercase">LeetCode DSA</span>
+<button class="text-[#10B981] hover:text-[#059669] transition-colors text-sm font-bold flex items-center gap-1">
+                            Log Progress <span class="material-symbols-outlined text-[16px]">school</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Goal Card 3: Weekly Goal (Just Started) -->
+<article class="glass-panel p-sm rounded-xl flex flex-col gap-md opacity-80 hover:opacity-100 transition-opacity border border-[#E5E5E5]">
+<div class="flex justify-between items-start">
+<div class="flex gap-2 items-center">
+<span class="font-label-mono text-label-mono text-xs bg-[#10B981]/10 text-[#10B981] px-2 py-1 rounded border border-[#10B981]/30">GATE Preparation</span>
+</div>
+<span class="text-[#6B7280] text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">science</span> 5 days left
+                    </span>
+</div>
+<div>
+<h3 class="font-stat-lg text-stat-lg text-[#1A1A1A] mb-1">Quantum Mechanics Labs</h3>
+<p class="text-[#6B7280] text-sm">Complete write-ups for experiment 3 &amp; 4.</p>
+</div>
+<div class="flex flex-col gap-2 mt-auto">
+<div class="flex justify-between text-sm">
+<span class="text-[#1A1A1A]">GATE Preparation</span>
+<span class="text-[#10B981] font-bold">0%</span>
+</div>
+<div class="h-2 w-full progress-bar-bg rounded-full overflow-hidden">
+<div class="h-full bg-[#10B981] rounded-full" style="width: 5%"></div> <!-- Small visible progress -->
+</div>
+<div class="flex justify-between items-center mt-2">
+<span class="font-label-mono text-[10px] text-[#6B7280] uppercase">GATE Preparation</span>
+<button class="text-[#10B981] hover:text-[#059669] transition-colors text-sm font-bold flex items-center gap-1">
+                            Log Progress <span class="material-symbols-outlined text-[16px]">science</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Goal Card 4: Long Term -->
+</section>
+<!-- Achieved Section -->
+<section class="mt-lg border-t border-[#E5E5E5] pt-lg">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-[#1A1A1A] mb-md flex items-center gap-3">
+<span class="material-symbols-outlined text-[#10B981] text-[32px]">task_alt</span>
+                Archived Triumphs
+            </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-sm">
+<!-- Completed Card 1 -->
+<div class="bg-white border border-[#E5E5E5] shadow-sm p-4 rounded-lg flex items-center justify-between opacity-60 grayscale hover:grayscale-0 transition-all">
+<div class="flex flex-col">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-mono text-[10px] text-[#1A1A1A] border border-[#E5E5E5] px-1 rounded">DSA</span>
+<span class="text-xs text-[#6B7280]">Completed Oct 12</span>
+</div>
+<h4 class="text-[#1A1A1A] font-bold strike-through line-through">Write Research Draft</h4>
+</div>
+<div class="bg-[#10B981]/20 p-2 rounded-full text-[#10B981]">
+<span class="material-symbols-outlined">check</span>
+</div>
+</div>
+<!-- Completed Card 2 -->
+<div class="bg-white border border-[#E5E5E5] shadow-sm p-4 rounded-lg flex items-center justify-between opacity-60 grayscale hover:grayscale-0 transition-all">
+<div class="flex flex-col">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-mono text-[10px] text-[#1A1A1A] border border-[#E5E5E5] px-1 rounded">Web Development</span>
+<span class="text-xs text-[#6B7280]">Completed Oct 10</span>
+</div>
+<h4 class="text-[#1A1A1A] font-bold strike-through line-through">Build React UI</h4>
+</div>
+<div class="bg-[#10B981]/20 p-2 rounded-full text-[#10B981]">
+<span class="material-symbols-outlined">check</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-[#1A1A1A]/40 backdrop-blur-sm" id="add-goal-modal">
+<div class="glass-panel w-full max-w-lg rounded-xl p-md border-t-2 border-t-[#10B981] relative bg-white">
+<button class="absolute top-4 right-4 text-[#6B7280] hover:text-[#EF4444] transition-colors" onclick="toggleModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-[#1A1A1A] mb-6">Initialize New Goal</h2>
+<form class="flex flex-col gap-4">
+<!-- Subject -->
+<div class="flex flex-col gap-1">
+<label class="font-label-mono text-label-mono text-xs text-[#6B7280]">SUBJECT TAG</label>
+<select class="bg-white border border-[#E5E5E5] rounded p-2 text-[#1A1A1A] focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] outline-none transition-all">
+<option>Computer Science</option>
+<option>Mathematics</option>
+<option>Physics</option>
+<option>Literature</option>
+<option>Custom...</option>
+</select>
+</div>
+<!-- Type & Metric Row -->
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-1">
+<label class="font-label-mono text-label-mono text-xs text-[#6B7280]">TIMEFRAME</label>
+<select class="bg-white border border-[#E5E5E5] rounded p-2 text-[#1A1A1A] focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] outline-none transition-all">
+<option>Daily Loop</option>
+<option>Weekly Sprint</option>
+<option>Monthly Arc</option>
+<option>Milestone</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-mono text-label-mono text-xs text-[#6B7280]">METRIC</label>
+<select class="bg-white border border-[#E5E5E5] rounded p-2 text-[#1A1A1A] focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] outline-none transition-all">
+<option>Problems Solved</option>
+<option>Hours Focused</option>
+<option>Topics Covered</option>
+<option>Pages Read</option>
+</select>
+</div>
+</div>
+<!-- Title & Target -->
+<div class="flex flex-col gap-1">
+<label class="font-label-mono text-label-mono text-xs text-[#6B7280]">OBJECTIVE TITLE</label>
+<input class="bg-white border border-[#E5E5E5] rounded p-2 text-[#1A1A1A] focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] outline-none transition-all placeholder:text-[#6B7280]/50" placeholder="e.g., Master Dynamic Programming" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-1">
+<label class="font-label-mono text-label-mono text-xs text-[#6B7280]">TARGET VALUE</label>
+<input class="bg-white border border-[#E5E5E5] rounded p-2 text-[#1A1A1A] focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] outline-none transition-all" placeholder="50" type="number"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-mono text-label-mono text-xs text-[#6B7280]">DEADLINE</label>
+<input class="bg-white border border-[#E5E5E5] rounded p-2 text-[#1A1A1A] focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] outline-none transition-all" type="date"/>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex justify-end gap-3 mt-4 pt-4 border-t border-[#E5E5E5]">
+<button class="px-4 py-2 border border-[#E5E5E5] text-[#1A1A1A] rounded hover:bg-[#FAFAFA] transition-colors" onclick="toggleModal()" type="button">Cancel</button>
+<button class="bg-[#10B981] text-white px-6 py-2 rounded font-bold hover:bg-[#059669] transition-colors" type="submit">Deploy Goal</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Mobile Bottom Navigation (Visible only on md:hidden) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center bg-white border-t border-[#E5E5E5] py-2 pb-safe flat no shadows">
+<a class="flex flex-col items-center gap-1 text-[#6B7280] hover:text-[#1A1A1A] p-2" href="#">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+<span class="font-label-mono text-[10px]">Dash</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#6B7280] hover:text-[#1A1A1A] p-2" href="#">
+<span class="material-symbols-outlined text-[24px]">book</span>
+<span class="font-label-mono text-[10px]">Subjects</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#10B981] p-2 relative" href="#">
+<div class="absolute -top-1 w-8 h-1 bg-[#10B981] rounded-full"></div>
+<span class="material-symbols-outlined text-[24px]">target</span>
+<span class="font-label-mono text-[10px] font-bold">Goals</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#6B7280] hover:text-[#1A1A1A] p-2" href="#">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="font-label-mono text-[10px]">Profile</span>
+</a>
+</nav>
+<script>
+        function toggleModal() {
+            const modal = document.getElementById('add-goal-modal');
+            if (modal.classList.contains('hidden')) {
+                modal.classList.remove('hidden');
+                // Slight delay to allow display block to render before opacity transition
+                setTimeout(() => {
+                    modal.classList.add('visible');
+                }, 10);
+            } else {
+                modal.classList.remove('visible');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300); // match transition duration
+            }
+        }
+    </script>
+</body></html>
