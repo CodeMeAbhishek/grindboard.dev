@@ -50,6 +50,52 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
 
   useEffect(() => {
     fetchPosts();
+
+    const supabase = createClient();
+    const channel = supabase.channel("public-feed");
+
+    channel.on("broadcast", { event: "new_post" }, (payload) => {
+      setPosts(current => [payload.payload, ...current]);
+    });
+
+    channel.on("broadcast", { event: "new_like" }, (payload) => {
+      const { postId, userId, liked } = payload.payload;
+      setPosts(current => current.map(p => {
+        if (p.id === postId) {
+          const hasLiked = p.likes.some(l => l.userId === userId);
+          if (liked && !hasLiked) return { ...p, likes: [...p.likes, { userId }] };
+          if (!liked && hasLiked) return { ...p, likes: p.likes.filter(l => l.userId !== userId) };
+        }
+        return p;
+      }));
+    });
+
+    channel.on("broadcast", { event: "new_comment" }, (payload) => {
+      const { postId, comment } = payload.payload;
+      setPosts(current => current.map(p => {
+        if (p.id === postId) {
+          return { ...p, comments: [...p.comments, comment] };
+        }
+        return p;
+      }));
+    });
+
+    channel.on("broadcast", { event: "delete_post" }, (payload) => {
+      setPosts(current => current.filter(p => p.id !== payload.payload.postId));
+    });
+
+    channel.on("broadcast", { event: "delete_comment" }, (payload) => {
+      const { postId, commentId } = payload.payload;
+      setPosts(current => current.map(p => {
+        if (p.id === postId) {
+          return { ...p, comments: p.comments.filter(c => c.id !== commentId) };
+        }
+        return p;
+      }));
+    });
+
+    channel.subscribe();
+    return () => { channel.unsubscribe(); };
   }, []);
 
   const fetchPosts = async () => {
@@ -75,6 +121,10 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
       });
       if (res.ok) {
         const post = await res.json();
+        const supabase = createClient();
+        supabase.channel("public-feed").send({ type: "broadcast", event: "new_post", payload: post });
+        // Optimistically add locally as well, or just let the broadcast receiver handle it.
+        // Actually, the sender also receives its own broadcast? No, Supabase Broadcast by default does not send back to sender unless configured.
         setPosts([post, ...posts]);
         setNewPostContent("");
       }
@@ -87,7 +137,13 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
     try {
       const res = await fetch(`/api/feed/${postId}/like`, { method: "POST" });
       if (res.ok) {
-        const { liked } = await res.json();
+        const { liked, notification } = await res.json();
+        const supabase = createClient();
+        supabase.channel("public-feed").send({ type: "broadcast", event: "new_like", payload: { postId, userId: currentUserId, liked } });
+        if (notification) {
+          supabase.channel("public-feed").send({ type: "broadcast", event: "new_notification", payload: notification });
+        }
+        
         setPosts(posts.map(p => {
           if (p.id === postId) {
             const hasLiked = p.likes.some(l => l.userId === currentUserId);
@@ -107,6 +163,8 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
     try {
       const res = await fetch(`/api/feed/${postId}`, { method: "DELETE" });
       if (res.ok) {
+        const supabase = createClient();
+        supabase.channel("public-feed").send({ type: "broadcast", event: "delete_post", payload: { postId } });
         setPosts(posts.filter(p => p.id !== postId));
       }
     } catch (e) {
@@ -125,7 +183,13 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
         body: JSON.stringify({ content, parentId }),
       });
       if (res.ok) {
-        const comment = await res.json();
+        const { comment, notification } = await res.json();
+        const supabase = createClient();
+        supabase.channel("public-feed").send({ type: "broadcast", event: "new_comment", payload: { postId, comment } });
+        if (notification) {
+          supabase.channel("public-feed").send({ type: "broadcast", event: "new_notification", payload: notification });
+        }
+
         setPosts(posts.map(p => {
           if (p.id === postId) {
             return { ...p, comments: [...p.comments, comment] };
@@ -145,6 +209,8 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
     try {
       const res = await fetch(`/api/feed/${postId}/comment?commentId=${commentId}`, { method: "DELETE" });
       if (res.ok) {
+        const supabase = createClient();
+        supabase.channel("public-feed").send({ type: "broadcast", event: "delete_comment", payload: { postId, commentId } });
         setPosts(posts.map(p => {
           if (p.id === postId) {
             return { ...p, comments: p.comments.filter(c => c.id !== commentId) };

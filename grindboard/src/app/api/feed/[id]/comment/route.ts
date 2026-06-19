@@ -33,7 +33,38 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       }
     });
 
-    return NextResponse.json(comment);
+    let notification = null;
+
+    // Create notification
+    if (parentId) {
+      const parentComment = await prisma.comment.findUnique({ where: { id: parentId } });
+      if (parentComment && parentComment.userId !== dbUser.id) {
+        notification = await prisma.notification.create({
+          data: {
+            userId: parentComment.userId,
+            actorId: dbUser.id,
+            type: "REPLY_ON_COMMENT",
+            referenceId: parentId,
+          },
+          include: { actor: { select: { id: true, name: true, avatarUrl: true, username: true } } }
+        });
+      }
+    } else {
+      const post = await prisma.post.findUnique({ where: { id: postId } });
+      if (post && post.userId !== dbUser.id) {
+        notification = await prisma.notification.create({
+          data: {
+            userId: post.userId,
+            actorId: dbUser.id,
+            type: "COMMENT_ON_POST",
+            referenceId: postId,
+          },
+          include: { actor: { select: { id: true, name: true, avatarUrl: true, username: true } } }
+        });
+      }
+    }
+
+    return NextResponse.json({ comment, notification });
   } catch (error) {
     return NextResponse.json({ error: "Failed to add comment" }, { status: 500 });
   }

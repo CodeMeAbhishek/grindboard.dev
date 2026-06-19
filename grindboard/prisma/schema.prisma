@@ -42,6 +42,12 @@ enum EventType {
   OTHER
 }
 
+enum NotificationType {
+  LIKE
+  COMMENT_ON_POST
+  REPLY_ON_COMMENT
+}
+
 // ─── MODELS ───────────────────────────────────────────────────────────────────
 
 model User {
@@ -84,6 +90,8 @@ model User {
   posts         Post[]
   comments      Comment[]
   likes         Like[]
+  notificationsReceived Notification[] @relation("UserNotifications")
+  notificationsSent     Notification[] @relation("ActorNotifications")
 
   @@map("users")
 }
@@ -331,4 +339,19 @@ model Announcement {
   createdBy   User @relation(fields: [createdById], references: [id], onDelete: Cascade)
 
   @@map("announcements")
+}
+
+model Notification {
+  id          String           @id @default(uuid())
+  userId      String           @map("user_id")
+  actorId     String           @map("actor_id")
+  type        NotificationType
+  referenceId String?          @map("reference_id") // postId or commentId
+  read        Boolean          @default(false)
+  createdAt   DateTime         @default(now()) @map("created_at")
+
+  user        User             @relation("UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
+  actor       User             @relation("ActorNotifications", fields: [actorId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
 }

@@ -9,8 +9,18 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {
+ userId?: string;
  userAvatarUrl?: string;
  userName?: string;
+}
+
+interface Notification {
+  id: string;
+  type: string;
+  read: boolean;
+  createdAt: string;
+  referenceId: string | null;
+  actor: { name: string; avatarUrl: string | null; username: string | null };
 }
 
 export function Header({ userAvatarUrl, userName }: HeaderProps) {
@@ -24,7 +34,12 @@ export function Header({ userAvatarUrl, userName }: HeaderProps) {
   const router = useRouter();
   const searchRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
+  const notificationsRef = useRef<HTMLDivElement>(null);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const unreadCount = notifications.filter(n => !n.read).length;
 
   const initials = userName
     ? userName.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
@@ -39,10 +54,40 @@ export function Header({ userAvatarUrl, userName }: HeaderProps) {
       if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
         setShowProfileMenu(false);
       }
+      if (notificationsRef.current && !notificationsRef.current.contains(event.target as Node)) {
+        setShowNotifications(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Fetch notifications and subscribe
+  useEffect(() => {
+    if (!userId) return;
+
+    fetch("/api/notifications").then(res => res.json()).then(data => {
+      if (Array.isArray(data)) setNotifications(data);
+    });
+
+    const supabase = createClient();
+    const channel = supabase.channel("public-feed");
+    channel.on("broadcast", { event: "new_notification" }, (payload) => {
+      if (payload.payload.userId === userId) {
+        setNotifications(prev => [payload.payload, ...prev]);
+      }
+    }).subscribe();
+
+    return () => { channel.unsubscribe(); };
+  }, [userId]);
+
+  const handleMarkAsRead = async () => {
+    if (unreadCount === 0) return;
+    try {
+      await fetch("/api/notifications", { method: "PATCH" });
+      setNotifications(notifications.map(n => ({ ...n, read: true })));
+    } catch (e) { console.error(e); }
+  };
 
   // Handle search debounce
   useEffect(() => {
@@ -180,9 +225,50 @@ export function Header({ userAvatarUrl, userName }: HeaderProps) {
  <div className="flex items-center gap-sm">
  <ThemeToggle />
  
- <button className="text-on-surface-variant hover:text-primary transition-colors duration-200 p-2 relative">
- <span className="material-symbols-outlined">notifications</span>
- </button>
+ <div className="relative" ref={notificationsRef}>
+   <button 
+     onClick={() => {
+       setShowNotifications(!showNotifications);
+       if (!showNotifications) handleMarkAsRead();
+     }}
+     className="text-on-surface-variant hover:text-primary transition-colors duration-200 p-2 relative"
+   >
+     <span className="material-symbols-outlined">notifications</span>
+     {unreadCount > 0 && (
+       <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-surface"></span>
+     )}
+   </button>
+
+   {showNotifications && (
+     <div className="absolute right-0 mt-2 w-80 bg-surface border border-outline shadow-panel rounded-lg py-2 z-50 max-h-96 overflow-y-auto">
+       <div className="px-4 py-2 border-b border-outline font-bold text-sm text-on-background">Notifications</div>
+       {notifications.length === 0 ? (
+         <div className="px-4 py-6 text-center text-sm text-on-surface-variant font-label-mono">No notifications yet.</div>
+       ) : (
+         notifications.map(notif => (
+           <div key={notif.id} className="px-4 py-3 hover:bg-surface-container transition-colors border-b border-outline last:border-0 flex gap-3 cursor-pointer" onClick={() => { setShowNotifications(false); router.push("/feed"); }}>
+             <div className="shrink-0 mt-1">
+               {notif.actor.avatarUrl ? (
+                 <img src={notif.actor.avatarUrl} alt="Avatar" className="w-8 h-8 rounded-full" />
+               ) : (
+                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">{notif.actor.name[0]}</div>
+               )}
+             </div>
+             <div>
+               <div className="text-sm text-on-background">
+                 <span className="font-bold">{notif.actor.name}</span>
+                 {notif.type === "LIKE" && " liked your post."}
+                 {notif.type === "COMMENT_ON_POST" && " commented on your post."}
+                 {notif.type === "REPLY_ON_COMMENT" && " replied to your comment."}
+               </div>
+               <div className="text-xs text-on-surface-variant mt-1 font-label-mono">{new Date(notif.createdAt).toLocaleDateString()}</div>
+             </div>
+           </div>
+         ))
+       )}
+     </div>
+   )}
+ </div>
 
  <button
  id="quick-log-btn"

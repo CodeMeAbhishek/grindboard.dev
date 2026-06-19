@@ -34,7 +34,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   />
 
  {/* Desktop + Mobile Header */}
- <Header userName={dbUser?.name || undefined} userAvatarUrl={dbUser?.avatarUrl || undefined} />
+ <Header userId={dbUser?.id || undefined} userName={dbUser?.name || undefined} userAvatarUrl={dbUser?.avatarUrl || undefined} />
 
  {/* Main Content */}
  <main className="flex-1 md:ml-64 pt-14 md:pt-16 min-h-screen pb-20 md:pb-0">

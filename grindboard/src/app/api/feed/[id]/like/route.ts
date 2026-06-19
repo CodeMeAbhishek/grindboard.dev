@@ -30,12 +30,25 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       return NextResponse.json({ liked: false });
     } else {
       await prisma.like.create({
-        data: {
-          postId,
-          userId: dbUser.id
-        }
+        data: { postId, userId: dbUser.id }
       });
-      return NextResponse.json({ liked: true });
+
+      let notification = null;
+      // Notify the post author
+      const post = await prisma.post.findUnique({ where: { id: postId } });
+      if (post && post.userId !== dbUser.id) {
+        notification = await prisma.notification.create({
+          data: {
+            userId: post.userId,
+            actorId: dbUser.id,
+            type: "LIKE",
+            referenceId: postId,
+          },
+          include: { actor: { select: { id: true, name: true, avatarUrl: true, username: true } } }
+        });
+      }
+
+      return NextResponse.json({ liked: true, notification });
     }
   } catch (error) {
     return NextResponse.json({ error: "Failed to toggle like" }, { status: 500 });
