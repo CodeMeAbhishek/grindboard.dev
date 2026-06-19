@@ -40,6 +40,10 @@ async function setupCron() {
     await client.query('CREATE EXTENSION IF NOT EXISTS pg_net;');
     console.log('Ensured pg_net extension is enabled.');
 
+    // Enable pg_cron
+    await client.query('CREATE EXTENSION IF NOT EXISTS pg_cron;');
+    console.log('Ensured pg_cron extension is enabled.');
+
     // Setup sync cron
     const syncSql = `
       SELECT cron.schedule(
@@ -47,8 +51,8 @@ async function setupCron() {
         '0 * * * *',
         $$
           SELECT net.http_post(
-              url:='https://your-production-domain.vercel.app/api/cron/sync',
-              headers:='{"Authorization": "Bearer CRON_SECRET_HERE"}'::jsonb
+              url:='https://www.grindboard.dev/api/cron/sync',
+              headers:='{"Authorization": "Bearer grindboard-secure-cron-2026"}'::jsonb
           );
         $$
       );
@@ -63,8 +67,8 @@ async function setupCron() {
         '0 */12 * * *',
         $$
           SELECT net.http_post(
-              url:='https://your-production-domain.vercel.app/api/cron/events',
-              headers:='{"Authorization": "Bearer CRON_SECRET_HERE"}'::jsonb
+              url:='https://www.grindboard.dev/api/cron/events',
+              headers:='{"Authorization": "Bearer grindboard-secure-cron-2026"}'::jsonb
           );
         $$
       );
@@ -73,7 +77,6 @@ async function setupCron() {
     console.log('Scheduled grindboard-events cron job (Every 12 Hours).');
 
     console.log('\\nSUCCESS! Cron jobs are injected into your Supabase database.');
-    console.log('IMPORTANT: Don\\'t forget to update the URLs and Bearer token in the Supabase SQL Editor once your domain is ready!');
   } catch (err) {
     console.error('Error setting up cron:', err);
   } finally {
