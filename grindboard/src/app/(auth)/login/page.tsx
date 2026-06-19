@@ -242,15 +242,15 @@ export default function LoginPage() {
   ) : awaitingResetOtp ? (
     <form onSubmit={handleVerifyResetOtp} className="space-y-4">
       <div>
-        <label className="mb-1.5 block text-xs font-bold text-on-surface-variant uppercase tracking-wider">8-Digit Code</label>
+        <label className="mb-1.5 block text-xs font-bold text-on-surface-variant uppercase tracking-wider">6-Digit Code</label>
         <input
           type="text"
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
-          placeholder="00000000"
+          placeholder="000000"
           className="w-full text-center tracking-[0.5em] font-mono text-2xl rounded-lg bg-surface text-on-background border border-outline px-4 py-2.5 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-colors outline-none"
           required
-          maxLength={8}
+          maxLength={6}
         />
         <p className="text-xs text-on-surface-variant mt-3">
           We've sent a password reset code to <strong>{email}</strong>. Please enter it above.
@@ -258,7 +258,7 @@ export default function LoginPage() {
       </div>
       <button
         type="submit"
-        disabled={loading || otp.length !== 8}
+        disabled={loading || otp.length !== 6}
         className="w-full rounded-lg bg-[#10B981] px-4 py-3 font-bold text-white transition-all hover:bg-[#059669] hover:shadow-md hover:-translate-y-0.5 disabled:opacity-50 mt-2"
       >
         {loading ? "Verifying..." : "Verify Code"}
@@ -306,15 +306,15 @@ export default function LoginPage() {
   ) : awaitingOtp ? (
  <form onSubmit={handleVerifyOtp} className="space-y-4">
  <div>
- <label className="mb-1.5 block text-xs font-bold text-on-surface-variant uppercase tracking-wider">8-Digit Code</label>
+ <label className="mb-1.5 block text-xs font-bold text-on-surface-variant uppercase tracking-wider">6-Digit Code</label>
  <input
  type="text"
  value={otp}
  onChange={(e) => setOtp(e.target.value)}
- placeholder="00000000"
+ placeholder="000000"
  className="w-full text-center tracking-[0.5em] font-mono text-2xl rounded-lg bg-surface text-on-background border border-outline px-4 py-2.5 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-colors outline-none"
  required
- maxLength={8}
+ maxLength={6}
  />
  <p className="text-xs text-on-surface-variant mt-3">
  We've sent a verification code to <strong>{email}</strong>. Please enter it above.
@@ -322,7 +322,7 @@ export default function LoginPage() {
  </div>
  <button
  type="submit"
- disabled={loading || otp.length !== 8}
+ disabled={loading || otp.length !== 6}
  className="w-full rounded-lg bg-[#10B981] px-4 py-3 font-bold text-white transition-all hover:bg-[#059669] hover:shadow-md hover:-translate-y-0.5 disabled:opacity-50 disabled:transform-none disabled:shadow-none mt-2"
  >
  {loading ? "Verifying..." : "Verify & Join"}
