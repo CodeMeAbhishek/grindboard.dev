@@ -15,7 +15,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
   try {
     const body = await req.json();
-    const { content } = body;
+    const { content, parentId } = body;
 
     if (!content || typeof content !== "string" || content.trim().length === 0) {
       return NextResponse.json({ error: "Content is required" }, { status: 400 });
@@ -25,7 +25,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       data: {
         content: content.trim(),
         postId,
-        userId: dbUser.id
+        userId: dbUser.id,
+        parentId: parentId || null
       },
       include: {
         user: { select: { id: true, name: true, avatarUrl: true, username: true } }

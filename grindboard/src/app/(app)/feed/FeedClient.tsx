@@ -25,6 +25,7 @@ interface Comment {
   id: string;
   content: string;
   createdAt: string;
+  parentId: string | null;
   user: {
     id: string;
     name: string;
@@ -45,6 +46,7 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
   const [newPostContent, setNewPostContent] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
+  const [replyingTo, setReplyingTo] = useState<Record<string, string | undefined>>({});
 
   useEffect(() => {
     fetchPosts();
@@ -115,11 +117,12 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
   const handleComment = async (postId: string) => {
     const content = commentInputs[postId];
     if (!content?.trim()) return;
+    const parentId = replyingTo[postId];
     try {
       const res = await fetch(`/api/feed/${postId}/comment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content }),
+        body: JSON.stringify({ content, parentId }),
       });
       if (res.ok) {
         const comment = await res.json();
@@ -130,6 +133,7 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
           return p;
         }));
         setCommentInputs({ ...commentInputs, [postId]: "" });
+        setReplyingTo({ ...replyingTo, [postId]: undefined });
       }
     } catch (e) {
       console.error(e);
@@ -156,6 +160,40 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
   if (loading) {
     return <div className="p-8 text-center text-on-surface-variant font-label-mono">Loading feed...</div>;
   }
+
+  const renderComment = (comment: Comment, allComments: Comment[], postId: string, depth: number = 0) => {
+    const children = allComments.filter(c => c.parentId === comment.id);
+    return (
+      <div key={comment.id} className="w-full">
+        <div className={`group flex gap-2 text-sm bg-surface-container rounded-lg p-2 relative ${depth > 0 ? "mt-1 border-l-2 border-primary/20" : ""}`} style={{ marginLeft: depth > 0 ? `${Math.min(depth * 16, 48)}px` : '0px' }}>
+          <div className="font-bold text-on-background shrink-0">{comment.user.name}:</div>
+          <div className="text-on-background flex-1 pr-10">{comment.content}</div>
+          
+          <div className="absolute right-2 top-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button 
+              onClick={() => setReplyingTo({ ...replyingTo, [postId]: comment.id })}
+              className="text-on-surface-variant hover:text-primary"
+            >
+              <span className="material-symbols-outlined text-[14px]">reply</span>
+            </button>
+            {comment.user.id === currentUserId && (
+              <button 
+                onClick={() => handleDeleteComment(postId, comment.id)}
+                className="text-on-surface-variant hover:text-red-500"
+              >
+                <span className="material-symbols-outlined text-[14px]">delete</span>
+              </button>
+            )}
+          </div>
+        </div>
+        {children.length > 0 && (
+          <div className="w-full">
+            {children.map(child => renderComment(child, allComments, postId, depth + 1))}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="max-w-2xl mx-auto py-8 px-4 space-y-6">
@@ -249,42 +287,39 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
               </div>
 
               {post.comments.length > 0 && (
-                <div className="space-y-2 pt-2 border-t border-outline/50">
-                  {post.comments.map(comment => (
-                    <div key={comment.id} className="group flex gap-2 text-sm bg-surface-container rounded-lg p-2 relative">
-                      <div className="font-bold text-on-background shrink-0">{comment.user.name}:</div>
-                      <div className="text-on-background flex-1 pr-6">{comment.content}</div>
-                      {comment.user.id === currentUserId && (
-                        <button 
-                          onClick={() => handleDeleteComment(post.id, comment.id)}
-                          className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 text-on-surface-variant hover:text-red-500 transition-opacity"
-                        >
-                          <span className="material-symbols-outlined text-[14px]">delete</span>
-                        </button>
-                      )}
-                    </div>
-                  ))}
+                <div className="space-y-2 pt-2 border-t border-outline/50 flex flex-col items-start w-full">
+                  {post.comments.filter(c => !c.parentId).map(comment => renderComment(comment, post.comments, post.id, 0))}
                 </div>
               )}
 
-              <div className="flex gap-2 pt-2">
-                <input
-                  type="text"
-                  placeholder="Write a reply..."
-                  className="flex-1 bg-surface-container text-on-background placeholder:text-on-surface-variant border-none rounded-lg py-1.5 px-3 text-sm focus:ring-1 focus:ring-primary outline-none"
-                  value={commentInputs[post.id] || ""}
-                  onChange={(e) => setCommentInputs({ ...commentInputs, [post.id]: e.target.value })}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") handleComment(post.id);
-                  }}
-                />
-                <button
-                  onClick={() => handleComment(post.id)}
-                  disabled={!commentInputs[post.id]?.trim()}
-                  className="text-primary disabled:opacity-50 px-2"
-                >
-                  <span className="material-symbols-outlined">send</span>
-                </button>
+              <div className="flex flex-col gap-2 pt-2">
+                {replyingTo[post.id] && (
+                  <div className="flex items-center justify-between bg-primary/10 text-primary text-xs px-2 py-1 rounded">
+                    <span>Replying to {post.comments.find(c => c.id === replyingTo[post.id])?.user.name}</span>
+                    <button onClick={() => setReplyingTo({ ...replyingTo, [post.id]: undefined })} className="hover:text-red-500">
+                      <span className="material-symbols-outlined text-[12px]">close</span>
+                    </button>
+                  </div>
+                )}
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Write a reply..."
+                    className="flex-1 bg-surface-container text-on-background placeholder:text-on-surface-variant border-none rounded-lg py-1.5 px-3 text-sm focus:ring-1 focus:ring-primary outline-none"
+                    value={commentInputs[post.id] || ""}
+                    onChange={(e) => setCommentInputs({ ...commentInputs, [post.id]: e.target.value })}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleComment(post.id);
+                    }}
+                  />
+                  <button
+                    onClick={() => handleComment(post.id)}
+                    disabled={!commentInputs[post.id]?.trim()}
+                    className="text-primary disabled:opacity-50 px-2"
+                  >
+                    <span className="material-symbols-outlined">send</span>
+                  </button>
+                </div>
               </div>
             </div>
           );
