@@ -3,42 +3,120 @@
 
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  :root {
+    --background: #FAFAFA;
+    --surface: #FFFFFF;
+    --surface-container-lowest: #FFFFFF;
+    --surface-container-low: #F3F4F6;
+    --surface-container: #F9FAFB;
+    --surface-container-high: #F3F4F6;
+    --surface-container-highest: #E5E7EB;
+    --on-background: #1A1A1A;
+    --on-surface: #1A1A1A;
+    --on-surface-variant: #6B7280;
+    
+    --primary: #10B981;
+    --primary-container: #D1FAE5;
+    --primary-hover: #059669;
+    --on-primary: #FFFFFF;
+    --on-primary-container: #047857;
+
+    --secondary: #0EA5E9;
+    --secondary-container: #E0F2FE;
+    --on-secondary: #FFFFFF;
+    --on-secondary-container: #0369A1;
+
+    --tertiary: #F59E0B;
+    --tertiary-container: #FEF3C7;
+    --on-tertiary: #FFFFFF;
+    --on-tertiary-container: #92400E;
+
+    --error: #EF4444;
+    --error-container: #FEE2E2;
+    --on-error: #FFFFFF;
+    --on-error-container: #991B1B;
+
+    --outline: #E5E5E5;
+    --outline-variant: #E5E5E5;
+  }
+
+  .dark {
+    --background: #000000;
+    --surface: #111111;
+    --surface-container-lowest: #000000;
+    --surface-container-low: #1C1C1C;
+    --surface-container: #262626;
+    --surface-container-high: #2D2D2D;
+    --surface-container-highest: #383838;
+    --on-background: #FFFFFF;
+    --on-surface: #FFFFFF;
+    --on-surface-variant: #A3A3A3;
+    
+    --primary: #10B981;
+    --primary-container: #065F46;
+    --primary-hover: #059669;
+    --on-primary: #FFFFFF;
+    --on-primary-container: #6EE7B7;
+
+    --secondary: #0EA5E9;
+    --secondary-container: #075985;
+    --on-secondary: #FFFFFF;
+    --on-secondary-container: #7DD3FC;
+
+    --tertiary: #F59E0B;
+    --tertiary-container: #78350F;
+    --on-tertiary: #FFFFFF;
+    --on-tertiary-container: #FCD34D;
+
+    --error: #EF4444;
+    --error-container: #7F1D1D;
+    --on-error: #FFFFFF;
+    --on-error-container: #FCA5A5;
+
+    --outline: rgba(255,255,255,0.1);
+    --outline-variant: rgba(255,255,255,0.1);
+  }
+}
+
 @theme {
   /* ── Colors ─────────────────────────────────────────────── */
-  --color-background: #FAFAFA;
-  --color-surface: #FFFFFF;
-  --color-surface-container-lowest: #FFFFFF;
-  --color-surface-container-low: #F3F4F6;
-  --color-surface-container: #F9FAFB;
-  --color-surface-container-high: #F3F4F6;
-  --color-surface-container-highest: #E5E7EB;
-  --color-on-background: #1A1A1A;
-  --color-on-surface: #1A1A1A;
-  --color-on-surface-variant: #6B7280;
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-on-background: var(--on-background);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
 
-  --color-primary: #10B981;
-  --color-primary-container: #D1FAE5;
-  --color-primary-hover: #059669;
-  --color-on-primary: #FFFFFF;
-  --color-on-primary-container: #047857;
+  --color-primary: var(--primary);
+  --color-primary-container: var(--primary-container);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-on-primary-container: var(--on-primary-container);
 
-  --color-secondary: #0EA5E9;
-  --color-secondary-container: #E0F2FE;
-  --color-on-secondary: #FFFFFF;
-  --color-on-secondary-container: #0369A1;
+  --color-secondary: var(--secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary: var(--on-secondary);
+  --color-on-secondary-container: var(--on-secondary-container);
 
-  --color-tertiary: #F59E0B;
-  --color-tertiary-container: #FEF3C7;
-  --color-on-tertiary: #FFFFFF;
-  --color-on-tertiary-container: #92400E;
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-container: var(--tertiary-container);
+  --color-on-tertiary: var(--on-tertiary);
+  --color-on-tertiary-container: var(--on-tertiary-container);
 
-  --color-error: #EF4444;
-  --color-error-container: #FEE2E2;
-  --color-on-error: #FFFFFF;
-  --color-on-error-container: #991B1B;
+  --color-error: var(--error);
+  --color-error-container: var(--error-container);
+  --color-on-error: var(--on-error);
+  --color-on-error-container: var(--on-error-container);
 
-  --color-outline: #E5E5E5;
-  --color-outline-variant: #E5E5E5;
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
 
   /* ── Font Families ───────────────────────────────────────── */
   --font-body-md: "Inter", sans-serif;
@@ -116,8 +194,8 @@ body {
 
 /* ── Component styles ─────────────────────────────────── */
 .glass-panel {
-  background: #FFFFFF;
-  border: 1px solid #E5E5E5;
+  background: var(--surface);
+  border: 1px solid var(--outline);
   box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
 }
 

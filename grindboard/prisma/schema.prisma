@@ -49,14 +49,27 @@ model User {
   supabaseId    String   @unique @map("supabase_id")
   email         String   @unique
   name          String
+  username      String?  @unique
   avatarUrl     String?  @map("avatar_url")
   role          UserRole @default(MEMBER)
+  isOnboarded   Boolean  @default(false) @map("is_onboarded")
   cfHandle      String?  @map("cf_handle")
   lcHandle      String?  @map("lc_handle")
+  linkedin      String?
   xpTotal       Int      @default(0) @map("xp_total")
   globalStreak  Int      @default(0) @map("global_streak")
   freezeCount   Int      @default(0) @map("freeze_count")
   lastSyncAt    DateTime? @map("last_sync_at")
+  
+  // CP Ratings
+  cfRating        Int?
+  cfMaxRating     Int?
+  cfRank          String?
+  lcRating        Float?
+  lcGlobalRanking Int?
+  lcTopPercentage Float?
+  lcBadge         String?
+
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
 
@@ -68,6 +81,9 @@ model User {
   userBadges    UserBadge[]
   announcements Announcement[]
   userTopics    UserTopic[]
+  posts         Post[]
+  comments      Comment[]
+  likes         Like[]
 
   @@map("users")
 }
@@ -230,12 +246,13 @@ model EventResult {
 }
 
 model Badge {
-  id          String @id @default(uuid())
-  key         String @unique
+  id          String   @id @default(uuid())
+  key         String   @unique // e.g. "early_adopter", "cf_grandmaster"
   name        String
   description String
-  icon        String @default("workspace_premium")
-  xpReward    Int    @default(0) @map("xp_reward")
+  icon        String   @default("workspace_premium")
+  xpReward    Int      @default(0) @map("xp_reward")
+  imageUrl    String?  @map("image_url")
   createdAt   DateTime @default(now()) @map("created_at")
 
   userBadges  UserBadge[]
@@ -248,12 +265,56 @@ model UserBadge {
   userId    String   @map("user_id")
   badgeId   String   @map("badge_id")
   earnedAt  DateTime @default(now()) @map("earned_at")
+  awardedAt DateTime @default(now()) @map("awarded_at")
 
-  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  badge     Badge @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badge     Badge    @relation(fields: [badgeId], references: [id], onDelete: Cascade)
 
   @@unique([userId, badgeId])
   @@map("user_badges")
+}
+
+// ─── COMMUNITY FEED ───────────────────────────────────────────────────────────
+
+model Post {
+  id        String    @id @default(uuid())
+  userId    String    @map("user_id")
+  content   String    @db.Text
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments  Comment[]
+  likes     Like[]
+
+  @@map("posts")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  postId    String   @map("post_id")
+  userId    String   @map("user_id")
+  content   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("comments")
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  postId    String   @map("post_id")
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, userId])
+  @@map("likes")
 }
 
 model Announcement {

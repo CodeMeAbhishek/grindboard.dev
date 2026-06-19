@@ -1,31 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { formatXP } from "@/lib/utils";
-import { getLevel } from "@/lib/gamification";
+import { CodeforcesIcon, LeetCodeIcon } from "@/components/icons/PlatformIcons";
 
 interface LeaderUser {
   id: string;
-  rank: number;
   name: string;
-  level: string;
-  xp: number;
-  streak: number;
-  problems: number;
-  isCurrentUser?: boolean;
+  avatarUrl: string | null;
+  cfHandle: string | null;
+  lcHandle: string | null;
+  cfRating: number;
+  cfRank: string | null;
+  lcRating: number;
+  lcGlobalRanking: number | null;
+  lcBadge: string | null;
+  isCurrentUser: boolean;
 }
 
 interface LeaderboardClientProps {
-  initialData: Omit<LeaderUser, "rank" | "level">[];
+  initialData: LeaderUser[];
 }
-
-const HOF = [
-  { name: "Alex Rivera", record: "42-day streak", icon: "local_fire_department", color: "text-[#F59E0B]" },
-  { name: "Priya Sharma", record: "312 LC problems", icon: "code", color: "text-[#0EA5E9]" },
-  { name: "Jordan Kim", record: "GATE 99.2%tile", icon: "school", color: "text-primary" },
-];
-
-type SortKey = "xp" | "streak" | "problems";
 
 function RankBadge({ rank }: { rank: number }) {
   if (rank === 1) return (
@@ -36,8 +30,8 @@ function RankBadge({ rank }: { rank: number }) {
     </div>
   );
   if (rank === 2) return (
-    <div className="w-8 h-8 rounded-full bg-[#F3F4F6] border border-[#6B7280]/30 flex items-center justify-center">
-      <span className="material-symbols-outlined text-[#6B7280] text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
+    <div className="w-8 h-8 rounded-full bg-surface-container-high border border-[#6B7280]/30 flex items-center justify-center">
+      <span className="material-symbols-outlined text-on-surface-variant text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
         emoji_events
       </span>
     </div>
@@ -50,184 +44,188 @@ function RankBadge({ rank }: { rank: number }) {
     </div>
   );
   return (
-    <div className="w-8 h-8 rounded-full bg-[#F9FAFB] border border-[#E5E5E5] flex items-center justify-center font-label-mono text-sm text-[#6B7280]">
+    <div className="w-8 h-8 rounded-full bg-surface-container border border-outline flex items-center justify-center font-label-mono text-sm text-on-surface-variant">
       {rank}
     </div>
   );
 }
 
 export function LeaderboardClient({ initialData }: LeaderboardClientProps) {
-  const [sort, setSort] = useState<SortKey>("xp");
-  const [tab, setTab] = useState<"global" | "weekly">("global");
+  const [tab, setTab] = useState<"CODEFORCES" | "LEETCODE">("CODEFORCES");
 
-  const fullData = initialData.map(u => ({ ...u, level: getLevel(u.xp).name }));
-  const sorted = [...fullData].sort((a, b) => b[sort] - a[sort]).map((u, i) => ({ ...u, rank: i + 1 }));
-  const currentUser = sorted.find((u) => u.isCurrentUser);
+  // Filter and sort based on active tab
+  const activeData = [...initialData]
+    .filter(u => tab === "CODEFORCES" ? u.cfHandle : u.lcHandle)
+    .sort((a, b) => {
+      if (tab === "CODEFORCES") return b.cfRating - a.cfRating;
+      return b.lcRating - a.lcRating;
+    })
+    .map((u, i) => ({ ...u, rank: i + 1 }));
+
+  const currentUser = activeData.find((u) => u.isCurrentUser);
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="font-headline-lg-mobile md:font-headline-lg text-[#1A1A1A] tracking-tight">
+          <h1 className="font-headline-lg-mobile md:font-headline-lg text-on-background tracking-tight">
             Leaderboard
           </h1>
-          <p className="text-[#6B7280] mt-0.5">Compete with your grind group across all metrics.</p>
+          <p className="text-on-surface-variant mt-0.5">Global Rankings (Updates every 6 hrs)</p>
         </div>
-        <div className="flex bg-[#F3F4F6] p-1 rounded-lg border border-[#E5E5E5] shadow-panel">
-          {(["global", "weekly"] as const).map((t) => (
-            <button
-              key={t}
-              onClick={() => setTab(t)}
-              className={`px-4 py-1.5 rounded-md font-label-mono text-sm capitalize transition-all ${
-                tab === t ? "tab-active" : "tab-inactive"
-              }`}
-            >
-              {t === "global" ? "All-Time" : "This Week"}
-            </button>
-          ))}
+        <div className="flex bg-surface-container-high p-1 rounded-lg border border-outline shadow-panel">
+          <button
+            onClick={() => setTab("CODEFORCES")}
+            className={`px-4 py-1.5 rounded-md font-label-mono text-sm capitalize transition-all flex items-center gap-2 ${
+              tab === "CODEFORCES" ? "bg-surface shadow-sm text-primary" : "text-on-surface-variant hover:text-on-background"
+            }`}
+          >
+            <CodeforcesIcon className="w-5 h-5" />
+            Codeforces
+          </button>
+          <button
+            onClick={() => setTab("LEETCODE")}
+            className={`px-4 py-1.5 rounded-md font-label-mono text-sm capitalize transition-all flex items-center gap-2 ${
+              tab === "LEETCODE" ? "bg-surface shadow-sm text-primary" : "text-on-surface-variant hover:text-on-background"
+            }`}
+          >
+            <LeetCodeIcon className="w-5 h-5" />
+            LeetCode
+          </button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* Main Table */}
         <div className="lg:col-span-8 space-y-4">
-          {/* Sort Controls */}
-          <div className="flex gap-2 flex-wrap">
-            {(
-              [
-                { key: "xp", label: "XP", icon: "bolt" },
-                { key: "streak", label: "Streak", icon: "local_fire_department" },
-                { key: "problems", label: "Problems", icon: "code" },
-              ] as { key: SortKey; label: string; icon: string }[]
-            ).map((s) => (
-              <button
-                key={s.key}
-                onClick={() => setSort(s.key)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded font-label-mono text-sm border transition-all ${
-                  sort === s.key
-                    ? "bg-[#F0FDF4] text-primary border-primary/30"
-                    : "bg-white text-[#6B7280] border-[#E5E5E5] hover:text-[#1A1A1A]"
-                }`}
-              >
-                <span className="material-symbols-outlined text-sm">{s.icon}</span>
-                {s.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Table */}
-          <div className="glass-panel rounded-xl overflow-hidden">
-            <div className="p-4 border-b border-[#E5E5E5] bg-[#F9FAFB] flex items-center justify-between">
-              <h2 className="font-label-mono text-sm text-[#6B7280] uppercase tracking-wider">
-                Rankings
-              </h2>
-              <span className="font-label-mono text-xs text-[#6B7280]">
-                {sorted.length} members
-              </span>
-            </div>
-            <div className="divide-y divide-[#E5E5E5]">
-              {sorted.length === 0 ? (
-                <div className="text-center py-6 text-[#6B7280] font-label-mono text-sm">
-                  No users to display.
-                </div>
-              ) : sorted.map((user) => (
-                <div
-                  key={user.id}
-                  className={`p-4 flex items-center gap-4 hover:bg-[#F9FAFB] transition-colors ${
-                    user.isCurrentUser ? "bg-[#F0FDF4]" : ""
-                  }`}
-                >
-                  <RankBadge rank={user.rank} />
-
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div
-                      className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-label-mono border uppercase ${
-                        user.isCurrentUser
-                          ? "bg-[#F0FDF4] border-primary/30 text-primary"
-                          : "bg-[#F9FAFB] border-[#E5E5E5] text-[#6B7280]"
+          <div className="bg-surface border border-outline rounded-xl overflow-hidden shadow-panel">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-outline bg-surface-container-low text-on-surface-variant text-xs font-label-mono uppercase tracking-wider">
+                    <th className="px-4 py-3 font-medium">Rank</th>
+                    <th className="px-4 py-3 font-medium">Competitor</th>
+                    <th className="px-4 py-3 font-medium text-right">Rating</th>
+                    <th className="px-4 py-3 font-medium text-right hidden sm:table-cell">Tier / Global Rank</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-outline">
+                  {activeData.map((user) => (
+                    <tr
+                      key={user.id}
+                      className={`hover:bg-surface-container-low transition-colors ${
+                        user.isCurrentUser ? "bg-primary/5" : ""
                       }`}
                     >
-                      {user.name.slice(0, 2)}
-                    </div>
-                    <div>
-                      <p className={`font-medium text-sm ${user.isCurrentUser ? "text-primary" : "text-[#1A1A1A]"}`}>
-                        {user.name} {user.isCurrentUser && "(You)"}
-                      </p>
-                      <p className="text-xs text-[#6B7280] font-label-mono">{user.level}</p>
-                    </div>
-                  </div>
-
-                  <div className="hidden md:flex gap-6 text-right">
-                    <div>
-                      <p className={`font-stat-lg text-sm ${sort === "xp" ? "text-primary font-bold" : "text-[#1A1A1A]"}`}>
-                        {formatXP(user.xp)}
-                      </p>
-                      <p className="text-[10px] text-[#6B7280] font-label-mono uppercase">XP</p>
-                    </div>
-                    <div>
-                      <p className={`font-stat-lg text-sm ${sort === "streak" ? "text-[#F59E0B] font-bold" : "text-[#1A1A1A]"}`}>
-                        {user.streak}🔥
-                      </p>
-                      <p className="text-[10px] text-[#6B7280] font-label-mono uppercase">Days</p>
-                    </div>
-                    <div>
-                      <p className={`font-stat-lg text-sm ${sort === "problems" ? "text-[#0EA5E9] font-bold" : "text-[#1A1A1A]"}`}>
-                        {user.problems}
-                      </p>
-                      <p className="text-[10px] text-[#6B7280] font-label-mono uppercase">Solved</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <RankBadge rank={user.rank} />
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <div className="flex items-center gap-3">
+                          {user.avatarUrl ? (
+                            <img src={user.avatarUrl} alt="" className="w-8 h-8 rounded-full border border-outline" />
+                          ) : (
+                            <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
+                              {user.name[0]}
+                            </div>
+                          )}
+                          <div className="flex flex-col">
+                            <span className={`font-medium ${user.isCurrentUser ? "text-primary" : "text-on-background"}`}>
+                              {user.name}
+                            </span>
+                            <span className="text-xs text-on-surface-variant font-label-mono">
+                              @{tab === "CODEFORCES" ? user.cfHandle : user.lcHandle}
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap text-right">
+                        <div className="font-label-mono font-bold text-on-background">
+                          {tab === "CODEFORCES" ? user.cfRating : user.lcRating}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap text-right hidden sm:table-cell">
+                        {tab === "CODEFORCES" ? (
+                          user.cfRank ? (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-label-mono font-medium capitalize bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 border border-blue-200 dark:border-blue-800/50">
+                              {user.cfRank}
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-label-mono font-medium capitalize bg-surface-container-high text-on-surface-variant border border-outline">
+                              Unrated
+                            </span>
+                          )
+                        ) : (
+                          <div className="flex flex-col items-end">
+                            {user.lcBadge ? (
+                              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-label-mono font-medium capitalize bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400 border border-orange-200 dark:border-orange-800/50">
+                                {user.lcBadge}
+                              </span>
+                            ) : !user.lcGlobalRanking ? (
+                              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-label-mono font-medium capitalize bg-surface-container-high text-on-surface-variant border border-outline">
+                                Unrated
+                              </span>
+                            ) : null}
+                            {user.lcGlobalRanking && (
+                              <span className="text-xs text-on-surface-variant font-label-mono mt-1">
+                                Global: #{user.lcGlobalRanking.toLocaleString()}
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                  {activeData.length === 0 && (
+                    <tr>
+                      <td colSpan={4} className="px-4 py-12 text-center text-on-surface-variant font-label-mono">
+                        No competitors found for {tab === "CODEFORCES" ? "Codeforces" : "LeetCode"}. Add your handle in Profile!
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
-
-          {/* Your Position */}
-          {currentUser && (
-            <div className="glass-panel rounded-xl p-4 flex items-center justify-between border-l-4 border-primary">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-[#F0FDF4] border border-primary/30 flex items-center justify-center text-sm font-label-mono text-primary">
-                  #{currentUser.rank}
-                </div>
-                <div>
-                  <p className="font-medium text-primary text-sm">Your Position</p>
-                  <p className="text-xs text-[#6B7280] font-label-mono">{formatXP(currentUser.xp)} XP · {currentUser.streak}🔥 streak</p>
-                </div>
-              </div>
-              <span className="text-xs text-[#6B7280] font-label-mono">
-                {currentUser.rank <= 3 ? "🏆 You're in the top 3!" : `${currentUser.rank - 1} place${currentUser.rank - 1 > 1 ? "s" : ""} ahead`}
-              </span>
-            </div>
-          )}
         </div>
 
-        {/* Sidebar */}
+        {/* Sidebar / Me */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="glass-panel rounded-xl overflow-hidden">
-            <div className="p-4 border-b border-[#E5E5E5] bg-[#F9FAFB]">
-              <h2 className="font-label-mono text-sm text-[#6B7280] uppercase tracking-wider flex items-center gap-2">
-                <span className="material-symbols-outlined text-[#F59E0B] text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  emoji_events
-                </span>
-                Hall of Fame
-              </h2>
-            </div>
-            <div className="p-4 space-y-3">
-              {HOF.map((entry, i) => (
-                <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-[#F9FAFB] border border-[#E5E5E5]">
-                  <div className={`w-8 h-8 rounded-full bg-white border border-[#E5E5E5] flex items-center justify-center ${entry.color}`}>
-                    <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>
-                      {entry.icon}
+          <div className="bg-surface border border-primary/20 rounded-xl p-5 shadow-panel relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full pointer-events-none" />
+            
+            <h3 className="font-label-mono text-xs text-on-surface-variant uppercase tracking-wider mb-4">
+              Your Standing
+            </h3>
+            
+            {currentUser ? (
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 rounded-2xl bg-surface-container-high border border-outline flex items-center justify-center flex-col shadow-sm relative z-10">
+                  <span className="text-xs font-label-mono text-on-surface-variant mb-0.5">RANK</span>
+                  <span className="font-headline-sm font-bold text-primary leading-none">#{currentUser.rank}</span>
+                </div>
+                
+                <div className="flex-1">
+                  <div className="font-bold text-on-background text-lg">{currentUser.name}</div>
+                  <div className="text-on-surface-variant text-sm flex items-center gap-1.5 mt-1">
+                    <span className="font-label-mono font-medium text-on-background">
+                      {tab === "CODEFORCES" ? currentUser.cfRating : currentUser.lcRating}
                     </span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-[#1A1A1A]">{entry.name}</p>
-                    <p className="text-xs text-[#6B7280] font-label-mono">{entry.record}</p>
+                    <span>Rating</span>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ) : (
+              <div className="text-center py-4">
+                <p className="text-sm text-on-surface-variant mb-3">
+                  You haven't linked your {tab === "CODEFORCES" ? "Codeforces" : "LeetCode"} account yet.
+                </p>
+                <a href="/profile" className="inline-block bg-primary text-white font-label-mono text-sm px-4 py-2 rounded hover:bg-[#059669] transition-colors">
+                  Link Account
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>

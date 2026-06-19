@@ -5,71 +5,71 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Dashboard — Grindboard",
-  description: "Your daily study agenda, streak status, and group activity feed",
+ title: "Dashboard — Grindboard",
+ description: "Your daily study agenda, streak status, and group activity feed",
 };
 
 export default async function DashboardPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+ const supabase = await createClient();
+ const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect("/login");
-  }
+ if (!user) {
+ redirect("/login");
+ }
 
-  let dbUser = await prisma.user.findUnique({
-    where: { supabaseId: user.id },
-    include: {
-      activities: {
-        take: 10,
-        orderBy: { createdAt: "desc" },
-        include: { module: true, user: true },
-      },
-      goals: {
-        where: { archived: false },
-        include: { module: true },
-      },
-      streaks: {
-        include: { module: true },
-      }
-    },
-  });
+ let dbUser = await prisma.user.findUnique({
+ where: { supabaseId: user.id },
+ include: {
+ activities: {
+ take: 10,
+ orderBy: { createdAt: "desc" },
+ include: { module: true, user: true },
+ },
+ goals: {
+ where: { archived: false },
+ include: { module: true },
+ },
+ streaks: {
+ include: { module: true },
+ }
+ },
+ });
 
-  if (!dbUser) {
-    // Fallback: If user authenticated via OTP/OAuth but the DB record doesn't exist yet, create it.
-    await prisma.user.create({
-      data: {
-        supabaseId: user.id,
-        email: user.email!,
-        name: user.user_metadata?.full_name || user.email?.split("@")[0] || "User",
-        avatarUrl: user.user_metadata?.avatar_url || null,
-      }
-    });
+ if (!dbUser) {
+ // Fallback: If user authenticated via OTP/OAuth but the DB record doesn't exist yet, create it.
+ await prisma.user.create({
+ data: {
+ supabaseId: user.id,
+ email: user.email!,
+ name: user.user_metadata?.full_name || user.email?.split("@")[0] || "User",
+ avatarUrl: user.user_metadata?.avatar_url || null,
+ }
+ });
 
-    // Re-fetch the newly created user with all the relationships
-    dbUser = await prisma.user.findUnique({
-      where: { supabaseId: user.id },
-      include: {
-        activities: {
-          take: 10,
-          orderBy: { createdAt: "desc" },
-          include: { module: true, user: true },
-        },
-        goals: {
-          where: { archived: false },
-          include: { module: true },
-        },
-        streaks: {
-          include: { module: true },
-        }
-      },
-    });
+ // Re-fetch the newly created user with all the relationships
+ dbUser = await prisma.user.findUnique({
+ where: { supabaseId: user.id },
+ include: {
+ activities: {
+ take: 10,
+ orderBy: { createdAt: "desc" },
+ include: { module: true, user: true },
+ },
+ goals: {
+ where: { archived: false },
+ include: { module: true },
+ },
+ streaks: {
+ include: { module: true },
+ }
+ },
+ });
 
-    // If it still fails, then something is very wrong, push back to login
-    if (!dbUser) {
-      redirect("/login");
-    }
-  }
+ // If it still fails, then something is very wrong, push back to login
+ if (!dbUser) {
+ redirect("/login");
+ }
+ }
 
   const recentActivities = await prisma.activity.findMany({
     take: 5,
@@ -77,5 +77,11 @@ export default async function DashboardPage() {
     include: { user: true, module: true },
   });
 
-  return <DashboardClient user={dbUser} feed={recentActivities} />;
+  const upcomingEvents = await prisma.event.findMany({
+    where: { scheduledAt: { gte: new Date() } },
+    orderBy: { scheduledAt: "asc" },
+    take: 3,
+  });
+
+  return <DashboardClient user={dbUser} feed={recentActivities} upcomingEvents={upcomingEvents} />;
 }
