@@ -233,23 +233,36 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
     const children = allComments.filter(c => c.parentId === comment.id);
     return (
       <div key={comment.id} className="w-full">
-        <div className={`group flex flex-col gap-1.5 text-sm bg-surface-container rounded-lg p-3 relative ${depth > 0 ? "mt-1 border-l-2 border-primary/20" : ""}`} style={{ marginLeft: depth > 0 ? `${Math.min(depth * 16, 48)}px` : '0px' }}>
-          <div>
-            <div className="flex items-center gap-2">
-              <Link href={`/u/${comment.user.id}`} className="font-bold text-on-background hover:text-primary transition-colors">
-                {comment.user.name}
-              </Link>
-              <span className="text-[10px] text-on-surface-variant font-label-mono">
-                • {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
-              </span>
-            </div>
-            {comment.user.username && (
-              <div className="text-xs text-on-surface-variant font-label-mono mt-0.5">
-                @{comment.user.username}
+        <div className={`group flex gap-3 text-sm bg-surface-container rounded-lg p-3 relative ${depth > 0 ? "mt-1 border-l-2 border-primary/20" : ""}`} style={{ marginLeft: depth > 0 ? `${Math.min(depth * 16, 48)}px` : '0px' }}>
+          <Link href={`/u/${comment.user.id}`} className="shrink-0 mt-0.5">
+            {comment.user.avatarUrl ? (
+              <img src={comment.user.avatarUrl} alt="Avatar" className="w-8 h-8 rounded-full border border-outline hover:border-primary transition-colors" />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold hover:bg-primary/20 transition-colors text-xs">
+                {comment.user.name[0]}
               </div>
             )}
+          </Link>
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-col gap-1.5">
+              <div>
+                <div className="flex items-center gap-2">
+                  <Link href={`/u/${comment.user.id}`} className="font-bold text-on-background hover:text-primary transition-colors truncate">
+                    {comment.user.name}
+                  </Link>
+                  <span className="text-[10px] text-on-surface-variant font-label-mono whitespace-nowrap">
+                    • {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
+                  </span>
+                </div>
+                {comment.user.username && (
+                  <div className="text-xs text-on-surface-variant font-label-mono mt-0.5 truncate">
+                    @{comment.user.username}
+                  </div>
+                )}
+              </div>
+              <div className="text-on-background pr-10">{comment.content}</div>
+            </div>
           </div>
-          <div className="text-on-background pr-10">{comment.content}</div>
           
           <div className="absolute right-2 top-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             <button 
