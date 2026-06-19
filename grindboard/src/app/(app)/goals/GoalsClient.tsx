@@ -11,7 +11,7 @@ export interface Goal {
   module: string;
   current: number;
   target: number;
-  deadline: Date;
+  deadline: Date | null;
   archived: boolean;
   metric: string;
 }
@@ -25,8 +25,8 @@ interface GoalsClientProps {
 function GoalCard({ goal }: { goal: Goal }) {
   const pct = Math.min(100, Math.round((goal.current / goal.target) * 100));
   const color = getModuleColor(goal.module) ?? "#10B981";
-  const daysLeft = Math.ceil((new Date(goal.deadline).getTime() - Date.now()) / 86400000);
-  const urgency = daysLeft <= 3 ? "text-[#EF4444]" : daysLeft <= 7 ? "text-[#F59E0B]" : "text-[#6B7280]";
+  const daysLeft = goal.deadline ? Math.ceil((new Date(goal.deadline).getTime() - Date.now()) / 86400000) : null;
+  const urgency = daysLeft === null ? "text-[#6B7280]" : daysLeft <= 3 ? "text-[#EF4444]" : daysLeft <= 7 ? "text-[#F59E0B]" : "text-[#6B7280]";
 
   return (
     <article className="bg-white border border-[#E5E5E5] shadow-panel rounded-xl p-sm flex flex-col gap-4 relative overflow-hidden">
@@ -41,7 +41,7 @@ function GoalCard({ goal }: { goal: Goal }) {
         </span>
         <span className={`text-xs flex items-center gap-1 font-label-mono ${urgency}`}>
           <span className="material-symbols-outlined text-sm">schedule</span>
-          {daysLeft > 0 ? `${daysLeft} days left` : "Overdue"}
+          {daysLeft === null ? "No deadline" : daysLeft > 0 ? `${daysLeft} days left` : "Overdue"}
         </span>
       </div>
 
@@ -136,7 +136,7 @@ export function GoalsClient({ initialActiveGoals, initialArchivedGoals, modules 
                       {goal.module}
                     </span>
                     <span className="text-xs text-[#6B7280]">
-                      Completed {formatDate(new Date(goal.deadline))}
+                      Completed {goal.deadline ? formatDate(new Date(goal.deadline)) : "Successfully"}
                     </span>
                   </div>
                   <h4 className="text-[#1A1A1A] font-bold line-through">{goal.title}</h4>

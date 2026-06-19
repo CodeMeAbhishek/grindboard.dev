@@ -26,24 +26,24 @@ export default async function EventsPage() {
   const now = new Date();
   
   const dbUpcoming = await prisma.event.findMany({
-    where: { date: { gte: now } },
-    orderBy: { date: "asc" }
+    where: { scheduledAt: { gte: now } },
+    orderBy: { scheduledAt: "asc" }
   });
 
   const upcoming = dbUpcoming.map((e) => ({
     id: e.id,
     title: e.title,
     type: e.type,
-    platform: e.platform || "Unknown",
-    time: e.date.toISOString(),
+    platform: e.type.toString(),
+    time: e.scheduledAt.toISOString(),
     description: e.description || "",
     participants: "Group",
-    url: e.url || "#"
+    url: e.platformUrl || "#"
   }));
 
   const dbPast = await prisma.event.findMany({
-    where: { date: { lt: now } },
-    orderBy: { date: "desc" },
+    where: { scheduledAt: { lt: now } },
+    orderBy: { scheduledAt: "desc" },
     include: {
       results: {
         include: { user: true },
@@ -57,16 +57,16 @@ export default async function EventsPage() {
     const leaderboard = e.results.map((r, idx) => ({
       rank: (idx + 1).toString(),
       name: r.userId === dbUser.id ? "You" : r.user.name,
-      score: r.score.toString()
+      score: (r.score ?? 0).toString()
     }));
 
     return {
       id: e.id,
       title: e.title,
       type: e.type,
-      date: e.date.toISOString(),
+      date: e.scheduledAt.toISOString(),
       yourRank: userResult ? leaderboard.find((l) => l.name === "You")?.rank || "-" : "-",
-      yourScore: userResult ? userResult.score.toString() : "-",
+      yourScore: userResult ? (userResult.score ?? 0).toString() : "-",
       xpEarned: userResult ? userResult.xpEarned : 0,
       leaderboard
     };

@@ -211,7 +211,7 @@ export function AdminClient({ initialUsers, initialModules, stats }: AdminClient
             </div>
             <div className="p-sm space-y-2">
               {filtered.map((user, i) => {
-                const userLevel = getLevel(user.xp).level;
+                const userLevel = getLevel(user.xp).name;
                 return (
                 <div
                   key={user.id}

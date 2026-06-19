@@ -17,13 +17,13 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  const dbUser = await prisma.user.findUnique({
+  let dbUser = await prisma.user.findUnique({
     where: { supabaseId: user.id },
     include: {
       activities: {
         take: 10,
         orderBy: { createdAt: "desc" },
-        include: { module: true },
+        include: { module: true, user: true },
       },
       goals: {
         where: { archived: false },
@@ -36,7 +36,39 @@ export default async function DashboardPage() {
   });
 
   if (!dbUser) {
-    redirect("/login");
+    // Fallback: If user authenticated via OTP/OAuth but the DB record doesn't exist yet, create it.
+    await prisma.user.create({
+      data: {
+        supabaseId: user.id,
+        email: user.email!,
+        name: user.user_metadata?.full_name || user.email?.split("@")[0] || "User",
+        avatarUrl: user.user_metadata?.avatar_url || null,
+      }
+    });
+
+    // Re-fetch the newly created user with all the relationships
+    dbUser = await prisma.user.findUnique({
+      where: { supabaseId: user.id },
+      include: {
+        activities: {
+          take: 10,
+          orderBy: { createdAt: "desc" },
+          include: { module: true, user: true },
+        },
+        goals: {
+          where: { archived: false },
+          include: { module: true },
+        },
+        streaks: {
+          include: { module: true },
+        }
+      },
+    });
+
+    // If it still fails, then something is very wrong, push back to login
+    if (!dbUser) {
+      redirect("/login");
+    }
   }
 
   const recentActivities = await prisma.activity.findMany({

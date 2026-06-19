@@ -25,7 +25,7 @@ export default async function ProfilePage() {
         include: { badge: true }
       },
       activities: {
-        where: { type: "LEETCODE" },
+        where: { type: { in: ["LEETCODE", "CODEFORCES"] } },
         select: { id: true }
       }
     }
@@ -36,7 +36,7 @@ export default async function ProfilePage() {
   const userData = {
     name: dbUser.name || "Unknown User",
     xp: dbUser.xpTotal,
-    level: getLevel(dbUser.xpTotal).level,
+    level: getLevel(dbUser.xpTotal).name,
     streak: dbUser.globalStreak,
     totalSolved: dbUser.activities.length,
     cfHandle: dbUser.cfHandle,

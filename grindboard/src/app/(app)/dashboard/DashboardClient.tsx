@@ -8,7 +8,7 @@ import { formatXP, timeAgo } from "@/lib/utils";
 type Module = { id: string; name: string; icon: string; color: string };
 type Goal = { id: string; title: string; moduleId: string | null; targetValue: number; currentValue: number; module: Module | null; archived: boolean };
 type Streak = { id: string; moduleId: string | null; current: number; module: Module | null };
-type Activity = { id: string; type: string; xpEarned: number; lcProblemName: string | null; lcDifficulty: string | null; cfRating: number | null; studyHours: number | null; createdAt: Date; module: Module | null; user: { name: string } };
+type Activity = { id: string; type: string; xpEarned: number; lcProblemName: string | null; lcDifficulty: string | null; cfRating: number | null; cfContestId: number | null; studyHours: number | null; notes: string | null; externalId: string | null; createdAt: Date; module: Module | null; user: { name: string; cfHandle: string | null } };
 
 interface DashboardClientProps {
   user: {
@@ -64,10 +64,25 @@ export function DashboardClient({ user, feed }: DashboardClientProps) {
   }
 
   function renderFeedAction(item: Activity) {
-    if (item.type === "LEETCODE") return `solved a ${item.lcDifficulty || ""} problem ${item.lcProblemName || ""}`;
-    if (item.type === "CODEFORCES") return `participated in contest with rating ${item.cfRating || ""}`;
-    if (item.type === "STUDY") return `studied for ${item.studyHours || 0} hours`;
-    return `logged an activity in ${item.module?.name || "General"}`;
+    if (item.type === "LEETCODE") {
+      const href = `https://leetcode.com/problems/${item.notes?.toLowerCase().replace(/\s+/g, '-') || ""}`;
+      return (
+        <span>
+          solved a {item.lcDifficulty || ""} problem <a href={href} target="_blank" rel="noopener noreferrer" className="text-[#0EA5E9] hover:underline">{item.notes || "on LeetCode"}</a>
+        </span>
+      );
+    }
+    if (item.type === "CODEFORCES") {
+      const subId = item.externalId?.replace('CF_', '');
+      const href = item.cfContestId ? `https://codeforces.com/contest/${item.cfContestId}/submission/${subId}` : `https://codeforces.com/`;
+      return (
+        <span>
+          solved Codeforces problem <a href={href} target="_blank" rel="noopener noreferrer" className="text-[#0EA5E9] hover:underline">{item.notes || ""}</a>
+        </span>
+      );
+    }
+    if (item.type === "STUDY") return <span>studied for {item.studyHours || 0} hours</span>;
+    return <span>logged an activity in {item.module?.name || "General"}</span>;
   }
 
   return (

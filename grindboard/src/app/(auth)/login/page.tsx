@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -12,6 +13,8 @@ export default function LoginPage() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [awaitingOtp, setAwaitingOtp] = useState(false);
+  const [otp, setOtp] = useState("");
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,8 +28,7 @@ export default function LoginPage() {
           password,
         });
         if (error) throw error;
-        // Supabase will automatically sign the user in, then redirect to callback
-        router.push("/dashboard");
+        setAwaitingOtp(true);
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email,
@@ -34,7 +36,28 @@ export default function LoginPage() {
         });
         if (error) throw error;
         router.push("/dashboard");
+        router.refresh();
       }
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const { error } = await supabase.auth.verifyOtp({
+        email,
+        token: otp,
+        type: 'signup',
+      });
+      if (error) throw error;
+      router.push("/dashboard");
       router.refresh();
     } catch (err: any) {
       setError(err.message);
@@ -43,15 +66,7 @@ export default function LoginPage() {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/api/auth/callback`,
-      },
-    });
-    if (error) setError(error.message);
-  };
+
 
   const handleGithubSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
@@ -71,11 +86,14 @@ export default function LoginPage() {
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 z-0" />
         
         <div className="relative z-10">
-          <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center mb-6">
-            <span className="material-symbols-outlined text-white text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-              track_changes
-            </span>
-          </div>
+          <Link href="/" className="flex items-center gap-3 mb-10 hover:opacity-80 transition-opacity w-fit">
+            <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+              <span className="material-symbols-outlined text-white text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+                track_changes
+              </span>
+            </div>
+            <span className="font-bold text-2xl text-white tracking-tight">grindboard.dev</span>
+          </Link>
           <h2 className="text-4xl font-display-xl tracking-tight leading-tight mb-8">
             The inner circle for top-tier engineers.
           </h2>
@@ -127,67 +145,99 @@ export default function LoginPage() {
             </div>
           )}
 
-          <form onSubmit={handleAuth} className="space-y-4">
-            <div>
-              <label className="mb-1.5 block text-xs font-bold text-[#6B7280] uppercase tracking-wider">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-lg border border-[#E5E5E5] px-4 py-2.5 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-colors outline-none"
-                required
-              />
-            </div>
-            <div>
-              <label className="mb-1.5 block text-xs font-bold text-[#6B7280] uppercase tracking-wider">Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-lg border border-[#E5E5E5] px-4 py-2.5 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-colors outline-none"
-                required
-              />
-            </div>
+          {awaitingOtp ? (
+            <form onSubmit={handleVerifyOtp} className="space-y-4">
+              <div>
+                <label className="mb-1.5 block text-xs font-bold text-[#6B7280] uppercase tracking-wider">8-Digit Code</label>
+                <input
+                  type="text"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  placeholder="00000000"
+                  className="w-full text-center tracking-[0.5em] font-mono text-2xl rounded-lg border border-[#E5E5E5] px-4 py-2.5 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-colors outline-none"
+                  required
+                  maxLength={8}
+                />
+                <p className="text-xs text-[#6B7280] mt-3">
+                  We've sent a verification code to <strong>{email}</strong>. Please enter it above.
+                </p>
+              </div>
+              <button
+                type="submit"
+                disabled={loading || otp.length !== 8}
+                className="w-full rounded-lg bg-[#10B981] px-4 py-3 font-bold text-white transition-all hover:bg-[#059669] hover:shadow-md hover:-translate-y-0.5 disabled:opacity-50 disabled:transform-none disabled:shadow-none mt-2"
+              >
+                {loading ? "Verifying..." : "Verify & Join"}
+              </button>
+              <div className="text-center mt-4">
+                <button
+                  type="button"
+                  onClick={() => setAwaitingOtp(false)}
+                  className="text-sm font-bold text-[#6B7280] hover:text-[#1A1A1A] transition-colors"
+                >
+                  Back to Sign Up
+                </button>
+              </div>
+            </form>
+          ) : (
+            <>
+              <form onSubmit={handleAuth} className="space-y-4">
+                <div>
+                  <label className="mb-1.5 block text-xs font-bold text-[#6B7280] uppercase tracking-wider">Email</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full rounded-lg border border-[#E5E5E5] px-4 py-2.5 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-colors outline-none"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-xs font-bold text-[#6B7280] uppercase tracking-wider">Password</label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full rounded-lg border border-[#E5E5E5] px-4 py-2.5 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-colors outline-none"
+                    required
+                  />
+                </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-lg bg-[#10B981] px-4 py-3 font-bold text-white transition-all hover:bg-[#059669] hover:shadow-md hover:-translate-y-0.5 disabled:opacity-50 disabled:transform-none disabled:shadow-none mt-2"
-            >
-              {loading ? "Please wait..." : isSignUp ? "Claim Your Spot" : "Sign In to Grind"}
-            </button>
-          </form>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full rounded-lg bg-[#10B981] px-4 py-3 font-bold text-white transition-all hover:bg-[#059669] hover:shadow-md hover:-translate-y-0.5 disabled:opacity-50 disabled:transform-none disabled:shadow-none mt-2"
+                >
+                  {loading ? "Please wait..." : isSignUp ? "Claim Your Spot" : "Sign In to Grind"}
+                </button>
+              </form>
 
-          <div className="my-6 flex items-center">
-            <div className="flex-1 border-t border-[#E5E5E5]"></div>
-            <span className="mx-4 text-xs font-bold text-[#6B7280] uppercase tracking-wider">Or continue with</span>
-            <div className="flex-1 border-t border-[#E5E5E5]"></div>
-          </div>
+              <div className="my-6 flex items-center">
+                <div className="flex-1 border-t border-[#E5E5E5]"></div>
+                <span className="mx-4 text-xs font-bold text-[#6B7280] uppercase tracking-wider">Or continue with</span>
+                <div className="flex-1 border-t border-[#E5E5E5]"></div>
+              </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <button
-              onClick={handleGoogleSignIn}
-              className="flex items-center justify-center gap-2 rounded-lg border border-[#E5E5E5] px-4 py-2.5 text-sm font-bold text-[#1A1A1A] transition-colors hover:bg-[#FAFAFA]"
-            >
-              Google
-            </button>
-            <button
-              onClick={handleGithubSignIn}
-              className="flex items-center justify-center gap-2 rounded-lg border border-[#E5E5E5] px-4 py-2.5 text-sm font-bold text-[#1A1A1A] transition-colors hover:bg-[#FAFAFA]"
-            >
-              GitHub
-            </button>
-          </div>
+              <button
+                onClick={handleGithubSignIn}
+                className="w-full flex items-center justify-center gap-2 rounded-lg border border-[#E5E5E5] px-4 py-2.5 text-sm font-bold text-[#1A1A1A] transition-colors hover:bg-[#FAFAFA]"
+              >
+                Continue with GitHub
+              </button>
 
-          <div className="mt-8 text-center text-sm text-[#6B7280]">
-            {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
-            <button
-              onClick={() => setIsSignUp(!isSignUp)}
-              className="font-bold text-[#10B981] hover:text-[#059669] transition-colors"
-            >
-              {isSignUp ? "Sign In" : "Sign Up"}
-            </button>
-          </div>
+              <div className="mt-8 text-center text-sm text-[#6B7280]">
+                {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+                <button
+                  onClick={() => setIsSignUp(!isSignUp)}
+                  className="font-bold text-[#10B981] hover:text-[#059669] transition-colors"
+                >
+                  {isSignUp ? "Sign In" : "Sign Up"}
+                </button>
+              </div>
+            </>
+          )}
+
+
         </div>
       </div>
     </div>
