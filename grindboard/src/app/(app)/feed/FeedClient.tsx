@@ -136,6 +136,23 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
     }
   };
 
+  const handleDeleteComment = async (postId: string, commentId: string) => {
+    if (!confirm("Delete this comment?")) return;
+    try {
+      const res = await fetch(`/api/feed/${postId}/comment?commentId=${commentId}`, { method: "DELETE" });
+      if (res.ok) {
+        setPosts(posts.map(p => {
+          if (p.id === postId) {
+            return { ...p, comments: p.comments.filter(c => c.id !== commentId) };
+          }
+          return p;
+        }));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   if (loading) {
     return <div className="p-8 text-center text-on-surface-variant font-label-mono">Loading feed...</div>;
   }
@@ -234,9 +251,17 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
               {post.comments.length > 0 && (
                 <div className="space-y-2 pt-2 border-t border-outline/50">
                   {post.comments.map(comment => (
-                    <div key={comment.id} className="flex gap-2 text-sm bg-surface-container rounded-lg p-2">
+                    <div key={comment.id} className="group flex gap-2 text-sm bg-surface-container rounded-lg p-2 relative">
                       <div className="font-bold text-on-background shrink-0">{comment.user.name}:</div>
-                      <div className="text-on-background">{comment.content}</div>
+                      <div className="text-on-background flex-1 pr-6">{comment.content}</div>
+                      {comment.user.id === currentUserId && (
+                        <button 
+                          onClick={() => handleDeleteComment(post.id, comment.id)}
+                          className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 text-on-surface-variant hover:text-red-500 transition-opacity"
+                        >
+                          <span className="material-symbols-outlined text-[14px]">delete</span>
+                        </button>
+                      )}
                     </div>
                   ))}
                 </div>
