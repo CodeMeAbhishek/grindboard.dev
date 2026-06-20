@@ -4,6 +4,8 @@ import { useState, useMemo } from "react";
 import { CompanyModal } from "@/components/interviews/CompanyModal";
 import { TopicModal } from "@/components/interviews/TopicModal";
 import { extractTopics, TopicGroup } from "./topicUtils";
+import { useQuery } from "@tanstack/react-query";
+import { SkeletonPage } from "@/components/skeletons";
 
 export interface InterviewData {
   title: string;
@@ -55,12 +57,29 @@ const COMPANY_LOGOS: Record<string, string> = {
   "BNY Mellon": "/logos/bny.png",
 };
 
-export default function InterviewsClient({ data }: { data: InterviewData }) {
+export default function InterviewsClient() {
   const [selectedCompany, setSelectedCompany] = useState<CompanyData | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<TopicGroup | null>(null);
 
+  const { data, isLoading, error } = useQuery<InterviewData>({
+    queryKey: ['interviews'],
+    queryFn: async () => {
+      const res = await fetch('/api/interviews');
+      if (!res.ok) throw new Error('Failed to fetch interviews');
+      return res.json();
+    }
+  });
+
   // Compute topics dynamically
-  const topics = useMemo(() => extractTopics(data), [data]);
+  const topics = useMemo(() => data ? extractTopics(data) : [], [data]);
+
+  if (isLoading) {
+    return <SkeletonPage />;
+  }
+
+  if (error || !data) {
+    return <div className="p-8 text-red-500 text-center">Failed to load interviews.</div>;
+  }
 
   return (
     <div className="max-w-7xl mx-auto space-y-12 animate-fade-in pb-20">

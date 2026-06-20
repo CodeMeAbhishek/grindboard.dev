@@ -357,3 +357,12 @@ body {
 @utility mx-md { margin-left: 24px; margin-right: 24px; }
 @utility mx-lg { margin-left: 40px; margin-right: 40px; }
 @utility mx-xl { margin-left: 64px; margin-right: 64px; }
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

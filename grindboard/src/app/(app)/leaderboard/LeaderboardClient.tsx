@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { CodeforcesIcon, LeetCodeIcon } from "@/components/icons/PlatformIcons";
+import { useQuery } from "@tanstack/react-query";
+import { SkeletonPage } from "@/components/skeletons";
 
 interface LeaderUser {
   id: string;
@@ -17,10 +19,6 @@ interface LeaderUser {
   lcGlobalRanking: number | null;
   lcBadge: string | null;
   isCurrentUser: boolean;
-}
-
-interface LeaderboardClientProps {
-  initialData: LeaderUser[];
 }
 
 function RankBadge({ rank }: { rank: number }) {
@@ -52,8 +50,25 @@ function RankBadge({ rank }: { rank: number }) {
   );
 }
 
-export function LeaderboardClient({ initialData }: LeaderboardClientProps) {
+export function LeaderboardClient() {
   const [tab, setTab] = useState<"CODEFORCES" | "LEETCODE">("CODEFORCES");
+
+  const { data: initialData, isLoading, error } = useQuery<LeaderUser[]>({
+    queryKey: ['leaderboard'],
+    queryFn: async () => {
+      const res = await fetch('/api/leaderboard');
+      if (!res.ok) throw new Error('Failed to fetch leaderboard');
+      return res.json();
+    }
+  });
+
+  if (isLoading) {
+    return <SkeletonPage />;
+  }
+
+  if (error || !initialData) {
+    return <div className="p-8 text-red-500 text-center">Failed to load leaderboard.</div>;
+  }
 
   // Filter and sort based on active tab
   const activeData = [...initialData]
@@ -67,7 +82,7 @@ export function LeaderboardClient({ initialData }: LeaderboardClientProps) {
   const currentUser = activeData.find((u) => u.isCurrentUser);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>

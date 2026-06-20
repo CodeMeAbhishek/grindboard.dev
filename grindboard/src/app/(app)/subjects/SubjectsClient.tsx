@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { getModuleColor, getModuleIcon } from "@/lib/gamification";
 import { timeAgo } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { CodeforcesIcon, LeetCodeIcon, GeeksForGeeksIcon } from "@/components/icons/PlatformIcons";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { SkeletonPage } from "@/components/skeletons";
 
 export interface Subject {
  id: string;
@@ -20,7 +22,6 @@ export interface Subject {
 
 interface SubjectsClientProps {
  userId: string;
- initialSubjects: Subject[];
 }
 
 const COMING_SOON_SUBJECTS = [
@@ -170,7 +171,7 @@ function SubjectCard({ subject, onEnroll }: { subject: Subject, onEnroll: (id: s
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ moduleId: subject.id })
                   });
-                  router.refresh();
+                  // Not calling router.refresh() anymore, let's invalidate query if needed
                 }}
                 className="w-full bg-primary text-white text-sm font-bold py-2 rounded hover:bg-primary/90 transition-colors"
               >
@@ -183,7 +184,7 @@ function SubjectCard({ subject, onEnroll }: { subject: Subject, onEnroll: (id: s
         {subject.enrolled && (
           <div className="mt-auto pt-3 border-t border-outline flex justify-between items-end">
             <span className="text-xs text-on-surface-variant italic">
-              {subject.lastActiveDate ? timeAgo(subject.lastActiveDate) : "never active"}
+              {subject.lastActiveDate ? timeAgo(new Date(subject.lastActiveDate)) : "never active"}
             </span>
           </div>
         )}
@@ -192,19 +193,33 @@ function SubjectCard({ subject, onEnroll }: { subject: Subject, onEnroll: (id: s
   );
 }
 
-export function SubjectsClient({ userId, initialSubjects }: SubjectsClientProps) {
- const [subjects, setSubjects] = useState(initialSubjects);
+export function SubjectsClient({ userId }: SubjectsClientProps) {
  const [search, setSearch] = useState("");
+ const queryClient = useQueryClient();
 
- // Update local state when initialSubjects changes from router.refresh()
- useEffect(() => {
-   setSubjects(initialSubjects);
- }, [initialSubjects]);
+ const { data: subjects, isLoading, error } = useQuery<Subject[]>({
+   queryKey: ['subjects'],
+   queryFn: async () => {
+     const res = await fetch('/api/subjects');
+     if (!res.ok) throw new Error('Failed to fetch subjects');
+     return res.json();
+   }
+ });
+
+ if (isLoading) {
+   return <SkeletonPage />;
+ }
+
+ if (error || !subjects) {
+   return <div className="p-8 text-red-500 text-center">Failed to load subjects.</div>;
+ }
 
  const handleEnroll = (id: string) => {
-   setSubjects(current => 
-     current.map(s => s.id === id ? { ...s, enrolled: true } : s)
-   );
+   // Optimistically update the cache
+   queryClient.setQueryData<Subject[]>(['subjects'], (old) => {
+     if (!old) return old;
+     return old.map(s => s.id === id ? { ...s, enrolled: true } : s);
+   });
  };
 
  const filtered = subjects.filter((s) => {
@@ -216,7 +231,7 @@ export function SubjectsClient({ userId, initialSubjects }: SubjectsClientProps)
  );
 
  return (
- <div className="space-y-6">
+ <div className="space-y-6 animate-fade-in">
  {/* Header */}
  <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
  <div>

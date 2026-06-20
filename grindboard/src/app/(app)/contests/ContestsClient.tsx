@@ -3,6 +3,8 @@
 import { useState, useMemo } from "react";
 import { formatDate } from "@/lib/utils";
 import { CodeforcesIcon, LeetCodeIcon } from "@/components/icons/PlatformIcons";
+import { useQuery } from "@tanstack/react-query";
+import { SkeletonPage } from "@/components/skeletons";
 
 interface Contest {
   id: string;
@@ -16,7 +18,7 @@ interface Contest {
   participants: { id: string; name: string; avatarUrl: string | null }[];
 }
 
-interface ContestsClientProps {
+interface ContestsData {
   upcoming: Contest[];
   past: Contest[];
 }
@@ -48,9 +50,18 @@ const TYPE_STYLES: Record<string, { badge: string; border: string; accent: strin
   },
 };
 
-export default function ContestsClient({ upcoming, past }: ContestsClientProps) {
+export default function ContestsClient() {
   const [tab, setTab] = useState<"UPCOMING" | "PAST">("UPCOMING");
   const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const { data, isLoading, error } = useQuery<ContestsData>({
+    queryKey: ['contests'],
+    queryFn: async () => {
+      const res = await fetch('/api/contests');
+      if (!res.ok) throw new Error('Failed to fetch contests');
+      return res.json();
+    }
+  });
 
   const getDaysInMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -77,13 +88,25 @@ export default function ContestsClient({ upcoming, past }: ContestsClientProps) 
   // Group upcoming contests by date string (YYYY-MM-DD) for calendar
   const contestsByDate = useMemo(() => {
     const map: Record<string, Contest[]> = {};
-    upcoming.forEach(c => {
-      const dateStr = new Date(c.time).toISOString().split("T")[0];
-      if (!map[dateStr]) map[dateStr] = [];
-      map[dateStr].push(c);
-    });
+    if (data?.upcoming) {
+      data.upcoming.forEach(c => {
+        const dateStr = new Date(c.time).toISOString().split("T")[0];
+        if (!map[dateStr]) map[dateStr] = [];
+        map[dateStr].push(c);
+      });
+    }
     return map;
-  }, [upcoming]);
+  }, [data?.upcoming]);
+
+  if (isLoading) {
+    return <SkeletonPage />;
+  }
+
+  if (error || !data) {
+    return <div className="p-8 text-red-500 text-center">Failed to load contests.</div>;
+  }
+
+  const { upcoming, past } = data;
 
   const renderCalendar = () => {
     const blanks = Array.from({ length: firstDay }, (_, i) => i);
@@ -116,7 +139,10 @@ export default function ContestsClient({ upcoming, past }: ContestsClientProps) 
           
           {days.map(d => {
             const dateObj = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), d);
-            const dateStr = dateObj.toISOString().split("T")[0];
+            // fix timezone offset to match the format used for map keys
+            const tzOffset = dateObj.getTimezoneOffset() * 60000;
+            const localISOTime = (new Date(dateObj.getTime() - tzOffset)).toISOString().slice(0, -1);
+            const dateStr = localISOTime.split("T")[0];
             const dayContests = contestsByDate[dateStr] || [];
             
             return (
@@ -150,7 +176,7 @@ export default function ContestsClient({ upcoming, past }: ContestsClientProps) 
   };
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto pb-12 pt-4">
+    <div className="space-y-6 max-w-5xl mx-auto pb-12 pt-4 animate-fade-in">
       <header className="mb-8 flex justify-between items-start gap-4">
         <div>
           <h1 className="font-display-lg text-3xl font-black tracking-tight text-on-background">

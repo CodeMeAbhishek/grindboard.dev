@@ -6,6 +6,8 @@ import { getModuleColor } from "@/lib/gamification";
 import { timeAgo } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { CodeforcesIcon, LeetCodeIcon, GeeksForGeeksIcon } from "@/components/icons/PlatformIcons";
+import { useQuery } from "@tanstack/react-query";
+import { SkeletonPage } from "@/components/skeletons";
 
 interface Material {
   id: string;
@@ -135,168 +137,183 @@ function TopicItem({ topic, color, isEnrolled, onEnrollmentError }: { topic: Top
   );
 }
 
-export function SubjectDetailClient({ subject }: { subject: SubjectData }) {
+export function SubjectDetailClient({ subjectId }: { subjectId: string }) {
   const router = useRouter();
-  const color = getModuleColor(subject.name);
   const [toast, setToast] = useState<string | null>(null);
 
- const topicsDone = subject.topics.filter((t) => t.completed).length;
- const topicsPct = subject.topics.length > 0 ? Math.round((topicsDone / subject.topics.length) * 100) : 0;
+  const { data: subject, isLoading, error } = useQuery<SubjectData>({
+    queryKey: ['subject', subjectId],
+    queryFn: async () => {
+      const res = await fetch(`/api/subjects/${subjectId}`);
+      if (!res.ok) throw new Error('Failed to fetch subject');
+      return res.json();
+    }
+  });
+
+  if (isLoading) {
+    return <SkeletonPage />;
+  }
+
+  if (error || !subject) {
+    return <div className="p-8 text-red-500 text-center">Failed to load subject.</div>;
+  }
+
+  const color = getModuleColor(subject.name);
+
+  const topicsDone = subject.topics.filter((t) => t.completed).length;
+  const topicsPct = subject.topics.length > 0 ? Math.round((topicsDone / subject.topics.length) * 100) : 0;
 
   const handleEnrollmentError = () => {
     setToast("Please enroll in this subject first to track your progress.");
     setTimeout(() => setToast(null), 3000);
   };
 
- return (
- <>
- <div className="space-y-6">
- {/* Breadcrumb */}
- <nav className="flex items-center gap-2 text-sm font-label-mono text-on-surface-variant">
- <Link href="/subjects" className="hover:text-on-background transition-colors flex items-center gap-1">
- <span className="material-symbols-outlined text-sm">arrow_back</span>
- Subjects
- </Link>
- <span>/</span>
- <span className="text-on-background">{subject.name}</span>
- </nav>
+  return (
+    <>
+      <div className="space-y-6 animate-fade-in">
+        {/* Breadcrumb */}
+        <nav className="flex items-center gap-2 text-sm font-label-mono text-on-surface-variant">
+          <Link href="/subjects" className="hover:text-on-background transition-colors flex items-center gap-1">
+            <span className="material-symbols-outlined text-sm">arrow_back</span>
+            Subjects
+          </Link>
+          <span>/</span>
+          <span className="text-on-background">{subject.name}</span>
+        </nav>
 
- {/* Header */}
- <header className="bg-surface border border-outline shadow-panel rounded-xl p-6 relative overflow-hidden">
- <div className="absolute top-0 left-0 w-full h-1" style={{ backgroundColor: color }} />
- <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pt-1">
- <div className="flex items-center gap-4">
- <div className="w-14 h-14 rounded-xl border border-outline flex items-center justify-center" style={{ backgroundColor: `${color}15` }}>
- <span className="material-symbols-outlined text-3xl" style={{ color }}>
- {subject.icon}
- </span>
- </div>
- <div>
- <h1 className="font-headline-lg-mobile md:font-headline-lg text-on-background">{subject.name}</h1>
- <p className="text-on-surface-variant text-sm mt-0.5">{subject.description}</p>
- </div>
- </div>
-  <div className="flex gap-2">
-  {subject.isEnrolled ? (
-    subject.streak > 0 && (
-      <div className="flex items-center gap-1.5 bg-[#FEF3C7] text-[#F59E0B] border border-[#F59E0B]/20 px-3 py-1.5 rounded font-label-mono text-sm">
-        <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>local_fire_department</span>
-        {subject.streak}-Day Streak
-      </div>
-    )
-  ) : (
-    <button
-      onClick={async () => {
-        await fetch('/api/modules/enroll', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ moduleId: subject.id })
-        });
-        router.refresh();
-      }}
-      className="bg-primary text-white px-4 py-1.5 rounded font-bold hover:bg-primary/90 transition-colors"
-    >
-      Enroll
-    </button>
-  )}
-  </div>
- </div>
- </header>
+        {/* Header */}
+        <header className="bg-surface border border-outline shadow-panel rounded-xl p-6 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1" style={{ backgroundColor: color }} />
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pt-1">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-xl border border-outline flex items-center justify-center" style={{ backgroundColor: `${color}15` }}>
+                <span className="material-symbols-outlined text-3xl" style={{ color }}>
+                  {subject.icon}
+                </span>
+              </div>
+              <div>
+                <h1 className="font-headline-lg-mobile md:font-headline-lg text-on-background">{subject.name}</h1>
+                <p className="text-on-surface-variant text-sm mt-0.5">{subject.description}</p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              {subject.isEnrolled ? (
+                subject.streak > 0 && (
+                  <div className="flex items-center gap-1.5 bg-[#FEF3C7] text-[#F59E0B] border border-[#F59E0B]/20 px-3 py-1.5 rounded font-label-mono text-sm">
+                    <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>local_fire_department</span>
+                    {subject.streak}-Day Streak
+                  </div>
+                )
+              ) : (
+                <button
+                  onClick={async () => {
+                    await fetch('/api/modules/enroll', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ moduleId: subject.id })
+                    });
+                    // ideally we'd invalidate queries here
+                    router.refresh();
+                  }}
+                  className="bg-primary text-white px-4 py-1.5 rounded font-bold hover:bg-primary/90 transition-colors"
+                >
+                  Enroll
+                </button>
+              )}
+            </div>
+          </div>
+        </header>
 
- {/* Stats Row */}
- <section className="grid grid-cols-2 md:grid-cols-4 gap-sm">
- {[
+        {/* Stats Row */}
+        <section className="grid grid-cols-2 md:grid-cols-4 gap-sm">
+          {[
+            { label: "Enrolled", value: subject.enrolledUsers, sub: "group members" },
+          ].map((stat) => (
+            <div key={stat.label} className="glass-panel p-4 rounded-xl">
+              <span className="font-label-mono text-xs text-on-surface-variant uppercase tracking-wider block mb-2">{stat.label}</span>
+              <div className="font-stat-lg text-on-background">{stat.value}</div>
+              <div className="text-xs text-on-surface-variant mt-1">{stat.sub}</div>
+            </div>
+          ))}
+        </section>
 
- { label: "Enrolled", value: subject.enrolledUsers, sub: "group members" },
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          {/* Topics Checklist */}
+          <div className="lg:col-span-7 space-y-4">
+            <h2 className="font-headline-lg-mobile text-on-background flex items-center gap-2 border-b border-outline pb-2">
+              <span className="material-symbols-outlined" style={{ color }}>checklist</span>
+              Topics
+            </h2>
+            {/* Progress */}
+            <div className="glass-panel rounded-xl p-4 flex items-center justify-between mb-4">
+              <div>
+                <span className="font-label-mono text-on-surface-variant text-sm block">Topic Progress</span>
+                <span className="text-xs text-on-surface-variant mt-1">{topicsDone} of {subject.topics.length} topics completed</span>
+              </div>
+              <div className="relative w-12 h-12 flex items-center justify-center shrink-0">
+                <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                  <path
+                    className="text-outline"
+                    strokeWidth="3.5"
+                    stroke="currentColor"
+                    fill="none"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                  <path
+                    strokeWidth="3.5"
+                    strokeDasharray={`${topicsPct}, 100`}
+                    stroke={color}
+                    strokeLinecap="round"
+                    fill="none"
+                    style={{ transition: 'stroke-dasharray 1s ease-in-out' }}
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                </svg>
+                <div className="absolute flex items-center justify-center">
+                  <span className="text-[10px] font-bold font-label-mono text-on-background">{topicsPct}%</span>
+                </div>
+              </div>
+            </div>
+            <div className="glass-panel rounded-xl p-4 space-y-1">
+              {subject.topics.length === 0 ? (
+                <div className="text-center py-6 text-on-surface-variant font-label-mono text-sm">
+                  No topics found for this subject.
+                </div>
+              ) : subject.topics.map((topic) => (
+                <TopicItem key={topic.id} topic={topic} color={color} isEnrolled={subject.isEnrolled} onEnrollmentError={handleEnrollmentError} />
+              ))}
+            </div>
+          </div>
 
- ].map((stat) => (
- <div key={stat.label} className="glass-panel p-4 rounded-xl">
- <span className="font-label-mono text-xs text-on-surface-variant uppercase tracking-wider block mb-2">{stat.label}</span>
- <div className="font-stat-lg text-on-background">{stat.value}</div>
- <div className="text-xs text-on-surface-variant mt-1">{stat.sub}</div>
- </div>
- ))}
- </section>
+          {/* Recent Activity */}
+          <div className="lg:col-span-5 space-y-4">
+            <h2 className="font-headline-lg-mobile text-on-background flex items-center gap-2 border-b border-outline pb-2">
+              <span className="material-symbols-outlined text-[#0EA5E9]" style={{ fontVariationSettings: "'FILL' 1" }}>history</span>
+              Recent Activity
+            </h2>
+            <div className="glass-panel rounded-xl p-4 space-y-3">
+              {subject.activities.length === 0 ? (
+                <div className="text-center py-6 text-on-surface-variant font-label-mono text-sm">
+                  No recent activity.
+                </div>
+              ) : subject.activities.map((act) => (
+                <div key={act.id} className="flex items-start gap-3 p-3 rounded-lg bg-surface-container border border-outline hover:border-[#D1D5DB] transition-colors">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center border border-outline shrink-0" style={{ backgroundColor: `${color}10` }}>
+                    <span className="material-symbols-outlined text-sm" style={{ color }}>
+                      {act.type === "LEETCODE" ? "code" : act.type === "CODEFORCES" ? "terminal" : "check_circle"}
+                    </span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-on-background truncate">{act.label}</p>
+                    <p className="text-xs text-on-surface-variant">{timeAgo(new Date(act.createdAt))}</p>
+                  </div>
 
- <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
- {/* Topics Checklist */}
- <div className="lg:col-span-7 space-y-4">
- <h2 className="font-headline-lg-mobile text-on-background flex items-center gap-2 border-b border-outline pb-2">
- <span className="material-symbols-outlined" style={{ color }}>checklist</span>
- Topics
- </h2>
- {/* Progress */}
- <div className="glass-panel rounded-xl p-4 flex items-center justify-between mb-4">
-   <div>
-     <span className="font-label-mono text-on-surface-variant text-sm block">Topic Progress</span>
-     <span className="text-xs text-on-surface-variant mt-1">{topicsDone} of {subject.topics.length} topics completed</span>
-   </div>
-   <div className="relative w-12 h-12 flex items-center justify-center shrink-0">
-     <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
-       <path
-         className="text-outline"
-         strokeWidth="3.5"
-         stroke="currentColor"
-         fill="none"
-         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-       />
-       <path
-         strokeWidth="3.5"
-         strokeDasharray={`${topicsPct}, 100`}
-         stroke={color}
-         strokeLinecap="round"
-         fill="none"
-         style={{ transition: 'stroke-dasharray 1s ease-in-out' }}
-         d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-       />
-     </svg>
-     <div className="absolute flex items-center justify-center">
-       <span className="text-[10px] font-bold font-label-mono text-on-background">{topicsPct}%</span>
-     </div>
-   </div>
- </div>
-    <div className="glass-panel rounded-xl p-4 space-y-1">
-      {subject.topics.length === 0 ? (
-        <div className="text-center py-6 text-on-surface-variant font-label-mono text-sm">
-          No topics found for this subject.
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      ) : subject.topics.map((topic) => (
-        <TopicItem key={topic.id} topic={topic} color={color} isEnrolled={subject.isEnrolled} onEnrollmentError={handleEnrollmentError} />
-      ))}
-    </div>
- </div>
-
- {/* Recent Activity */}
- <div className="lg:col-span-5 space-y-4">
- <h2 className="font-headline-lg-mobile text-on-background flex items-center gap-2 border-b border-outline pb-2">
- <span className="material-symbols-outlined text-[#0EA5E9]" style={{ fontVariationSettings: "'FILL' 1" }}>history</span>
- Recent Activity
- </h2>
- <div className="glass-panel rounded-xl p-4 space-y-3">
- {subject.activities.length === 0 ? (
- <div className="text-center py-6 text-on-surface-variant font-label-mono text-sm">
- No recent activity.
- </div>
- ) : subject.activities.map((act) => (
- <div key={act.id} className="flex items-start gap-3 p-3 rounded-lg bg-surface-container border border-outline hover:border-[#D1D5DB] transition-colors">
- <div className="w-8 h-8 rounded-full flex items-center justify-center border border-outline shrink-0" style={{ backgroundColor: `${color}10` }}>
- <span className="material-symbols-outlined text-sm" style={{ color }}>
- {act.type === "LEETCODE" ? "code" : act.type === "CODEFORCES" ? "terminal" : "check_circle"}
- </span>
- </div>
- <div className="flex-1 min-w-0">
- <p className="text-sm text-on-background truncate">{act.label}</p>
- <p className="text-xs text-on-surface-variant">{timeAgo(new Date(act.createdAt))}</p>
- </div>
-
- </div>
- ))}
- </div>
-
-
- </div>
- </div>
- </div>
+      </div>
       
       {toast && (
         <div className="fixed bottom-6 right-6 bg-surface border border-outline shadow-panel p-4 rounded-xl flex items-center gap-3 animate-in slide-in-from-bottom-5 fade-in duration-300 z-50">
@@ -307,6 +324,6 @@ export function SubjectDetailClient({ subject }: { subject: SubjectData }) {
           </button>
         </div>
       )}
- </>
- );
+    </>
+  );
 }

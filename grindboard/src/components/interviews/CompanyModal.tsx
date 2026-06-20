@@ -65,26 +65,27 @@ export function CompanyModal({ company, onClose }: CompanyModalProps) {
         {/* Modal Body (Split Pane) */}
         <div className="flex-1 flex flex-col md:flex-row min-h-0">
           
-          {/* Left Sidebar - Candidate List */}
-          <div className="w-full md:w-64 border-r border-outline bg-surface-container/20 overflow-y-auto">
-            <div className="p-4">
-              <h3 className="text-xs font-label-mono text-on-surface-variant uppercase tracking-wider mb-3 px-2">
+          {/* Left Sidebar / Top Bar - Candidate List */}
+          <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-outline bg-surface-container/20 shrink-0">
+            <div className="p-3 md:p-4 flex flex-col h-full">
+              <h3 className="text-xs font-label-mono text-on-surface-variant uppercase tracking-wider mb-3 px-2 hidden md:block">
                 Candidates ({company.candidates.length})
               </h3>
-              <div className="space-y-1">
+              {/* Desktop vertical list, Mobile horizontal list */}
+              <div className="flex flex-row md:flex-col overflow-x-auto md:overflow-y-auto gap-2 md:space-y-1 md:gap-0 pb-1 md:pb-0 hide-scrollbar md:custom-scrollbar">
                 {company.candidates.map((candidate, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedCandidate(candidate)}
-                    className={`w-full text-left px-4 py-3 rounded-xl transition-all font-body-md text-sm flex items-center justify-between ${
+                    className={`whitespace-nowrap md:whitespace-normal shrink-0 md:w-full text-left px-4 py-2 md:py-3 rounded-xl transition-all font-body-md text-sm flex items-center justify-between ${
                       selectedCandidate === candidate
                         ? "bg-primary text-on-primary font-medium shadow-md shadow-primary/20"
-                        : "text-on-surface-variant hover:bg-surface hover:text-on-background"
+                        : "text-on-surface-variant hover:bg-surface hover:text-on-background border border-outline md:border-transparent bg-surface md:bg-transparent"
                     }`}
                   >
                     {candidate.candidate_label}
                     {selectedCandidate === candidate && (
-                      <span className="material-symbols-outlined text-sm">
+                      <span className="material-symbols-outlined text-sm ml-2 hidden md:block">
                         chevron_right
                       </span>
                     )}

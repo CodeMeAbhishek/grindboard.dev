@@ -1,17 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getSkillLevel } from "@/lib/gamification";
 import { timeAgo } from "@/lib/utils";
 import { format } from "date-fns";
+import { useQuery } from "@tanstack/react-query";
+import { DashboardSkeleton } from "@/components/skeletons";
 
 // Types derived from Prisma models
 type Module = { id: string; name: string; icon: string; color: string };
 type Streak = { id: string; moduleId: string | null; current: number; module: Module | null };
-type Activity = { id: string; type: string; lcProblemName: string | null; lcDifficulty: string | null; cfRating: number | null; cfContestId: number | null; studyHours: number | null; notes: string | null; externalId: string | null; createdAt: Date; module: Module | null; user: { id: string; name: string; cfHandle: string | null } };
+type Activity = { id: string; type: string; lcProblemName: string | null; lcDifficulty: string | null; cfRating: number | null; cfContestId: number | null; studyHours: number | null; notes: string | null; externalId: string | null; createdAt: Date; module: Module | null; user: { id: string; name: string; cfHandle: string | null; username?: string } };
 
-interface DashboardClientProps {
+interface DashboardData {
  user: {
   name: string;
   cfRating: number | null;
@@ -25,33 +27,51 @@ interface DashboardClientProps {
  upcomingContests?: { title: string; scheduledAt: Date; type: string; platformUrl: string | null }[];
 }
 
-export function DashboardClient({ user, feed, upcomingContests }: DashboardClientProps) {
+export function DashboardClient() {
+ const { data, isLoading, error } = useQuery<DashboardData>({
+   queryKey: ['dashboard'],
+   queryFn: async () => {
+     const res = await fetch('/api/dashboard');
+     if (!res.ok) throw new Error('Failed to fetch dashboard data');
+     return res.json();
+   }
+ });
+
+ const [agenda, setAgenda] = useState<{id: string, title: string, subject: string, priority: string, done: boolean, type: "enrollment" | "task"}[]>([]);
+
+ useEffect(() => {
+   if (data) {
+     const enrollmentAgenda = (data.user.enrollments || []).map((e, index) => {
+       const messages = [
+         "Continue learning and don't break your streak!",
+         "Do not get left behind, keep grinding!",
+         "Review today's concepts to stay ahead.",
+         "Push your limits today!"
+       ];
+       return {
+         id: `enroll-${e.id}`,
+         title: messages[index % messages.length],
+         subject: e.module.name,
+         priority: "High",
+         done: false,
+         type: "enrollment" as const
+       };
+     });
+     setAgenda(enrollmentAgenda);
+   }
+ }, [data]);
+
+ if (isLoading) {
+   return <DashboardSkeleton />;
+ }
+
+ if (error || !data) {
+   return <div className="p-8 text-red-500 text-center">Failed to load dashboard.</div>;
+ }
+
+ const { user, feed, upcomingContests } = data;
+
  const level = getSkillLevel(user.cfRating, user.lcRating);
-
- // For agenda, we'll map goals into agenda items
- // This is a simplified approach where goals are interactive tasks
-  const enrollmentAgenda = (user.enrollments || []).map((e, index) => {
-    const messages = [
-      "Continue learning and don't break your streak!",
-      "Do not get left behind, keep grinding!",
-      "Review today's concepts to stay ahead.",
-      "Push your limits today!"
-    ];
-    return {
-      id: `enroll-${e.id}`,
-      title: messages[index % messages.length],
-      subject: e.module.name,
-      priority: "High",
-      done: false,
-      type: "enrollment" as const
-    };
-  });
-
-  const initialAgenda = [
-    ...enrollmentAgenda
-  ];
-
-  const [agenda, setAgenda] = useState(initialAgenda);
 
  function toggleItem(id: string) {
  setAgenda((prev) =>
@@ -94,7 +114,7 @@ export function DashboardClient({ user, feed, upcomingContests }: DashboardClien
  }
 
  return (
- <div className="space-y-8">
+ <div className="space-y-8 animate-fade-in">
  {/* ── Header ─────────────────────────────────────────────── */}
  <section className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
  <div>

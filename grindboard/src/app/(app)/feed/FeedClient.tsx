@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import { FeedSkeleton } from "@/components/skeletons";
 
 interface Post {
   id: string;
@@ -229,7 +230,11 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
 
 
   if (loading) {
-    return <div className="p-8 text-center text-on-surface-variant font-label-mono">Loading feed...</div>;
+    return (
+      <div className="max-w-2xl mx-auto py-8 px-4">
+        <FeedSkeleton />
+      </div>
+    );
   }
 
   const renderComment = (comment: Comment, allComments: Comment[], postId: string, depth: number = 0) => {
