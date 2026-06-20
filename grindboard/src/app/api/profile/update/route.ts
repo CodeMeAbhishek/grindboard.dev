@@ -13,7 +13,7 @@ export async function POST(request: Request) {
  return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
  }
 
- const { cfHandle, lcHandle, linkedin, name } = await request.json();
+ const { cfHandle, lcHandle, linkedin, name, avatarUrl } = await request.json();
 
  if (cfHandle) {
  const isValid = await validateCFHandle(cfHandle.trim());
@@ -36,6 +36,7 @@ export async function POST(request: Request) {
  cfHandle: cfHandle !== undefined ? cfHandle : undefined,
  lcHandle: lcHandle !== undefined ? lcHandle : undefined,
  linkedin: linkedin !== undefined ? linkedin : undefined,
+ avatarUrl: avatarUrl !== undefined ? avatarUrl : undefined,
  }
  });
 

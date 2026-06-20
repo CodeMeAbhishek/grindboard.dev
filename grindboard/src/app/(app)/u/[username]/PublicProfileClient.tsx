@@ -8,6 +8,7 @@ import { CodeforcesIcon, LeetCodeIcon, LinkedInIcon } from "@/components/icons/P
 interface PublicUserProfile {
   name: string;
   username: string | null;
+  avatarUrl: string | null;
   globalStreak: number;
   cfHandle: string | null;
   lcHandle: string | null;
@@ -25,6 +26,7 @@ interface PublicUserProfile {
 export default function PublicProfileClient({ user, isCurrentUser }: { user: PublicUserProfile; isCurrentUser?: boolean }) {
   const router = useRouter();
   const heatmapRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedYear, setSelectedYear] = useState<string>("Past Year");
   
   const [isEditing, setIsEditing] = useState(false);
@@ -32,6 +34,7 @@ export default function PublicProfileClient({ user, isCurrentUser }: { user: Pub
   const [cfHandle, setCfHandle] = useState(user.cfHandle || "");
   const [lcHandle, setLcHandle] = useState(user.lcHandle || "");
   const [linkedin, setLinkedin] = useState(user.linkedin || "");
+  const [avatarUrl, setAvatarUrl] = useState(user.avatarUrl || "");
   const [isSaving, setIsSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -46,6 +49,7 @@ export default function PublicProfileClient({ user, isCurrentUser }: { user: Pub
           cfHandle: cfHandle.trim() || null,
           lcHandle: lcHandle.trim() || null,
           linkedin: linkedin.trim() || null,
+          avatarUrl: avatarUrl.trim() || null,
         }),
       });
       if (res.ok) {
@@ -62,6 +66,43 @@ export default function PublicProfileClient({ user, isCurrentUser }: { user: Pub
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const MAX_WIDTH = 256;
+        const MAX_HEIGHT = 256;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx?.drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+        setAvatarUrl(dataUrl);
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.readAsDataURL(file);
   };
 
   // Format activity counts for heatmap
@@ -168,9 +209,13 @@ export default function PublicProfileClient({ user, isCurrentUser }: { user: Pub
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full pointer-events-none" />
             
             <div className="flex items-center gap-4 mb-6 relative z-10">
-              <div className="w-16 h-16 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center text-primary font-bold text-xl">
-                {user.name.charAt(0)}
-              </div>
+              {user.avatarUrl ? (
+                <img src={user.avatarUrl} alt={user.name} className="w-16 h-16 rounded-full border-2 border-primary object-cover" />
+              ) : (
+                <div className="w-16 h-16 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center text-primary font-bold text-xl">
+                  {user.name.charAt(0)}
+                </div>
+              )}
               <div>
                 <h2 className="font-bold text-xl text-on-background">{user.name}</h2>
                 <div className="text-sm font-label-mono text-primary flex items-center gap-2">
@@ -391,6 +436,41 @@ export default function PublicProfileClient({ user, isCurrentUser }: { user: Pub
                   placeholder="e.g. John Doe"
                   className="w-full bg-surface-container border border-outline rounded p-3 text-sm text-on-background focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary font-label-mono"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-label-mono text-on-background mb-1">Profile Image</label>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-2">
+                  <input 
+                    type="file" 
+                    accept="image/*"
+                    ref={fileInputRef}
+                    className="hidden"
+                    onChange={handleImageUpload}
+                  />
+                  <button 
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="px-4 py-2 w-full sm:w-auto bg-surface-container border border-outline rounded text-sm text-on-background hover:border-primary transition-colors font-label-mono flex items-center justify-center gap-2 shrink-0"
+                  >
+                    <span className="material-symbols-outlined text-[16px]">upload</span>
+                    Upload Image
+                  </button>
+                  <span className="text-on-surface-variant text-xs font-label-mono hidden sm:inline">OR URL</span>
+                  <input
+                    type="text"
+                    value={avatarUrl}
+                    onChange={(e) => setAvatarUrl(e.target.value)}
+                    placeholder="https://example.com/avatar.png"
+                    className="w-full bg-surface-container border border-outline rounded p-2 text-sm text-on-background focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary font-label-mono"
+                  />
+                </div>
+                {avatarUrl && (
+                  <div className="mt-3 flex items-center gap-3 p-3 border border-outline/50 rounded-lg bg-surface-container-lowest">
+                    <span className="text-xs text-on-surface-variant font-label-mono">Preview:</span>
+                    <img src={avatarUrl} alt="Preview" className="w-12 h-12 rounded-full border border-outline object-cover" />
+                  </div>
+                )}
               </div>
 
               <div>

@@ -40,5 +40,5 @@ export async function GET(request: Request) {
  }
  }
 
- return NextResponse.redirect(`${requestUrl.origin}/dashboard`);
+ return NextResponse.redirect(`${requestUrl.origin}/feed`);
 }

@@ -9,8 +9,11 @@ interface Contest {
   title: string;
   type: string;
   time: string;
+  endTime: string;
+  durationMs: number;
   description: string;
   url: string;
+  participants: { id: string; name: string; avatarUrl: string | null }[];
 }
 
 interface ContestsClientProps {
@@ -201,8 +204,27 @@ export default function ContestsClient({ upcoming, past }: ContestsClientProps) 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {upcoming.map((contest) => {
                 const style = TYPE_STYLES[contest.type] || TYPE_STYLES.OTHER;
+                const isLive = new Date(contest.time).getTime() <= Date.now() && new Date(contest.endTime).getTime() > Date.now();
+                const msUntilStart = new Date(contest.time).getTime() - Date.now();
+                
+                let relativeTimeStr = "";
+                if (isLive) {
+                  relativeTimeStr = "Live Now";
+                } else {
+                  const hoursUntil = msUntilStart / (1000 * 60 * 60);
+                  if (hoursUntil < 24) {
+                    if (hoursUntil < 1) relativeTimeStr = `Starts in ${Math.round(msUntilStart / 60000)} mins`;
+                    else relativeTimeStr = `Starts in ${Math.round(hoursUntil)} hrs`;
+                  } else {
+                    relativeTimeStr = `Starts in ${Math.round(hoursUntil / 24)} days`;
+                  }
+                }
+
                 return (
-                  <div key={contest.id} className={`bg-surface rounded-xl p-5 border shadow-sm flex flex-col ${style.border}`}>
+                  <div key={contest.id} className={`bg-surface rounded-xl p-5 border shadow-sm flex flex-col ${isLive ? 'border-[#EF4444] shadow-md relative overflow-hidden' : style.border}`}>
+                    {isLive && (
+                      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#EF4444] to-transparent animate-pulse" />
+                    )}
                     <div className="flex justify-between items-start mb-3">
                       <div className={`px-2 py-0.5 rounded text-xs font-label-mono font-medium border ${style.badge} flex items-center gap-1.5`}>
                         {contest.type === 'CP' ? (
@@ -214,9 +236,21 @@ export default function ContestsClient({ upcoming, past }: ContestsClientProps) 
                         )}
                         {contest.type === 'CP' ? 'Codeforces' : contest.type === 'LEETCODE' ? 'LeetCode' : contest.type}
                       </div>
-                      <span className="text-xs font-label-mono text-on-surface-variant bg-surface-container px-2 py-1 rounded">
-                        {new Date(contest.time).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
-                      </span>
+                      
+                      <div className="flex flex-col items-end gap-1">
+                        <span className="text-xs font-label-mono text-on-surface-variant bg-surface-container px-2 py-1 rounded">
+                          {new Date(contest.time).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                        </span>
+                        {isLive ? (
+                          <span className="text-[10px] font-bold text-[#EF4444] flex items-center gap-1 uppercase tracking-wider bg-[#FEE2E2] px-1.5 py-0.5 rounded border border-[#EF4444]/20 animate-pulse">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#EF4444]"></span> LIVE
+                          </span>
+                        ) : (
+                          <span className="text-[10px] font-medium text-on-surface-variant/70 uppercase tracking-wider">
+                            {relativeTimeStr}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     
                     <h3 className="font-bold text-on-background text-lg leading-tight mb-2 line-clamp-2">
@@ -266,13 +300,14 @@ export default function ContestsClient({ upcoming, past }: ContestsClientProps) 
                     <th className="p-4 font-medium">Contest</th>
                     <th className="p-4 font-medium">Platform</th>
                     <th className="p-4 font-medium">Date</th>
+                    <th className="p-4 font-medium">Participants</th>
                     <th className="p-4 font-medium text-right">Link</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-outline">
                   {past.length === 0 ? (
                     <tr>
-                      <td colSpan={4} className="p-8 text-center text-on-surface-variant font-label-mono">
+                      <td colSpan={5} className="p-8 text-center text-on-surface-variant font-label-mono">
                         No past contests found.
                       </td>
                     </tr>
@@ -291,6 +326,28 @@ export default function ContestsClient({ upcoming, past }: ContestsClientProps) 
                           </td>
                           <td className="p-4 text-sm font-label-mono text-on-surface-variant">
                             {formatDate(contest.time)}
+                          </td>
+                          <td className="p-4">
+                            {contest.participants && contest.participants.length > 0 ? (
+                              <div className="flex -space-x-2 overflow-hidden">
+                                {contest.participants.slice(0, 3).map((p) => (
+                                  <img
+                                    key={p.id}
+                                    className="inline-block h-6 w-6 rounded-full ring-2 ring-surface object-cover bg-surface-container-high"
+                                    src={p.avatarUrl || `https://api.dicebear.com/7.x/initials/svg?seed=${p.name}`}
+                                    alt={p.name}
+                                    title={p.name}
+                                  />
+                                ))}
+                                {contest.participants.length > 3 && (
+                                  <div className="flex items-center justify-center h-6 w-6 rounded-full ring-2 ring-surface bg-surface-container-high text-[10px] font-bold text-on-surface-variant z-10" title={`+${contest.participants.length - 3} others`}>
+                                    +{contest.participants.length - 3}
+                                  </div>
+                                )}
+                              </div>
+                            ) : (
+                              <span className="text-xs text-on-surface-variant italic">None</span>
+                            )}
                           </td>
                           <td className="p-4 text-right">
                             <a 

@@ -33,7 +33,7 @@ export async function updateSession(request: NextRequest) {
  } = await supabase.auth.getUser();
 
  // protect routes inside /(app)
- const publicRoutes = ["/", "/about", "/contact", "/privacy", "/terms", "/login"];
+ const publicRoutes = ["/", "/about", "/contact", "/privacy", "/terms", "/login", "/sitemap.xml", "/robots.txt"];
  const isPublicRoute = publicRoutes.includes(request.nextUrl.pathname) || 
                        request.nextUrl.pathname.startsWith("/api/auth") ||
                        request.nextUrl.pathname.startsWith("/api/cron");
@@ -44,10 +44,10 @@ export async function updateSession(request: NextRequest) {
  return NextResponse.redirect(url);
  }
 
- // If user is logged in and trying to access /login, redirect to dashboard
+ // If user is logged in and trying to access /login, redirect to feed
  if (user && request.nextUrl.pathname.startsWith("/login")) {
  const url = request.nextUrl.clone();
- url.pathname = "/dashboard";
+ url.pathname = "/feed";
  return NextResponse.redirect(url);
  }
 

@@ -49,6 +49,8 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
   const [submitting, setSubmitting] = useState(false);
   const [commentInputs, setCommentInputs] = useState<Record<string, string>>({});
   const [replyingTo, setReplyingTo] = useState<Record<string, string | undefined>>({});
+  const [deletePrompt, setDeletePrompt] = useState<{ type: 'post', postId: string } | { type: 'comment', postId: string, commentId: string } | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     fetchPosts();
@@ -160,17 +162,36 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
     }
   };
 
-  const handleDelete = async (postId: string) => {
-    if (!confirm("Delete this post?")) return;
+  const handleConfirmDelete = async () => {
+    if (!deletePrompt) return;
+    setIsDeleting(true);
     try {
-      const res = await fetch(`/api/feed/${postId}`, { method: "DELETE" });
-      if (res.ok) {
-        const supabase = createClient();
-        supabase.channel("public-feed").send({ type: "broadcast", event: "delete_post", payload: { postId } });
-        setPosts(posts.filter(p => p.id !== postId));
+      if (deletePrompt.type === 'post') {
+        const res = await fetch(`/api/feed/${deletePrompt.postId}`, { method: "DELETE" });
+        if (res.ok) {
+          const supabase = createClient();
+          supabase.channel("public-feed").send({ type: "broadcast", event: "delete_post", payload: { postId: deletePrompt.postId } });
+          setPosts(posts.filter(p => p.id !== deletePrompt.postId));
+        }
+      } else {
+        const { postId, commentId } = deletePrompt;
+        const res = await fetch(`/api/feed/${postId}/comment?commentId=${commentId}`, { method: "DELETE" });
+        if (res.ok) {
+          const supabase = createClient();
+          supabase.channel("public-feed").send({ type: "broadcast", event: "delete_comment", payload: { postId, commentId } });
+          setPosts(posts.map(p => {
+            if (p.id === postId) {
+              return { ...p, comments: p.comments.filter(c => c.id !== commentId) };
+            }
+            return p;
+          }));
+        }
       }
     } catch (e) {
       console.error(e);
+    } finally {
+      setIsDeleting(false);
+      setDeletePrompt(null);
     }
   };
 
@@ -206,24 +227,6 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
     }
   };
 
-  const handleDeleteComment = async (postId: string, commentId: string) => {
-    if (!confirm("Delete this comment?")) return;
-    try {
-      const res = await fetch(`/api/feed/${postId}/comment?commentId=${commentId}`, { method: "DELETE" });
-      if (res.ok) {
-        const supabase = createClient();
-        supabase.channel("public-feed").send({ type: "broadcast", event: "delete_comment", payload: { postId, commentId } });
-        setPosts(posts.map(p => {
-          if (p.id === postId) {
-            return { ...p, comments: p.comments.filter(c => c.id !== commentId) };
-          }
-          return p;
-        }));
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   if (loading) {
     return <div className="p-8 text-center text-on-surface-variant font-label-mono">Loading feed...</div>;
@@ -273,7 +276,7 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
             </button>
             {comment.user.id === currentUserId && (
               <button 
-                onClick={() => handleDeleteComment(postId, comment.id)}
+                onClick={() => setDeletePrompt({ type: 'comment', postId, commentId: comment.id })}
                 className="text-on-surface-variant hover:text-red-500"
               >
                 <span className="material-symbols-outlined text-[14px]">delete</span>
@@ -363,7 +366,7 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
                   </div>
                 </div>
                 {isAuthor && (
-                  <button onClick={() => handleDelete(post.id)} className="text-on-surface-variant hover:text-red-500">
+                  <button onClick={() => setDeletePrompt({ type: 'post', postId: post.id })} className="text-on-surface-variant hover:text-red-500">
                     <span className="material-symbols-outlined text-[18px]">delete</span>
                   </button>
                 )}
@@ -429,6 +432,38 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
           </div>
         )}
       </div>
+
+      {deletePrompt && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#1A1A1A]/40 backdrop-blur-sm animate-fade-in"
+          onClick={(e) => e.target === e.currentTarget && !isDeleting && setDeletePrompt(null)}
+        >
+          <div className="bg-surface border border-outline rounded-xl w-full max-w-sm shadow-modal animate-slide-up">
+            <div className="p-6">
+              <h3 className="font-headline-sm text-on-background mb-2">Delete {deletePrompt.type === 'post' ? 'Post' : 'Comment'}</h3>
+              <p className="text-on-surface-variant text-sm mb-6">
+                Are you sure you want to delete this {deletePrompt.type === 'post' ? 'post' : 'comment'}? This action cannot be undone.
+              </p>
+              <div className="flex gap-3 w-full">
+                <button
+                  disabled={isDeleting}
+                  onClick={() => setDeletePrompt(null)}
+                  className="flex-1 px-4 py-2 rounded-lg font-bold font-label-mono text-sm border border-outline text-on-background hover:bg-surface-container transition-colors disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  disabled={isDeleting}
+                  onClick={handleConfirmDelete}
+                  className="flex-1 px-4 py-2 rounded-lg font-bold font-label-mono text-sm bg-red-500 text-white hover:bg-red-600 shadow-sm transition-colors disabled:opacity-50"
+                >
+                  {isDeleting ? "Deleting..." : "Delete"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

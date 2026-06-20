@@ -60,7 +60,7 @@ export default function OnboardingWizard({ initialName }: { initialName: string 
  }
 
  // Success! Redirect to dashboard
- router.push("/dashboard");
+ router.push("/feed");
  } catch (err: any) {
  setError(err.message);
  setIsLoading(false);

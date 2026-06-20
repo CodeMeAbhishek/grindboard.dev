@@ -9,6 +9,7 @@ export function SettingsClient({ email }: { email: string }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,25 +92,49 @@ export function SettingsClient({ email }: { email: string }) {
             <label className="block text-xs font-label-mono text-on-surface-variant uppercase tracking-wider mb-1">
               New Password
             </label>
-            <input 
-              type="password" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-background border border-outline focus:border-primary rounded p-2 text-sm text-on-background focus:outline-none transition-colors"
-              placeholder="Enter new password"
-            />
+            <div className="relative">
+              <input 
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-background border border-outline focus:border-primary rounded p-2 pr-10 text-sm text-on-background focus:outline-none transition-colors"
+                placeholder="Enter new password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-on-surface-variant hover:text-on-background"
+                tabIndex={-1}
+              >
+                <span className="material-symbols-outlined text-[20px]">
+                  {showPassword ? "visibility_off" : "visibility"}
+                </span>
+              </button>
+            </div>
           </div>
           <div>
             <label className="block text-xs font-label-mono text-on-surface-variant uppercase tracking-wider mb-1">
               Confirm New Password
             </label>
-            <input 
-              type="password" 
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full bg-background border border-outline focus:border-primary rounded p-2 text-sm text-on-background focus:outline-none transition-colors"
-              placeholder="Confirm new password"
-            />
+            <div className="relative">
+              <input 
+                type={showPassword ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full bg-background border border-outline focus:border-primary rounded p-2 pr-10 text-sm text-on-background focus:outline-none transition-colors"
+                placeholder="Confirm new password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-on-surface-variant hover:text-on-background"
+                tabIndex={-1}
+              >
+                <span className="material-symbols-outlined text-[20px]">
+                  {showPassword ? "visibility_off" : "visibility"}
+                </span>
+              </button>
+            </div>
           </div>
           <button 
             type="submit" 

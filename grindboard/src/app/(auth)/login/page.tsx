@@ -20,6 +20,7 @@ export default function LoginPage() {
  const [resetNewPassword, setResetNewPassword] = useState("");
  const [resetConfirmPassword, setResetConfirmPassword] = useState("");
  const [isSettingNewPassword, setIsSettingNewPassword] = useState(false);
+ const [showPassword, setShowPassword] = useState(false);
 
  const handleAuth = async (e: React.FormEvent) => {
  e.preventDefault();
@@ -40,7 +41,7 @@ export default function LoginPage() {
  password,
  });
  if (error) throw error;
- router.push("/dashboard");
+ router.push("/feed");
  router.refresh();
  }
  } catch (err: any) {
@@ -62,7 +63,7 @@ export default function LoginPage() {
  type: 'signup',
  });
  if (error) throw error;
- router.push("/dashboard");
+ router.push("/feed");
  router.refresh();
  } catch (err: any) {
  setError(err.message);
@@ -117,7 +118,7 @@ export default function LoginPage() {
     try {
       const { error } = await supabase.auth.updateUser({ password: resetNewPassword });
       if (error) throw error;
-      router.push("/dashboard");
+      router.push("/feed");
       router.refresh();
     } catch (err: any) {
       setError(err.message);
@@ -175,16 +176,18 @@ export default function LoginPage() {
  </div>
  </div>
  
- <div className="relative z-10 bg-surface/10 p-6 rounded-2xl backdrop-blur-sm border border-white/20 mt-12">
- <p className="italic mb-4 text-white/90">"If you're not grinding here, you're missing out on the network that actually gets you hired. The FOMO is real."</p>
- <div className="flex items-center gap-3">
- <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0EA5E9] to-[#2563EB] flex items-center justify-center font-bold text-white">A</div>
- <div>
- <div className="font-bold text-sm">Alex Chen</div>
- <div className="text-xs text-white/70">SDE @ FAANG</div>
- </div>
- </div>
- </div>
+  <div className="relative z-10 bg-surface/10 p-6 rounded-2xl backdrop-blur-sm border border-white/20 mt-12">
+  <p className="italic mb-4 text-white/90">"I built this platform because preparing alone is hard. Grinding with an elite community is how you actually crack top-tier companies. Don't grind in silence."</p>
+  <div className="flex items-center gap-3">
+  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white overflow-hidden border border-white/30">
+    <img src="/creator_avatar.jpeg" alt="Abhishek Gupta" className="w-full h-full object-cover" />
+  </div>
+  <div>
+  <div className="font-bold text-sm">Abhishek Gupta</div>
+  <div className="text-xs text-white/70">Founder, Grindboard</div>
+  </div>
+  </div>
+  </div>
  </div>
 
  {/* Right Side - Form */}
@@ -211,25 +214,49 @@ export default function LoginPage() {
     <form onSubmit={handleUpdateRecoveredPassword} className="space-y-4">
       <div>
         <label className="mb-1.5 block text-xs font-bold text-on-surface-variant uppercase tracking-wider">New Password</label>
-        <input
-          type="password"
-          value={resetNewPassword}
-          onChange={(e) => setResetNewPassword(e.target.value)}
-          placeholder="••••••••"
-          className="w-full rounded-lg bg-surface text-on-background border border-outline px-4 py-2.5 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-colors outline-none"
-          required
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            value={resetNewPassword}
+            onChange={(e) => setResetNewPassword(e.target.value)}
+            placeholder="••••••••"
+            className="w-full rounded-lg bg-surface text-on-background border border-outline px-4 py-2.5 pr-10 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-colors outline-none"
+            required
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute inset-y-0 right-0 flex items-center pr-3 text-on-surface-variant hover:text-on-background"
+            tabIndex={-1}
+          >
+            <span className="material-symbols-outlined text-[20px]">
+              {showPassword ? "visibility_off" : "visibility"}
+            </span>
+          </button>
+        </div>
       </div>
       <div>
         <label className="mb-1.5 block text-xs font-bold text-on-surface-variant uppercase tracking-wider">Confirm New Password</label>
-        <input
-          type="password"
-          value={resetConfirmPassword}
-          onChange={(e) => setResetConfirmPassword(e.target.value)}
-          placeholder="••••••••"
-          className="w-full rounded-lg bg-surface text-on-background border border-outline px-4 py-2.5 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-colors outline-none"
-          required
-        />
+        <div className="relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            value={resetConfirmPassword}
+            onChange={(e) => setResetConfirmPassword(e.target.value)}
+            placeholder="••••••••"
+            className="w-full rounded-lg bg-surface text-on-background border border-outline px-4 py-2.5 pr-10 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-colors outline-none"
+            required
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute inset-y-0 right-0 flex items-center pr-3 text-on-surface-variant hover:text-on-background"
+            tabIndex={-1}
+          >
+            <span className="material-symbols-outlined text-[20px]">
+              {showPassword ? "visibility_off" : "visibility"}
+            </span>
+          </button>
+        </div>
       </div>
       <button
         type="submit"
@@ -364,15 +391,27 @@ export default function LoginPage() {
         </button>
       )}
     </div>
-    <input
-      type="password"
- value={password}
- onChange={(e) => setPassword(e.target.value)}
- placeholder="••••••••"
- className="w-full rounded-lg bg-surface text-on-background border border-outline px-4 py-2.5 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-colors outline-none"
- required
- />
- </div>
+    <div className="relative">
+      <input
+        type={showPassword ? "text" : "password"}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="••••••••"
+        className="w-full rounded-lg bg-surface text-on-background border border-outline px-4 py-2.5 pr-10 focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-colors outline-none"
+        required
+      />
+      <button
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute inset-y-0 right-0 flex items-center pr-3 text-on-surface-variant hover:text-on-background"
+        tabIndex={-1}
+      >
+        <span className="material-symbols-outlined text-[20px]">
+          {showPassword ? "visibility_off" : "visibility"}
+        </span>
+      </button>
+    </div>
+  </div>
 
  <button
  type="submit"

@@ -139,7 +139,7 @@ export function LeaderboardClient({ initialData }: LeaderboardClientProps) {
                               {user.name}
                             </Link>
                             <span className="text-xs text-on-surface-variant font-label-mono">
-                              @{tab === "CODEFORCES" ? user.cfHandle : user.lcHandle}
+                              {user.username ? `@${user.username}` : "Member"}
                             </span>
                           </div>
                         </div>

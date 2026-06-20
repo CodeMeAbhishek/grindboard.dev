@@ -26,9 +26,10 @@ export default async function ContestsPage() {
   if (!dbUser) redirect("/login");
 
   const now = new Date();
+  const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   
   let dbUpcoming = await prisma.event.findMany({
-    where: { scheduledAt: { gte: now } },
+    where: { scheduledAt: { gte: yesterday } },
     orderBy: { scheduledAt: "asc" }
   });
 
@@ -77,7 +78,7 @@ export default async function ContestsPage() {
 
         // Refetch after inserting
         dbUpcoming = await prisma.event.findMany({
-          where: { scheduledAt: { gte: now } },
+          where: { scheduledAt: { gte: yesterday } },
           orderBy: { scheduledAt: "asc" }
         });
       }
@@ -86,29 +87,68 @@ export default async function ContestsPage() {
     }
   }
 
-  const upcoming = dbUpcoming.map((e) => ({
-    id: e.id,
-    title: e.title,
-    type: e.type,
-    time: e.scheduledAt.toISOString(),
-    description: e.description || "",
-    url: e.platformUrl || "#"
-  }));
+  function parseDurationMs(desc: string | null): number {
+    if (!desc) return 2 * 60 * 60 * 1000;
+    const matchHours = desc.match(/Duration:\s*([\d.]+)\s*hours?/);
+    if (matchHours) return parseFloat(matchHours[1]) * 60 * 60 * 1000;
+    const matchMins = desc.match(/Duration:\s*([\d.]+)\s*minutes?/);
+    if (matchMins) return parseFloat(matchMins[1]) * 60 * 1000;
+    return 2 * 60 * 60 * 1000;
+  }
+
+  const upcomingRaw = dbUpcoming.map((e) => {
+    const durationMs = parseDurationMs(e.description);
+    return {
+      id: e.id,
+      title: e.title,
+      type: e.type,
+      time: e.scheduledAt.toISOString(),
+      endTime: new Date(e.scheduledAt.getTime() + durationMs).toISOString(),
+      durationMs,
+      description: e.description || "",
+      url: e.platformUrl || "#",
+      participants: []
+    };
+  });
+
+  // Filter out truly past contests from the upcoming array (using endTime)
+  const upcoming = upcomingRaw.filter(c => new Date(c.endTime).getTime() > now.getTime());
 
   const dbPast = await prisma.event.findMany({
     where: { scheduledAt: { lt: now } },
     orderBy: { scheduledAt: "desc" },
-    take: 50 // Limit to last 50 past contests
+    take: 50, // Limit to last 50 past contests
+    include: {
+      results: {
+        take: 5,
+        include: {
+          user: { select: { id: true, name: true, avatarUrl: true } }
+        }
+      }
+    }
   });
 
-  const past = dbPast.map((e) => ({
-    id: e.id,
-    title: e.title,
-    type: e.type,
-    time: e.scheduledAt.toISOString(),
-    description: e.description || "",
-    url: e.platformUrl || "#"
-  }));
+  const pastRaw = dbPast.map((e) => {
+    const durationMs = parseDurationMs(e.description);
+    return {
+      id: e.id,
+      title: e.title,
+      type: e.type,
+      time: e.scheduledAt.toISOString(),
+      endTime: new Date(e.scheduledAt.getTime() + durationMs).toISOString(),
+      durationMs,
+      description: e.description || "",
+      url: e.platformUrl || "#",
+      participants: e.results.map(r => ({
+        id: r.user.id,
+        name: r.user.name,
+        avatarUrl: r.user.avatarUrl
+      }))
+    };
+  });
+
+  // Ensure live contests aren't accidentally shown in Past
+  const past = pastRaw.filter(c => new Date(c.endTime).getTime() <= now.getTime());
 
   return <ContestsClient upcoming={upcoming} past={past} />;
 }

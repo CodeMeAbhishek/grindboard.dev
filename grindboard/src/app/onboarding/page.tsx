@@ -20,7 +20,7 @@ export default async function OnboardingPage() {
  }
 
  if (dbUser.isOnboarded) {
- redirect("/dashboard");
+ redirect("/feed");
  }
 
  return (

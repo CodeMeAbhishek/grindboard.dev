@@ -27,6 +27,7 @@ export function Header({ userId, userAvatarUrl, userName }: HeaderProps) {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   
   const pathname = usePathname();
   const router = useRouter();
@@ -326,9 +327,14 @@ export function Header({ userId, userAvatarUrl, userName }: HeaderProps) {
 
  {/* Mobile Top Nav */}
  <header className="md:hidden bg-surface/90 backdrop-blur-md fixed top-0 w-full z-50 flex justify-between items-center px-sm py-base border-b border-outline h-14">
- <span className="font-display-xl text-2xl font-black tracking-tighter text-primary leading-none">
- Grindboard
- </span>
+ <div className="flex items-center gap-3">
+   <button onClick={() => setShowMobileMenu(true)} className="text-on-surface-variant hover:text-primary transition-colors focus:outline-none flex">
+     <span className="material-symbols-outlined">menu</span>
+   </button>
+   <span className="font-display-xl text-2xl font-black tracking-tighter text-primary leading-none">
+   Grindboard
+   </span>
+ </div>
  <div className="flex items-center gap-sm">
  <div className="relative">
    <button 
@@ -374,8 +380,104 @@ export function Header({ userId, userAvatarUrl, userName }: HeaderProps) {
      </div>
    )}
  </div>
-  </div>
+   </div>
  </header>
+
+ {/* Mobile Menu Overlay */}
+ {showMobileMenu && (
+   <div className="fixed inset-0 bg-surface z-[60] flex flex-col md:hidden animate-in slide-in-from-left-full duration-200">
+     <div className="flex justify-between items-center p-4 border-b border-outline h-14">
+       <span className="font-display-xl text-2xl font-black tracking-tighter text-primary leading-none">
+         Grindboard
+       </span>
+       <button onClick={() => setShowMobileMenu(false)} className="text-on-surface-variant hover:text-primary focus:outline-none flex">
+         <span className="material-symbols-outlined">close</span>
+       </button>
+     </div>
+
+     <div className="p-4 flex-1 overflow-y-auto space-y-6">
+       {/* Search */}
+       <div className="relative">
+         <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">
+           search
+         </span>
+         <input
+           type="text"
+           placeholder="Search users..."
+           value={searchQuery}
+           onChange={(e) => setSearchQuery(e.target.value)}
+           className="w-full bg-surface border border-outline rounded py-3 pl-10 pr-3 text-sm font-label-mono text-on-background focus:outline-none focus:border-primary"
+         />
+         {searchResults.length > 0 && searchQuery.length >= 2 && (
+           <div className="mt-2 bg-surface border border-outline rounded-lg shadow-sm overflow-hidden border-t-0">
+               {searchResults.map((user) => (
+                 <button
+                   key={user.id}
+                   onClick={() => {
+                     router.push(`/u/${user.id}`);
+                     setShowMobileMenu(false);
+                     setSearchQuery("");
+                   }}
+                   className="w-full flex items-center gap-3 px-3 py-2 hover:bg-surface-container transition-colors text-left border-b border-outline last:border-0"
+                 >
+                   {user.avatarUrl ? (
+                     <img src={user.avatarUrl} alt={user.name} className="w-8 h-8 rounded-full object-cover" />
+                   ) : (
+                     <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">
+                       {user.name.charAt(0)}
+                     </div>
+                   )}
+                   <div className="flex-1 min-w-0">
+                     <div className="text-sm font-bold text-on-background truncate">{user.name}</div>
+                   </div>
+                 </button>
+               ))}
+           </div>
+         )}
+       </div>
+
+       {/* Navigation */}
+       <nav className="flex flex-col space-y-1">
+         <Link href="/feed" onClick={() => setShowMobileMenu(false)} className="flex items-center gap-3 px-3 py-3 font-label-mono text-on-background border border-transparent hover:bg-surface-container rounded-lg">
+           <span className="material-symbols-outlined">home</span> Home
+         </Link>
+         <Link href="/contests" onClick={() => setShowMobileMenu(false)} className="flex items-center gap-3 px-3 py-3 font-label-mono text-on-background border border-transparent hover:bg-surface-container rounded-lg">
+           <span className="material-symbols-outlined">calendar_today</span> 
+           <div className="flex items-start">
+             Contests
+             <span className="w-1.5 h-1.5 bg-red-500 rounded-full ml-0.5 mt-0.5 shadow-[0_0_6px_rgba(239,68,68,0.8)]" />
+           </div>
+         </Link>
+         <Link href="/leaderboard" onClick={() => setShowMobileMenu(false)} className="flex items-center gap-3 px-3 py-3 font-label-mono text-on-background border border-transparent hover:bg-surface-container rounded-lg">
+           <span className="material-symbols-outlined">leaderboard</span> Leaderboard
+         </Link>
+         <Link href="/profile" onClick={() => setShowMobileMenu(false)} className="flex items-center gap-3 px-3 py-3 font-label-mono text-on-background border border-transparent hover:bg-surface-container rounded-lg">
+           <span className="material-symbols-outlined">person</span> View Profile
+         </Link>
+         <Link href="/settings" onClick={() => setShowMobileMenu(false)} className="flex items-center gap-3 px-3 py-3 font-label-mono text-on-background border border-transparent hover:bg-surface-container rounded-lg">
+           <span className="material-symbols-outlined">settings</span> Settings
+         </Link>
+       </nav>
+
+       {/* Actions */}
+       <div className="flex flex-col space-y-4 pt-4 border-t border-outline px-3">
+         <div className="flex items-center justify-between font-label-mono text-on-background py-2">
+           <span className="flex items-center gap-3"><span className="material-symbols-outlined">light_mode</span> Theme</span>
+           <ThemeToggle />
+         </div>
+         <button 
+           onClick={() => {
+             setShowMobileMenu(false);
+             handleSignOut();
+           }}
+           className="flex items-center gap-3 text-red-500 font-label-mono py-2 text-left hover:bg-red-500/10 rounded-lg px-2 -mx-2"
+         >
+           <span className="material-symbols-outlined">logout</span> Sign Out
+         </button>
+       </div>
+     </div>
+   </div>
+ )}
  </>
  );
 }

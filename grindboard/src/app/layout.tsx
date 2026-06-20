@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
@@ -32,6 +33,21 @@ export default function RootLayout({
  />
  </head>
  <body className="bg-background text-on-background transition-colors" suppressHydrationWarning>
+    {/* Google Analytics */}
+    <Script
+      src="https://www.googletagmanager.com/gtag/js?id=G-XK7GJPWXX7"
+      strategy="afterInteractive"
+    />
+    <Script id="google-analytics" strategy="afterInteractive">
+      {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-XK7GJPWXX7');
+      `}
+    </Script>
+
  <ThemeProvider
  attribute="class"
  defaultTheme="system"

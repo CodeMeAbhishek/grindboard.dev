@@ -25,10 +25,7 @@ export default async function DashboardPage() {
  orderBy: { createdAt: "desc" },
  include: { module: true, user: true },
  },
- goals: {
- where: { archived: false },
- include: { module: true },
- },
+ 
  streaks: {
  include: { module: true },
  },
@@ -58,10 +55,7 @@ export default async function DashboardPage() {
  orderBy: { createdAt: "desc" },
  include: { module: true, user: true },
  },
- goals: {
- where: { archived: false },
- include: { module: true },
- },
+ 
  streaks: {
  include: { module: true },
  },

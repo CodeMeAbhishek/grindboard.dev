@@ -89,24 +89,24 @@ export default function InterviewsClient({ data }: { data: InterviewData }) {
             {/* Decorative gradient blob */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 group-hover:bg-primary/10 transition-colors" />
 
-            <div className="flex items-start justify-between mb-4 relative z-10">
-              <div className="flex items-center gap-3">
+            <div className="flex items-start justify-between mb-4 relative z-10 gap-3">
+              <div className="flex items-center gap-3 min-w-0">
                 {COMPANY_LOGOS[company.company] ? (
                   <img 
                     src={COMPANY_LOGOS[company.company]} 
                     alt={`${company.company} logo`} 
-                    className="w-10 h-10 object-contain rounded-md bg-white p-1 shadow-sm"
+                    className="w-10 h-10 object-contain rounded-md bg-white p-1 shadow-sm shrink-0"
                   />
                 ) : (
-                  <div className="w-10 h-10 rounded-md bg-surface-container flex items-center justify-center border border-outline">
+                  <div className="w-10 h-10 rounded-md bg-surface-container flex items-center justify-center border border-outline shrink-0">
                     <span className="material-symbols-outlined text-primary text-xl">corporate_fare</span>
                   </div>
                 )}
-                <h2 className="font-headline-md text-on-background group-hover:text-primary transition-colors">
+                <h2 className="font-headline-md text-on-background group-hover:text-primary transition-colors truncate">
                   {company.company}
                 </h2>
               </div>
-              <div className="bg-primary/10 text-primary px-3 py-1 rounded-full font-label-mono text-xs font-bold whitespace-nowrap ml-2">
+              <div className="bg-primary/10 text-primary px-3 py-1 rounded-xl font-label-mono text-[10px] font-bold text-center shrink-0 max-w-[50%] flex-wrap">
                 {company.number_of_selects} Selects
               </div>
             </div>
