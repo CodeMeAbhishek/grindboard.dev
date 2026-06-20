@@ -1,22 +1,16 @@
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import { MobileNav } from "@/components/layout/MobileNav";
-import { createClient } from "@/lib/supabase/server";
+import { getAuthenticatedUser } from "@/lib/data";
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/prisma";
 import { getSkillLevel } from "@/lib/gamification";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
- const supabase = await createClient();
- const { data: { user } } = await supabase.auth.getUser();
+  const { authUser, dbUser } = await getAuthenticatedUser();
 
- if (!user) {
- redirect("/login");
- }
-
- const dbUser = await prisma.user.findUnique({
- where: { supabaseId: user.id },
- });
+  if (!authUser) {
+    redirect("/login");
+  }
 
  if (dbUser && !dbUser.isOnboarded) {
  redirect("/onboarding");

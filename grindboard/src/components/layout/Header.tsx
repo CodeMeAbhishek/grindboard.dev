@@ -65,9 +65,12 @@ export function Header({ userId, userAvatarUrl, userName }: HeaderProps) {
   useEffect(() => {
     if (!userId) return;
 
-    fetch("/api/notifications").then(res => res.json()).then(data => {
-      if (Array.isArray(data)) setNotifications(data);
-    });
+    fetch("/api/notifications")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) setNotifications(data);
+      })
+      .catch((err) => console.error("Failed to fetch notifications:", err));
 
     const supabase = createClient();
     const channel = supabase.channel("public-feed");

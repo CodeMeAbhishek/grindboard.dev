@@ -41,8 +41,7 @@ export default function LoginPage() {
  password,
  });
  if (error) throw error;
- router.push("/feed");
- router.refresh();
+ window.location.href = "/feed";
  }
  } catch (err: any) {
  setError(err.message);
@@ -63,8 +62,7 @@ export default function LoginPage() {
  type: 'signup',
  });
  if (error) throw error;
- router.push("/feed");
- router.refresh();
+ window.location.href = "/feed";
  } catch (err: any) {
  setError(err.message);
  } finally {
@@ -118,8 +116,7 @@ export default function LoginPage() {
     try {
       const { error } = await supabase.auth.updateUser({ password: resetNewPassword });
       if (error) throw error;
-      router.push("/feed");
-      router.refresh();
+      window.location.href = "/feed";
     } catch (err: any) {
       setError(err.message);
     } finally {

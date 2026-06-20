@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { CodeforcesIcon, LeetCodeIcon, LinkedInIcon } from "@/components/icons/PlatformIcons";
 
 type Step = 1 | 2 | 3;
 
@@ -60,7 +61,7 @@ export default function OnboardingWizard({ initialName }: { initialName: string 
  }
 
  // Success! Redirect to dashboard
- router.push("/feed");
+ window.location.href = "/feed";
  } catch (err: any) {
  setError(err.message);
  setIsLoading(false);
@@ -181,7 +182,7 @@ export default function OnboardingWizard({ initialName }: { initialName: string 
  <label className="block text-sm font-medium text-on-surface-variant mb-2">Codeforces Username</label>
  <div className="relative">
  <span className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center">
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5"><path fill="#F44336" d="M22.5 4.5h-4.5v15h4.5v-15Z"/><path fill="#2196F3" d="M14.5 9h-4.5v10.5h4.5V9Z"/><path fill="#FFC107" d="M6.5 13.5h-4.5V19.5h4.5v-6Z"/></svg>
+ <CodeforcesIcon className="w-5 h-5" />
  </span>
  <input
  type="text"
@@ -197,7 +198,7 @@ export default function OnboardingWizard({ initialName }: { initialName: string 
  <label className="block text-sm font-medium text-on-surface-variant mb-2">LeetCode Username</label>
  <div className="relative">
  <span className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center">
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5"><path fill="#FFA116" d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.939 5.939 0 0 0 1.271 1.543l5.997 5.608a3.803 3.803 0 0 0 2.722 1.132 3.802 3.802 0 0 0 2.651-1.041 3.738 3.738 0 0 0 1.121-2.617 3.739 3.739 0 0 0-1.085-2.614l-5.618-5.342c-.222-.211-.341-.497-.341-.787 0-.29.119-.575.341-.786l8.805-8.31a.586.586 0 0 0 .193-.437.587.587 0 0 0-.18-.432l-3.13-2.855a1.375 1.375 0 0 0-.963-.41zm-.008 3.529c.14.004.28.064.387.164l2.176 1.986a1.18 1.18 0 0 1 .374.872 1.179 1.179 0 0 1-.362.864l-8.595 8.113c-.63.595-.98 1.401-.98 2.247 0 .846.35 1.652.98 2.247l5.618 5.341c.219.208.513.325.823.325.311 0 .604-.117.824-.325l-6.14-5.742a4.437 4.437 0 0 1-.95-1.15 4.33 4.33 0 0 1-.26-.759 4.027 4.027 0 0 1-.046-1.768 4.015 4.015 0 0 1 .325-1.065 4.312 4.312 0 0 1 .903-1.571l3.854-4.126 5.405-5.787a.12.12 0 0 0-.007-.174l-2.176-1.986a.12.12 0 0 0-.172.007L1.93 14.542a.12.12 0 0 0 .007.174l8.36 7.643a1.176 1.176 0 0 1 .373.868 1.175 1.175 0 0 1-.373.867l-3.13 2.855a.586.586 0 0 0-.193.437.587.587 0 0 0 .193.432l5.618 5.342c.866.822 2.019 1.282 3.238 1.282 1.219 0 2.372-.46 3.238-1.282l3.13-2.855c.348-.318.544-.755.544-1.212 0-.457-.196-.894-.544-1.212L8.27 16.275a.12.12 0 0 0-.171-.007l-2.176 1.986a.12.12 0 0 0-.007.174l6.02 5.626a.584.584 0 0 0 .41.161.585.585 0 0 0 .41-.161l5.618-5.342a2.492 2.492 0 0 0 .753-1.776 2.493 2.493 0 0 0-.753-1.777l-5.618-5.341c-.63-.596-.98-1.402-.98-2.248 0-.846.35-1.652.98-2.247l8.595-8.113a2.428 2.428 0 0 0 .769-1.792 2.427 2.427 0 0 0-.769-1.79l-2.176-1.987a2.625 2.625 0 0 0-1.794-.741z"/></svg>
+ <LeetCodeIcon className="w-5 h-5" />
  </span>
  <input
  type="text"
@@ -213,7 +214,7 @@ export default function OnboardingWizard({ initialName }: { initialName: string 
  <label className="block text-sm font-medium text-on-surface-variant mb-2">LinkedIn Username (Optional)</label>
  <div className="relative">
  <span className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center">
- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5"><path fill="#0A66C2" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+ <LinkedInIcon className="w-5 h-5" />
  </span>
  <input
  type="text"

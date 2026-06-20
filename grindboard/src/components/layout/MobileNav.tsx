@@ -8,6 +8,7 @@ const mobileNavItems = [
   { href: "/dashboard", label: "Home", icon: "home" },
   { href: "/subjects", label: "Learn", icon: "menu_book" },
   { href: "/interviews", label: "Prep", icon: "work" },
+  { href: "/feed", label: "Feed", icon: "dynamic_feed" },
   { href: "/leaderboard", label: "Rank", icon: "leaderboard" },
   { href: "/profile", label: "Profile", icon: "person" },
 ];

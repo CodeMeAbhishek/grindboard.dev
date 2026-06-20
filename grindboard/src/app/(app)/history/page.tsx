@@ -1,8 +1,8 @@
-import { createClient } from "@/lib/supabase/server";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { CodeforcesIcon, LeetCodeIcon } from "@/components/icons/PlatformIcons";
+import { getAuthenticatedUser } from "@/lib/data";
 
 export const dynamic = 'force-dynamic';
 
@@ -11,18 +11,11 @@ export default async function HistoryPage({
 }: {
   searchParams: { page?: string }
 }) {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const { authUser, dbUser } = await getAuthenticatedUser();
 
-  if (!user) {
+  if (!authUser || !dbUser) {
     redirect("/login");
   }
-
-  const dbUser = await prisma.user.findUnique({
-    where: { supabaseId: user.id },
-  });
-
-  if (!dbUser) redirect("/login");
 
   const page = parseInt(searchParams.page || "1", 10);
   const pageSize = 15;

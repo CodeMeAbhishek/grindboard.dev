@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import ContestsClient from "./ContestsClient";
-import { createClient } from "@/lib/supabase/server";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { getCFUpcomingContests } from "@/lib/integrations/codeforces";
 import { getLCUpcomingContests } from "@/lib/integrations/leetcode";
+import { getAuthenticatedUser } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Contests — Grindboard",
@@ -12,18 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default async function ContestsPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const { authUser, dbUser } = await getAuthenticatedUser();
 
-  if (!user) {
+  if (!authUser || !dbUser) {
     redirect("/login");
   }
-
-  const dbUser = await prisma.user.findUnique({
-    where: { supabaseId: user.id }
-  });
-
-  if (!dbUser) redirect("/login");
 
   const now = new Date();
   const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
@@ -96,6 +89,17 @@ export default async function ContestsPage() {
     return 2 * 60 * 60 * 1000;
   }
 
+  function formatPlatformUrl(type: string, url: string | null): string {
+    if (!url) return "#";
+    if (type === "LEETCODE" && url.startsWith("LC_CONTEST_")) {
+      return `https://leetcode.com/contest/${url.replace("LC_CONTEST_", "")}`;
+    }
+    if (type === "CP" && url.startsWith("CF_CONTEST_")) {
+      return `https://codeforces.com/contest/${url.replace("CF_CONTEST_", "")}`;
+    }
+    return url;
+  }
+
   const upcomingRaw = dbUpcoming.map((e) => {
     const durationMs = parseDurationMs(e.description);
     return {
@@ -106,7 +110,7 @@ export default async function ContestsPage() {
       endTime: new Date(e.scheduledAt.getTime() + durationMs).toISOString(),
       durationMs,
       description: e.description || "",
-      url: e.platformUrl || "#",
+      url: formatPlatformUrl(e.type, e.platformUrl),
       participants: []
     };
   });
@@ -138,7 +142,7 @@ export default async function ContestsPage() {
       endTime: new Date(e.scheduledAt.getTime() + durationMs).toISOString(),
       durationMs,
       description: e.description || "",
-      url: e.platformUrl || "#",
+      url: formatPlatformUrl(e.type, e.platformUrl),
       participants: e.results.map(r => ({
         id: r.user.id,
         name: r.user.name,

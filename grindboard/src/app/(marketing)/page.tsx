@@ -20,7 +20,7 @@ export default function LandingPage() {
  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#10B981] to-[#059669]">Engineering Grind</span>
  </h1>
  <p className="text-lg md:text-xl italic font-bold text-on-background max-w-2xl mx-auto lg:mx-0">
- "Don't get left behind. Join the inner circle of top programmers to stay accountable, get direct advice, and dominate contests together. Prove your consistency, climb the leaderboard, and unlock direct FANG/MANG referrals. If you aren't grinding here, you're missing out."
+ "Don't get left behind. Join the inner circle of top programmers to stay accountable, get direct advice, and dominate contests together. Prove your consistency, climb the leaderboard, and unlock direct FAANG/MAANG referrals. If you aren't grinding here, you're missing out."
  </p>
  <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-4">
  <Link href="/login" className="w-full sm:w-auto bg-[#10B981] text-white px-8 py-4 rounded-xl font-bold hover:bg-[#059669] transition-all text-lg shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center justify-center gap-2">
@@ -59,9 +59,9 @@ export default function LandingPage() {
  <section id="features" className="bg-surface border border-outline rounded-3xl p-8 md:p-16 shadow-panel relative overflow-hidden">
  <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-bl from-[#F0FDF4] dark:from-[#10B981]/10 to-transparent pointer-events-none" />
  <div className="flex flex-col md:flex-row items-center gap-12 relative z-10">
- <div className="flex-1 order-2 md:order-1 relative h-[400px] w-full">
-  {/* Floating Logos Composition */}
-  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[450px] h-full">
+  <div className="flex-1 order-2 md:order-1 w-full flex items-center justify-center relative h-[350px] md:h-[450px] overflow-visible">
+   {/* Floating Logos Composition */}
+   <div className="relative w-[450px] h-[450px] scale-[0.65] sm:scale-[0.8] md:scale-100 shrink-0">
     {/* Center */}
     <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 animate-float" style={{ animationDelay: '0s' }}>
       <div className="w-28 h-28 bg-surface rounded-[2rem] shadow-2xl flex items-center justify-center border border-outline/50 z-20 overflow-hidden p-4 bg-white">
@@ -145,10 +145,10 @@ export default function LandingPage() {
  <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>domain</span>
  </div>
  <h2 className="text-3xl md:text-5xl font-display-xl text-on-background tracking-tight">
- Built to crack <br/> <span className="text-[#10B981]">MNCs, FANG & MANG</span>
+ Built to crack <br/> <span className="text-[#10B981]">MNCs, FAANG & MAANG</span>
  </h2>
  <p className="text-lg text-on-surface-variant">
-  Get direct access to exclusive interview notes and authentic questions from software engineers placed at JP Morgan Chase, DeShaw, and top MNCs like FANG & MANG. Keep your eyes on the prize and prepare methodically for top-tier tech interviews.
+  Get direct access to exclusive interview notes and authentic questions from software engineers placed at JP Morgan Chase, DeShaw, and top MNCs like FAANG & MAANG. Keep your eyes on the prize and prepare methodically for top-tier tech interviews.
  </p>
  <ul className="space-y-3 pt-4">
  {[

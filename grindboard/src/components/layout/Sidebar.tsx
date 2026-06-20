@@ -8,6 +8,7 @@ const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: "dashboard", fillIcon: false },
   { href: "/subjects", label: "Subjects", icon: "book", fillIcon: false },
   { href: "/interviews", label: "Interviews", icon: "work", fillIcon: false },
+  { href: "/feed", label: "Feed", icon: "dynamic_feed", fillIcon: false },
   { href: "/profile", label: "Profile", icon: "person", fillIcon: false },
 ];
 

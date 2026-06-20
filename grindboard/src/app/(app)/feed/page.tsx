@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { FeedClient } from "./FeedClient";
-import { createClient } from "@/lib/supabase/server";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { getAuthenticatedUser } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Home — Grindboard",
@@ -10,18 +10,11 @@ export const metadata: Metadata = {
 };
 
 export default async function FeedPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const { authUser, dbUser } = await getAuthenticatedUser();
 
-  if (!user) {
+  if (!authUser || !dbUser) {
     redirect("/login");
   }
-
-  const dbUser = await prisma.user.findUnique({
-    where: { supabaseId: user.id }
-  });
-
-  if (!dbUser) redirect("/login");
 
   return <FeedClient currentUserId={dbUser.id} currentUserAvatar={dbUser.avatarUrl} currentUserName={dbUser.name} />;
 }
