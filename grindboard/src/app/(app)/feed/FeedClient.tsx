@@ -234,7 +234,7 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
     return (
       <div key={comment.id} className="w-full">
         <div className={`group flex gap-2 md:gap-3 text-sm bg-surface-container rounded-lg p-2 md:p-3 relative ${depth > 0 ? "mt-1 border-l-2 border-primary/20" : ""}`} style={{ marginLeft: depth > 0 ? `${Math.min(depth * 8, 24)}px` : '0px' }}>
-          <Link href={`/u/${comment.user.id}`} className="shrink-0 mt-0.5">
+          <Link href={`/u/${comment.user.username || comment.user.id}`} className="shrink-0 mt-0.5">
             {comment.user.avatarUrl ? (
               <img src={comment.user.avatarUrl} alt="Avatar" className="w-8 h-8 rounded-full border border-outline hover:border-primary transition-colors" />
             ) : (
@@ -247,7 +247,7 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
             <div className="flex flex-col gap-1.5">
               <div>
                 <div className="flex items-center gap-2">
-                  <Link href={`/u/${comment.user.id}`} className="font-bold text-on-background hover:text-primary transition-colors truncate">
+                  <Link href={`/u/${comment.user.username || comment.user.id}`} className="font-bold text-on-background hover:text-primary transition-colors truncate">
                     {comment.user.name}
                   </Link>
                   <span className="text-[10px] text-on-surface-variant font-label-mono whitespace-nowrap">
@@ -331,7 +331,7 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
             <div key={post.id} className="bg-surface border border-outline rounded-xl p-4 shadow-sm space-y-3">
               <div className="flex justify-between items-start">
                 <div className="flex gap-3 items-center">
-                  <Link href={`/u/${post.user.id}`} className="shrink-0">
+                  <Link href={`/u/${post.user.username || post.user.id}`} className="shrink-0">
                     {post.user.avatarUrl ? (
                       <img src={post.user.avatarUrl} alt="Avatar" className="w-10 h-10 rounded-full border border-outline hover:border-primary transition-colors" />
                     ) : (
@@ -342,7 +342,7 @@ export function FeedClient({ currentUserId, currentUserAvatar, currentUserName }
                   </Link>
                   <div>
                     <div className="font-bold text-on-background flex items-center gap-2 flex-wrap">
-                      <Link href={`/u/${post.user.id}`} className="hover:text-primary transition-colors">
+                      <Link href={`/u/${post.user.username || post.user.id}`} className="hover:text-primary transition-colors">
                         {post.user.name}
                       </Link>
                       {post.user.cfRating && (

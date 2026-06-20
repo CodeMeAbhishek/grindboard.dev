@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: "dashboard", fillIcon: false },
   { href: "/subjects", label: "Subjects", icon: "book", fillIcon: false },
-  { href: "/goals", label: "Goals", icon: "target", fillIcon: false },
+  { href: "/interviews", label: "Interviews", icon: "work", fillIcon: false },
   { href: "/profile", label: "Profile", icon: "person", fillIcon: false },
 ];
 
@@ -98,9 +98,11 @@ export function Sidebar({
 
  {/* Footer */}
  <div className="p-sm border-t border-outline">
- <button className="w-full border border-outline text-on-surface-variant font-label-mono text-xs py-2 rounded hover:text-primary hover:border-primary transition-colors">
- Upgrade to Pro
- </button>
+  <Link href="/pro" className="block w-full">
+    <button className="w-full border border-outline text-on-surface-variant font-label-mono text-xs py-2 rounded hover:text-primary hover:border-primary transition-colors">
+      Upgrade to Pro
+    </button>
+  </Link>
  </div>
  </aside>
  );

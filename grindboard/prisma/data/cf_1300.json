@@ -1,0 +1,272 @@
+{
+  "problems": [
+    {
+      "rank": 1,
+      "title": "Divisible Pairs",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1931/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "is_star": true
+    },
+    {
+      "rank": 2,
+      "title": "Find the Different Ones!",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1927/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Binary Search", "Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 3,
+      "title": "Romantic Glasses",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1915/E?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 4,
+      "title": "Divide and Equalize",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1881/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "is_star": true
+    },
+    {
+      "rank": 5,
+      "title": "Make it Alternating",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1879/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 6,
+      "title": "Strong Vertices",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1857/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "is_star": true
+    },
+    {
+      "rank": 7,
+      "title": "Rudolf and Snowflakes (simple version)",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1846/E1?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "is_star": true
+    },
+    {
+      "rank": 8,
+      "title": "Scoring Subsequences",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1794/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Binary Search", "Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 9,
+      "title": "Gardener and the Array",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1775/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "is_star": true
+    },
+    {
+      "rank": 10,
+      "title": "Yet Another Problem About Pairs Satisfying an Inequality",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1703/F?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Binary Search", "Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 11,
+      "title": "White-Black Balanced Subtrees",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1676/G?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "is_star": true
+    },
+    {
+      "rank": 12,
+      "title": "Maximal AND",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1669/H?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 13,
+      "title": "Chat Ban",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1612/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Binary Search"],
+      "is_star": true
+    },
+    {
+      "rank": 14,
+      "title": "Array Elimination",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1601/A?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 15,
+      "title": "Deep Down Below",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1561/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Binary Search", "Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 16,
+      "title": "Box Fitting",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1498/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Binary Search", "Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 17,
+      "title": "Strange Birthday Party",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1470/A?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Binary Search", "Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 18,
+      "title": "Move and Turn",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1459/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "is_star": true
+    },
+    {
+      "rank": 19,
+      "title": "Omkar and Last Class of Math",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1372/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 20,
+      "title": "Shuffle",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1984/E?utm=codolio",
+      "site": "codeforces",
+      "rating": 2400,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 21,
+      "title": "Most socially-distanced subsequence",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1364/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Greedy Algorithms", "Two Pointers"],
+      "is_star": true
+    },
+    {
+      "rank": 22,
+      "title": "Buying Shovels",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1360/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "is_star": true
+    },
+    {
+      "rank": 23,
+      "title": "Product of Three Numbers",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1294/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 24,
+      "title": "Just Eat It!",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1285/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 25,
+      "title": "Balanced Tunnel",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1237/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Two Pointers"],
+      "is_star": true
+    },
+    {
+      "rank": 26,
+      "title": "WOW Factor",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1178/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Strings"],
+      "is_star": true
+    },
+    {
+      "rank": 27,
+      "title": "Alyona and a Narrow Fridge",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1119/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Binary Search", "Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 28,
+      "title": "Good Array",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1532/E?utm=codolio",
+      "site": "codeforces",
+      "rating": "Easy",
+      "is_star": true
+    },
+    {
+      "rank": 29,
+      "title": "Mahmoud and Ehab and the bipartiteness",
+      "codeforces_url": "https://codeforces.com/problemset/problem/862/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "is_star": true
+    },
+    {
+      "rank": 30,
+      "title": "Average Sleep Time",
+      "codeforces_url": "https://codeforces.com/problemset/problem/808/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "is_star": true
+    },
+    {
+      "rank": 31,
+      "title": "Simple Strings",
+      "codeforces_url": "https://codeforces.com/problemset/problem/665/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1300,
+      "topics": ["Greedy Algorithms", "Strings"],
+      "is_star": true
+    }
+  ]
+}

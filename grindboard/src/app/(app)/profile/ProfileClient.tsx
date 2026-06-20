@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, useMemo } from "react";
 import { getSkillLevel, BADGE_DEFINITIONS } from "@/lib/gamification";
-import { formatXP } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { CodeforcesIcon, LeetCodeIcon, LinkedInIcon } from "@/components/icons/PlatformIcons";
 
@@ -10,7 +9,6 @@ interface UserProfile {
  name: string;
  username: string;
  level: string;
- xp: number;
  streak: number;
  cfSolved: number;
  lcSolved: number;
@@ -26,14 +24,13 @@ interface UserProfile {
   earnedBadges: string[];
   recentActivities?: Array<{
     id: string;
-    type: "LEETCODE" | "CODEFORCES";
+    type: string;
     lcProblemName: string | null;
     lcDifficulty: "EASY" | "MEDIUM" | "HARD" | null;
     cfContestId: number | null;
     metadata: any;
     notes: string | null;
     externalId: string | null;
-    xpEarned: number;
     createdAt: string;
   }>;
   activityCounts: Record<string, number>;
@@ -67,7 +64,7 @@ export function ProfileClient({ initialUser }: ProfileClientProps) {
     return ["Past Year", ...Array.from(years).sort().reverse()];
   }, [initialUser.activityCounts]);
 
-  const level = getSkillLevel(initialUser.cfRating, initialUser.lcRating);
+  const level = getSkillLevel(initialUser.cfRating ?? null, initialUser.lcRating ?? null);
 
   // Generate activity heatmap using real data
   useEffect(() => {
@@ -162,7 +159,7 @@ export function ProfileClient({ initialUser }: ProfileClientProps) {
  const res = await fetch("/api/sync", { method: "POST" });
  const data = await res.json();
  if (res.ok) {
- alert(`Synced successfully! New activities: ${data.newActivities}, XP Gained: ${data.xpGained}`);
+ alert(`Synced successfully! New activities: ${data.newActivities}`);
  router.refresh();
  } else {
  alert("Sync failed: " + data.error);
@@ -419,9 +416,6 @@ export function ProfileClient({ initialUser }: ProfileClientProps) {
                   </div>
                 </div>
               </div>
-              <div className="font-label-mono text-sm text-primary font-bold whitespace-nowrap">
-                +{activity.xpEarned} XP
-              </div>
             </div>
           ))}
         </div>
@@ -457,9 +451,6 @@ export function ProfileClient({ initialUser }: ProfileClientProps) {
  )}
  <p className="font-label-mono text-sm text-on-background">{badge.name}</p>
  <p className="text-[10px] text-on-surface-variant">{badge.description}</p>
- {earned && (
- <span className="xp-badge text-[10px]">+{badge.xpReward} XP</span>
- )}
  </div>
  );
  })}
@@ -572,7 +563,7 @@ export function ProfileClient({ initialUser }: ProfileClientProps) {
 
  <div className="bg-[#FFFBEB] border border-[#FDE68A] rounded-lg p-4 flex gap-3 text-sm text-[#92400E]">
  <span className="material-symbols-outlined">info</span>
- <p>Linking accounts allows Grindboard to automatically track your problem-solving activities and award XP.</p>
+ <p>Linking accounts allows Grindboard to automatically track your problem-solving activities.</p>
  </div>
 
  <div className="flex gap-4 pt-4 border-t border-outline">

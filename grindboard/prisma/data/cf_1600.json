@@ -1,0 +1,296 @@
+{
+  "sheetName": "1600 Rated: CP-31 Sheet",
+  "curator": "Priyansh Agarwal",
+  "curator_bio": "ICPC World Finalist, AIR 1 in Google Kick Start, Master (India Rank 34) on Codeforces, 4000+ students taught",
+  "totalProblems": 31,
+  "lastEdited": "Jun 18, 2026",
+  "problems": [
+    {
+      "index": 1,
+      "name": "Partitioning the Array",
+      "codeforces_id": "1920C",
+      "url": "https://codeforces.com/problemset/problem/1920/C?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    },
+    {
+      "index": 2,
+      "name": "Good Triples",
+      "codeforces_id": "1907E",
+      "url": "https://codeforces.com/problemset/problem/1907/E?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    },
+    {
+      "index": 3,
+      "name": "Decreasing String",
+      "codeforces_id": "1886C",
+      "url": "https://codeforces.com/problemset/problem/1886/C?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Strings"]
+    },
+    {
+      "index": 4,
+      "name": "To Become Max",
+      "codeforces_id": "1856C",
+      "url": "https://codeforces.com/problemset/problem/1856/C?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Binary Search"]
+    },
+    {
+      "index": 5,
+      "name": "Tracking Segments",
+      "codeforces_id": "1843E",
+      "url": "https://codeforces.com/problemset/problem/1843/E?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Binary Search", "Two Pointers"]
+    },
+    {
+      "index": 6,
+      "name": "Round Dance",
+      "codeforces_id": "1833E",
+      "url": "https://codeforces.com/problemset/problem/1833/E?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    },
+    {
+      "index": 7,
+      "name": "Hits Different",
+      "codeforces_id": "1829G",
+      "url": "https://codeforces.com/problemset/problem/1829/G?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    },
+    {
+      "index": 8,
+      "name": "Shocking Arrangement",
+      "codeforces_id": "1798D",
+      "url": "https://codeforces.com/problemset/problem/1798/D?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Greedy Algorithms"]
+    },
+    {
+      "index": 9,
+      "name": "Triangle Coloring",
+      "codeforces_id": "1795D",
+      "url": "https://codeforces.com/problemset/problem/1795/D?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    },
+    {
+      "index": 10,
+      "name": "Equal Frequencies",
+      "codeforces_id": "1781C",
+      "url": "https://codeforces.com/problemset/problem/1781/C?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Greedy Algorithms", "Strings"]
+    },
+    {
+      "index": 11,
+      "name": "Flexible String",
+      "codeforces_id": "1778C",
+      "url": "https://codeforces.com/problemset/problem/1778/C?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Strings"]
+    },
+    {
+      "index": 12,
+      "name": "Interesting Sequence",
+      "codeforces_id": "1775C",
+      "url": "https://codeforces.com/problemset/problem/1775/C?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    },
+    {
+      "index": 13,
+      "name": "Sending a Sequence Over the Network",
+      "codeforces_id": "1741E",
+      "url": "https://codeforces.com/problemset/problem/1741/E?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    },
+    {
+      "index": 14,
+      "name": "Meeting on the Line",
+      "codeforces_id": "1730B",
+      "url": "https://codeforces.com/problemset/problem/1730/B?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Binary Search", "Greedy Algorithms"]
+    },
+    {
+      "index": 15,
+      "name": "Split Into Two Sets",
+      "codeforces_id": "1702E",
+      "url": "https://codeforces.com/problemset/problem/1702/E?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    },
+    {
+      "index": 16,
+      "name": "Fixed Point Guessing",
+      "codeforces_id": "1698D",
+      "url": "https://codeforces.com/problemset/problem/1698/D?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Binary Search"]
+    },
+    {
+      "index": 17,
+      "name": "Maximum Product Strikes Back",
+      "codeforces_id": "1660D",
+      "url": "https://codeforces.com/problemset/problem/1660/D?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Two Pointers"]
+    },
+    {
+      "index": 18,
+      "name": "Make Them Equal",
+      "codeforces_id": "1633D",
+      "url": "https://codeforces.com/problemset/problem/1633/D?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Greedy Algorithms"]
+    },
+    {
+      "index": 19,
+      "name": "Keshi Is Throwing a Party",
+      "codeforces_id": "1610C",
+      "url": "https://codeforces.com/problemset/problem/1610/C?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Binary Search", "Greedy Algorithms"]
+    },
+    {
+      "index": 20,
+      "name": "Say No to Palindromes",
+      "codeforces_id": "1555D",
+      "url": "https://codeforces.com/problemset/problem/1555/D?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Strings"]
+    },
+    {
+      "index": 21,
+      "name": "Erase and Extend (Easy Version)",
+      "codeforces_id": "1537E1",
+      "url": "https://codeforces.com/problemset/problem/1537/E1?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Binary Search", "Greedy Algorithms"]
+    },
+    {
+      "index": 22,
+      "name": "Parsa's Humongous Tree",
+      "codeforces_id": "1528A",
+      "url": "https://codeforces.com/problemset/problem/1528/A?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Greedy Algorithms"]
+    },
+    {
+      "index": 23,
+      "name": "Planar Reflections",
+      "codeforces_id": "1498C",
+      "url": "https://codeforces.com/problemset/problem/1498/C?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    },
+    {
+      "index": 24,
+      "name": "Advertising Agency",
+      "codeforces_id": "1475E",
+      "url": "https://codeforces.com/problemset/problem/1475/E?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    },
+    {
+      "index": 25,
+      "name": "Row GCD",
+      "codeforces_id": "1458A",
+      "url": "https://codeforces.com/problemset/problem/1458/A?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    },
+    {
+      "index": 26,
+      "name": "Chocolate Bunny",
+      "codeforces_id": "1407C",
+      "url": "https://codeforces.com/problemset/problem/1407/C?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Two Pointers"]
+    },
+    {
+      "index": 27,
+      "name": "Good Subarrays",
+      "codeforces_id": "1398C",
+      "url": "https://codeforces.com/problemset/problem/1398/C?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    },
+    {
+      "index": 28,
+      "name": "Array Walk",
+      "codeforces_id": "1389B",
+      "url": "https://codeforces.com/problemset/problem/1389/B?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Greedy Algorithms"]
+    },
+    {
+      "index": 29,
+      "name": "Orac and LCM",
+      "codeforces_id": "1349A",
+      "url": "https://codeforces.com/problemset/problem/1349/A?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    },
+    {
+      "index": 30,
+      "name": "Linova and Kingdom",
+      "codeforces_id": "1336A",
+      "url": "https://codeforces.com/problemset/problem/1336/A?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": ["Greedy Algorithms"]
+    },
+    {
+      "index": 31,
+      "name": "Kuroni and Impossible Calculation",
+      "codeforces_id": "1305C",
+      "url": "https://codeforces.com/problemset/problem/1305/C?utm=codolio",
+      "platform": "codeforces",
+      "rating": 1600,
+      "topics": []
+    }
+  ],
+  "topicsSummary": [
+    "Strings",
+    "Binary Search",
+    "Two Pointers",
+    "Greedy Algorithms"
+  ],
+  "sourceUrl": "https://codolio.com/question-tracker/sheet/1600-rated-cp-31-sheet",
+  "extractedAt": "2026-06-20"
+}

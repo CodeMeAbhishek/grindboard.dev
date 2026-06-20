@@ -16,7 +16,7 @@ export default function AboutPage() {
  <div className="space-y-6 pt-6">
  <h2 className="text-2xl font-display-xl text-on-background">Why Gamification?</h2>
  <p className="text-lg text-on-surface-variant leading-relaxed">
- Traditional study tracking is boring. By introducing XP, streaks, levels, and global leaderboards, we transform the tedious process of studying into a competitive and rewarding journey. You're no longer just solving a problem; you're leveling up your engineering skills.
+ Traditional study tracking is boring. By introducing streaks, levels, and global leaderboards, we transform the tedious process of studying into a competitive and rewarding journey. You're no longer just solving a problem; you're leveling up your engineering skills.
  </p>
  </div>
 

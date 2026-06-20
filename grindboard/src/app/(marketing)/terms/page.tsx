@@ -12,7 +12,7 @@ export default function TermsPage() {
 
  <h2 className="text-2xl font-bold mt-8 mb-4">2. User Accounts</h2>
  <p className="text-on-surface-variant mb-4">
- You are responsible for maintaining the confidentiality of your account credentials. Grindboard reserves the right to terminate accounts that violate our community guidelines, including but not limited to spamming, abuse, or attempting to exploit the XP/gamification engine.
+ You are responsible for maintaining the confidentiality of your account credentials. Grindboard reserves the right to terminate accounts that violate our community guidelines, including but not limited to spamming, abuse, or attempting to exploit the gamification engine.
  </p>
 
  <h2 className="text-2xl font-bold mt-8 mb-4">3. Content and Conduct</h2>

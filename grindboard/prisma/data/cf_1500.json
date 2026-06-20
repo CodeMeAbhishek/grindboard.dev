@@ -1,0 +1,289 @@
+{
+  "sheets": [
+    {
+      "rating": 1500,
+      "url": "https://codolio.com/question-tracker/sheet/1500-rated-cp-31-sheet",
+      "problems": [
+        {
+          "rank": 1,
+          "title": "Greetings",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1915/F?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": [],
+          "is_star": true
+        },
+        {
+          "rank": 2,
+          "title": "Smilo and Monsters",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1891/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Binary Search", "Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 3,
+          "title": "Block Sequence",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1881/E?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": [],
+          "is_star": true
+        },
+        {
+          "rank": 4,
+          "title": "Data Structures Fan",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1872/E?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Binary Search"],
+          "is_star": true
+        },
+        {
+          "rank": 5,
+          "title": "Tea Tasting",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1795/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Binary Search"],
+          "is_star": true
+        },
+        {
+          "rank": 6,
+          "title": "Controllers",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1776/L?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Binary Search"],
+          "is_star": true
+        },
+        {
+          "rank": 7,
+          "title": "Palindrome Basis",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1673/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": [],
+          "is_star": true
+        },
+        {
+          "rank": 8,
+          "title": "Line Empire",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1659/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Binary Search", "Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 9,
+          "title": "Factorials and Powers of Two",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1646/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": [],
+          "is_star": true
+        },
+        {
+          "rank": 10,
+          "title": "AGAGA XOOORRR",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1516/B?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 11,
+          "title": "Eastern Exhibition",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1486/B?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Binary Search"],
+          "is_star": true
+        },
+        {
+          "rank": 12,
+          "title": "13th Labour of Heracles",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1466/D?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 13,
+          "title": "Mortal Kombat Tower",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1418/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 14,
+          "title": "k-Amazing Numbers",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1416/A?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Binary Search", "Two Pointers"],
+          "is_star": true
+        },
+        {
+          "rank": 15,
+          "title": "Balanced Bitstring",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1404/A?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Strings"],
+          "is_star": true
+        },
+        {
+          "rank": 16,
+          "title": "Powered Addition",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1338/A?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 17,
+          "title": "K-Complete Word",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1332/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms", "Strings"],
+          "is_star": true
+        },
+        {
+          "rank": 18,
+          "title": "Ehab and Path-etic MEXs",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1325/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 19,
+          "title": "Count Subrectangles",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1323/B?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Binary Search", "Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 20,
+          "title": "Zero Array",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1201/B?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 21,
+          "title": "Edgy Trees",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1139/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": [],
+          "is_star": true
+        },
+        {
+          "rank": 22,
+          "title": "Zero Quantity Maximization",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1133/D?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["HashMap and Set"],
+          "is_star": true
+        },
+        {
+          "rank": 23,
+          "title": "Lunar New Year and a Wander",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1106/D?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 24,
+          "title": "Division and Union",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1101/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": [],
+          "is_star": true
+        },
+        {
+          "rank": 25,
+          "title": "The Fair Nut and String",
+          "codeforces_url": "https://codeforces.com/problemset/problem/1084/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": [],
+          "is_star": true
+        },
+        {
+          "rank": 26,
+          "title": "Cut 'em all!",
+          "codeforces_url": "https://codeforces.com/problemset/problem/982/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 27,
+          "title": "Nested Segments",
+          "codeforces_url": "https://codeforces.com/problemset/problem/976/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 28,
+          "title": "Minimize the error",
+          "codeforces_url": "https://codeforces.com/problemset/problem/960/B?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 29,
+          "title": "Pride",
+          "codeforces_url": "https://codeforces.com/problemset/problem/891/A?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 30,
+          "title": "Two TVs",
+          "codeforces_url": "https://codeforces.com/problemset/problem/845/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms"],
+          "is_star": true
+        },
+        {
+          "rank": 31,
+          "title": "Little Girl and Maximum Sum",
+          "codeforces_url": "https://codeforces.com/problemset/problem/276/C?utm=codolio",
+          "site": "codeforces",
+          "rating": 1500,
+          "topics": ["Greedy Algorithms"],
+          "is_star": true
+        }
+      ]
+    }
+  ]
+}

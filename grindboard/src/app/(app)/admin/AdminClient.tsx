@@ -1,14 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { getSkillLevel } from "@/lib/gamification";
+import { ModuleManager } from "@/components/admin/ModuleManager";
 
 interface AdminUser {
  id: string;
  name: string;
  cfRating: number | null;
  lcRating: number | null;
- xp: number;
  isAdmin: boolean;
  initials: string;
 }
@@ -16,7 +17,7 @@ interface AdminUser {
 interface AdminModule {
  id: string;
  name: string;
- topics: number;
+ topics: any[];
  enrolled: number;
  color: string;
 }
@@ -26,23 +27,38 @@ interface AdminClientProps {
  initialModules: AdminModule[];
  stats: {
  activeUsers: number;
- avgXp: number;
  };
 }
 
-const XP_DISTRIBUTION = [
- { label: "Lvl 1-5", pct: 30 },
- { label: "Lvl 6-10", pct: 50 },
- { label: "Lvl 11-15", pct: 90 },
- { label: "Lvl 16-20", pct: 40 },
- { label: "Lvl 21+", pct: 20 },
-];
 
 export function AdminClient({ initialUsers, initialModules, stats }: AdminClientProps) {
- const [users, setUsers] = useState(initialUsers);
- const [search, setSearch] = useState("");
- const [announcement, setAnnouncement] = useState("");
- const [deployed, setDeployed] = useState(false);
+  const router = useRouter();
+  const [users, setUsers] = useState(initialUsers);
+  const [search, setSearch] = useState("");
+  const [announcement, setAnnouncement] = useState("");
+  const [deployed, setDeployed] = useState(false);
+  const [showAddModule, setShowAddModule] = useState(false);
+  const [newModule, setNewModule] = useState({ name: "", description: "", icon: "book", color: "#10B981" });
+  const [loading, setLoading] = useState(false);
+
+  const handleAddModule = async () => {
+    if (!newModule.name.trim()) return;
+    setLoading(true);
+    try {
+      await fetch("/api/admin/modules", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newModule),
+      });
+      setNewModule({ name: "", description: "", icon: "book", color: "#10B981" });
+      setShowAddModule(false);
+      router.refresh();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
  function toggleAdmin(id: string) {
  setUsers((prev) => prev.map((u) => (u.id === id ? { ...u, isAdmin: !u.isAdmin } : u)));
@@ -64,7 +80,6 @@ export function AdminClient({ initialUsers, initialModules, stats }: AdminClient
  const mockStats = [
  { label: "Active Users", value: stats.activeUsers.toString(), icon: "group", change: null, color: "text-primary" },
  { label: "Top Module", value: initialModules.length > 0 ? initialModules.reduce((max, m) => m.enrolled > max.enrolled ? m : max, initialModules[0]).name : "None", icon: "terminal", change: null, color: "text-[#0EA5E9]" },
- { label: "Avg. XP", value: stats.avgXp.toString(), icon: "bolt", change: null, color: "text-[#F59E0B]" },
  { label: "Event Part.", value: "88%", icon: "celebration", change: null, color: "text-primary", progress: 88 },
  ];
 
@@ -100,28 +115,7 @@ export function AdminClient({ initialUsers, initialModules, stats }: AdminClient
  </section>
 
  {/* Charts */}
- <section className="grid grid-cols-1 lg:grid-cols-2 gap-sm">
- {/* XP Distribution Bar Chart */}
- <div className="glass-panel p-md rounded-xl">
- <h3 className="font-label-mono text-sm text-on-surface-variant mb-6 uppercase tracking-wider">
- XP Distribution
- </h3>
- <div className="h-40 flex items-end justify-between gap-2 px-2">
- {XP_DISTRIBUTION.map((bar) => (
- <div key={bar.label} className="flex-1 flex flex-col items-center gap-1 group">
- <div
- className="w-full rounded-t-sm bg-primary/30 hover:bg-primary/60 transition-colors border-t-2 border-primary relative"
- style={{ height: `${bar.pct}%` }}
- >
- <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs opacity-0 group-hover:opacity-100 transition-opacity text-primary whitespace-nowrap font-label-mono">
- {bar.label}
- </span>
- </div>
- <span className="text-[10px] text-on-surface-variant font-label-mono">{bar.label.split(" ")[0]}</span>
- </div>
- ))}
- </div>
- </div>
+ <section className="grid grid-cols-1 gap-sm">
 
  {/* Daily Activity Line Chart (SVG) */}
  <div className="glass-panel p-md rounded-xl flex flex-col">
@@ -151,47 +145,85 @@ export function AdminClient({ initialUsers, initialModules, stats }: AdminClient
  <div className="glass-panel rounded-xl overflow-hidden">
  <div className="p-sm border-b border-outline flex justify-between items-center">
  <h3 className="font-label-mono text-sm uppercase text-on-background">Module Manager</h3>
- <button className="flex items-center gap-1 text-primary hover:text-[#059669] transition-colors text-sm font-label-mono">
- <span className="material-symbols-outlined text-sm">add</span>
- Add New
+ <button 
+   onClick={() => setShowAddModule(!showAddModule)}
+   className="flex items-center gap-1 text-primary hover:text-[#059669] transition-colors text-sm font-label-mono"
+ >
+ <span className="material-symbols-outlined text-sm">{showAddModule ? "close" : "add"}</span>
+ {showAddModule ? "Cancel" : "Add New"}
  </button>
  </div>
+ {showAddModule && (
+   <div className="p-sm border-b border-outline bg-surface-container flex flex-col gap-4">
+     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+       <div>
+         <label className="text-xs font-label-mono text-on-surface-variant mb-1 block">Module Name</label>
+         <input
+           type="text"
+           placeholder="e.g., System Design"
+           className="w-full border border-outline rounded-lg px-3 py-2 bg-surface text-on-background focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm transition-all"
+           value={newModule.name}
+           onChange={(e) => setNewModule({ ...newModule, name: e.target.value })}
+         />
+       </div>
+       <div>
+         <label className="text-xs font-label-mono text-on-surface-variant mb-1 block">Description</label>
+         <input
+           type="text"
+           placeholder="Brief description of the module"
+           className="w-full border border-outline rounded-lg px-3 py-2 bg-surface text-on-background focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm transition-all"
+           value={newModule.description}
+           onChange={(e) => setNewModule({ ...newModule, description: e.target.value })}
+         />
+       </div>
+     </div>
+     
+     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+       <div className="md:col-span-1">
+         <label className="text-xs font-label-mono text-on-surface-variant mb-1 block">Icon (Material Symbol)</label>
+         <div className="relative">
+           <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">
+             {newModule.icon || "book"}
+           </span>
+           <input
+             type="text"
+             placeholder="terminal, code, book"
+             className="w-full border border-outline rounded-lg pl-9 pr-3 py-2 bg-surface text-on-background focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm font-label-mono transition-all"
+             value={newModule.icon}
+             onChange={(e) => setNewModule({ ...newModule, icon: e.target.value })}
+           />
+         </div>
+       </div>
+       
+       <div className="md:col-span-1">
+         <label className="text-xs font-label-mono text-on-surface-variant mb-1 block">Theme Color</label>
+         <div className="flex items-center gap-2 border border-outline rounded-lg p-1.5 bg-surface">
+           <input
+             type="color"
+             className="w-8 h-8 rounded cursor-pointer border-0 p-0 bg-transparent"
+             value={newModule.color}
+             onChange={(e) => setNewModule({ ...newModule, color: e.target.value })}
+           />
+           <span className="text-sm font-label-mono text-on-surface-variant">{newModule.color.toUpperCase()}</span>
+         </div>
+       </div>
+ 
+       <div className="md:col-span-1 flex justify-end">
+         <button 
+           disabled={loading || !newModule.name}
+           onClick={handleAddModule}
+           className="w-full bg-primary text-white px-4 py-2 rounded-lg hover:bg-[#059669] disabled:opacity-50 text-sm font-medium transition-colors flex items-center justify-center gap-2"
+         >
+           <span className="material-symbols-outlined text-sm">{loading ? "hourglass_empty" : "add_circle"}</span>
+           {loading ? "Creating..." : "Create Module"}
+         </button>
+       </div>
+     </div>
+   </div>
+ )}
  <div className="p-sm">
- <table className="w-full text-left">
- <thead>
- <tr className="text-on-surface-variant font-label-mono text-xs border-b border-outline">
- <th className="pb-2 font-normal">Subject</th>
- <th className="pb-2 font-normal text-right">Topics</th>
- <th className="pb-2 font-normal text-right">Enrolled</th>
- <th className="pb-2 font-normal text-right">Actions</th>
- </tr>
- </thead>
- <tbody className="text-sm divide-y divide-[#E5E5E5]">
- {initialModules.length === 0 ? (
- <tr>
- <td colSpan={4} className="py-4 text-center text-on-surface-variant font-label-mono text-xs">No modules found</td>
- </tr>
- ) : initialModules.map((mod) => (
- <tr key={mod.id} className="hover:bg-surface-container transition-colors">
- <td className="py-3 flex items-center gap-2 text-on-background">
- <span className={`w-2 h-2 rounded-full`} style={{ backgroundColor: mod.color.replace('bg-', '') }} />
- {mod.name}
- </td>
- <td className="py-3 text-right text-on-surface-variant">{mod.topics}</td>
- <td className="py-3 text-right text-on-background">{mod.enrolled}</td>
- <td className="py-3 text-right">
- <button className="text-[#0EA5E9] hover:text-primary px-2 transition-colors">
- <span className="material-symbols-outlined text-sm">edit</span>
- </button>
- <button className="text-[#EF4444] hover:text-[#EF4444]/80 px-2 transition-colors">
- <span className="material-symbols-outlined text-sm">delete</span>
- </button>
- </td>
- </tr>
- ))}
- </tbody>
- </table>
- </div>
+    <ModuleManager initialModules={initialModules} />
+  </div>
  </div>
 
  {/* User Manager */}
@@ -248,7 +280,7 @@ export function AdminClient({ initialUsers, initialModules, stats }: AdminClient
  </span>
  </div>
  <button className="bg-surface border border-outline hover:border-[#0EA5E9] px-2 py-1 rounded text-xs font-label-mono flex items-center gap-1 transition-colors group text-on-background">
- <span>{user.xp.toLocaleString()} XP</span>
+ <span>Edit</span>
  <span className="material-symbols-outlined text-sm text-on-surface-variant group-hover:text-[#0EA5E9]">edit</span>
  </button>
  </div>

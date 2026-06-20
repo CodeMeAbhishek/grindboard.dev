@@ -1,0 +1,278 @@
+{
+  "sheet": {
+    "total_problems": 31,
+    "problems": [
+      {
+        "rank": 1,
+        "title": "Swap and Delete",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1913/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Strings"],
+        "is_star": true
+      },
+      {
+        "rank": 2,
+        "title": "Raspberries",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1883/C?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "is_star": true
+      },
+      {
+        "rank": 3,
+        "title": "Helmets in Night Light",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1876/A?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 4,
+        "title": "Olya and Game with Arrays",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1859/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 5,
+        "title": "Monsters",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1849/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 6,
+        "title": "Ski Resort",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1840/C?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Two Pointers"],
+        "is_star": true
+      },
+      {
+        "rank": 7,
+        "title": "Array merging",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1831/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 8,
+        "title": "Distinct Split",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1791/D?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms", "Strings"],
+        "is_star": true
+      },
+      {
+        "rank": 9,
+        "title": "Minimum LCM",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1765/M?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "is_star": true
+      },
+      {
+        "rank": 10,
+        "title": "Traffic Light",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1744/C?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Binary Search", "Two Pointers"],
+        "is_star": true
+      },
+      {
+        "rank": 11,
+        "title": "Basketball Together",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1725/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Binary Search", "Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 12,
+        "title": "Beautiful Array",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1986/E?utm=codolio",
+        "site": "codeforces",
+        "rating": 1700,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 13,
+        "title": "Luke is a Foodie",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1704/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 14,
+        "title": "Shoe Shuffling",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1691/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms", "Two Pointers"],
+        "is_star": true
+      },
+      {
+        "rank": 15,
+        "title": "Black and White Stripe",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1690/D?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Two Pointers"],
+        "is_star": true
+      },
+      {
+        "rank": 16,
+        "title": "Red Versus Blue",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1659/A?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 17,
+        "title": "Roof Construction",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1632/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "is_star": true
+      },
+      {
+        "rank": 18,
+        "title": "Triangles on a Rectangle",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1620/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 19,
+        "title": "Divan and a New Project",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1614/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "is_star": true
+      },
+      {
+        "rank": 20,
+        "title": "MEXor Mixup",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1567/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 21,
+        "title": "Double-ended Strings",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1506/C?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Strings"],
+        "is_star": true
+      },
+      {
+        "rank": 22,
+        "title": "Add and Divide",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1485/A?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 23,
+        "title": "Different Divisors",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1474/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Binary Search", "Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 24,
+        "title": "Numbers Box",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1447/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 25,
+        "title": "Valerii Against Everyone",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1438/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 26,
+        "title": "Buying Torches",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1418/A?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "is_star": true
+      },
+      {
+        "rank": 27,
+        "title": "Fair Numbers",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1411/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "is_star": true
+      },
+      {
+        "rank": 28,
+        "title": "Move Brackets",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1374/C?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Greedy Algorithms", "Strings"],
+        "is_star": true
+      },
+      {
+        "rank": 29,
+        "title": "Johnny and Ancient Computer",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1362/A?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "is_star": true
+      },
+      {
+        "rank": 30,
+        "title": "Bogosort",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1312/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "is_star": true
+      },
+      {
+        "rank": 31,
+        "title": "Reverse a Substring",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1155/A?utm=codolio",
+        "site": "codeforces",
+        "rating": 1000,
+        "topics": ["Strings"],
+        "is_star": true
+      }
+    ]
+  }
+}

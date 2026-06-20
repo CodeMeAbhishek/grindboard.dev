@@ -1,0 +1,271 @@
+{
+  "problems": [
+    {
+      "rank": 1,
+      "title": "Anna and the Valentine's Day Gift",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1931/E?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 2,
+      "title": "Grouping Increases",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1919/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 3,
+      "title": "Jumping Through Segments",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1907/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Binary Search"],
+      "is_star": true
+    },
+    {
+      "rank": 4,
+      "title": "Array Game",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1904/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Binary Search", "Two Pointers"],
+      "is_star": true
+    },
+    {
+      "rank": 5,
+      "title": "Dances (Easy version)",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1883/G1?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Binary Search", "Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 6,
+      "title": "Iva & Pav",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1878/E?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Binary Search", "Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 7,
+      "title": "Bracket Coloring",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1837/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 8,
+      "title": "Copil Copac Draws Trees",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1830/A?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 9,
+      "title": "Hossam and Friends",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1771/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Binary Search", "Two Pointers"],
+      "is_star": true
+    },
+    {
+      "rank": 10,
+      "title": "Make It Round",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1759/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "is_star": true
+    },
+    {
+      "rank": 11,
+      "title": "Add Modulo 10",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1714/E?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "is_star": true
+    },
+    {
+      "rank": 12,
+      "title": "Schedule Management",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1701/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Binary Search", "Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 13,
+      "title": "2^Sort",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1692/G?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Two Pointers"],
+      "is_star": true
+    },
+    {
+      "rank": 14,
+      "title": "Weird Sum",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1648/A?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "is_star": true
+    },
+    {
+      "rank": 15,
+      "title": "Fortune Telling",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1634/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "is_star": true
+    },
+    {
+      "rank": 16,
+      "title": "Arranging The Sheep",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1520/E?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 17,
+      "title": "Berland Regional",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1519/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 18,
+      "title": "AND Sequences",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1513/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "is_star": true
+    },
+    {
+      "rank": 19,
+      "title": "Ball in Berland",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1475/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "is_star": true
+    },
+    {
+      "rank": 20,
+      "title": "Zero Remainder Array",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1374/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Two Pointers"],
+      "is_star": true
+    },
+    {
+      "rank": 21,
+      "title": "Johnny and Another Rating Drop",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1362/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 22,
+      "title": "Orac and Models",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1350/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "is_star": true
+    },
+    {
+      "rank": 23,
+      "title": "Journey Planning",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1320/A?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 24,
+      "title": "The Number of Products",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1215/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "is_star": true
+    },
+    {
+      "rank": 25,
+      "title": "Basketball Exercise",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1195/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 26,
+      "title": "Candy Box (easy version)",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1183/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 27,
+      "title": "News Distribution",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1167/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "is_star": true
+    },
+    {
+      "rank": 28,
+      "title": "Lost Numbers",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1167/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "is_star": true
+    },
+    {
+      "rank": 29,
+      "title": "Queen",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1143/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "is_star": true
+    },
+    {
+      "rank": 30,
+      "title": "Tape",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1110/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 31,
+      "title": "Mashmokh and ACM",
+      "codeforces_url": "https://codeforces.com/problemset/problem/414/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1400,
+      "is_star": true
+    }
+  ]
+}

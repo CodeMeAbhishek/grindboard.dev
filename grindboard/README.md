@@ -4,9 +4,9 @@ A gamified group study tracker designed for friends preparing for GATE, Competit
 
 ## Features ✨
 
-*   **Gamified Tracking:** Earn XP, level up, and maintain streaks by logging your daily study activities.
+*   **Gamified Tracking:** Level up and maintain streaks by logging your daily study activities.
 *   **Module Management:** Enroll in specific subjects and track your progress against weekly goals.
-*   **Leaderboard:** Compete with your friends on the global leaderboard ranked by XP, streaks, and problems solved.
+*   **Leaderboard:** Compete with your friends on the global leaderboard ranked by rating, streaks, and problems solved.
 *   **Events Radar:** Keep track of upcoming contests (Codeforces, LeetCode) and GATE mock tests, and log your past results.
 *   **Activity Heatmap:** Visualize your consistency over the year in your profile.
 *   **Admin Panel:** Manage users, modules, and broadcast announcements to the group.
@@ -58,8 +58,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Gamification System 🎮
 
-*   **XP System:** Different activities yield different XP (e.g., LeetCode Easy = +10 XP, Hard = +30 XP, Codeforces Div 2 = +40 XP).
-*   **Levels:** Progress through 50 ranks, from "Novice" to "Grandmaster".
+*   **Rating System:** Focuses on Codeforces and LeetCode ratings. Progress through 50 ranks, from "Novice" to "Grandmaster".
 *   **Badges:** Unlock badges for milestones like First Blood, Streak Starter, and Century Club.
 
 ## License 📄

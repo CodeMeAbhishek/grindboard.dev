@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const mobileNavItems = [
-  { href: "/feed", label: "Home", icon: "home" },
-  { href: "/dashboard", label: "Dash", icon: "dashboard" },
-  { href: "/subjects", label: "Subjects", icon: "book" },
+  { href: "/dashboard", label: "Home", icon: "home" },
+  { href: "/subjects", label: "Learn", icon: "menu_book" },
+  { href: "/interviews", label: "Prep", icon: "work" },
   { href: "/leaderboard", label: "Rank", icon: "leaderboard" },
   { href: "/profile", label: "Profile", icon: "person" },
 ];

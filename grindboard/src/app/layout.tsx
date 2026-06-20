@@ -5,7 +5,7 @@ import "./globals.css";
 export const metadata: Metadata = {
  title: "Grindboard — Gamified Group Study Tracker",
  description:
- "Track your GATE, CP, LeetCode, DSA, ML, and Web Dev progress with friends. Earn XP, build streaks, and climb the leaderboard.",
+ "Track your GATE, CP, LeetCode, DSA, ML, and Web Dev progress with friends. Build streaks and climb the leaderboard.",
  keywords: ["study tracker", "GATE", "LeetCode", "Codeforces", "gamified", "DSA"],
  openGraph: {
  title: "Grindboard",
@@ -23,7 +23,7 @@ export default function RootLayout({
  <html lang="en" suppressHydrationWarning>
  <head>
  <link
- href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+ href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block"
  rel="stylesheet"
  />
  <link
@@ -31,7 +31,7 @@ export default function RootLayout({
  rel="stylesheet"
  />
  </head>
- <body className="bg-background text-on-background transition-colors">
+ <body className="bg-background text-on-background transition-colors" suppressHydrationWarning>
  <ThemeProvider
  attribute="class"
  defaultTheme="system"

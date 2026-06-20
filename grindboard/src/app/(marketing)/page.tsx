@@ -61,36 +61,83 @@ export default function LandingPage() {
  <div className="flex flex-col md:flex-row items-center gap-12 relative z-10">
  <div className="flex-1 order-2 md:order-1 relative h-[400px] w-full">
   {/* Floating Logos Composition */}
-  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[400px] h-full">
-  <div className="absolute top-[10%] left-[15%] animate-float" style={{ animationDelay: '0s' }}>
-  <div className="w-20 h-20 bg-surface rounded-[1.5rem] shadow-xl flex items-center justify-center border border-outline/50 rotate-[-12deg] overflow-hidden">
-  <Image src="/logos/logo1.png" alt="Company Logo" width={48} height={48} className="object-contain w-10 h-10" />
-  </div>
-  </div>
-  
-  <div className="absolute top-[65%] left-[5%] animate-float" style={{ animationDelay: '1s' }}>
-  <div className="w-24 h-24 bg-surface rounded-[1.8rem] shadow-lg flex items-center justify-center border border-outline/50 rotate-[15deg] overflow-hidden">
-  <Image src="/logos/logo2.png" alt="Company Logo" width={64} height={64} className="object-contain w-12 h-12" />
-  </div>
-  </div>
+  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[450px] h-full">
+    {/* Center */}
+    <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 animate-float" style={{ animationDelay: '0s' }}>
+      <div className="w-28 h-28 bg-surface rounded-[2rem] shadow-2xl flex items-center justify-center border border-outline/50 z-20 overflow-hidden p-4 bg-white">
+        <Image src="/logos/gs.png" alt="Goldman Sachs Logo" width={80} height={80} className="object-contain w-20 h-20" />
+      </div>
+    </div>
 
-  <div className="absolute top-[35%] left-[50%] -translate-x-1/2 -translate-y-1/2 animate-float" style={{ animationDelay: '2s' }}>
-  <div className="w-32 h-32 bg-surface rounded-[2rem] shadow-2xl flex items-center justify-center border border-outline/50 z-10 overflow-hidden">
-  <Image src="/logos/logo3.png" alt="Company Logo" width={96} height={96} className="object-contain w-20 h-20" />
-  </div>
-  </div>
+    {/* Top Row */}
+    <div className="absolute top-[5%] left-[20%] animate-float" style={{ animationDelay: '0.5s' }}>
+      <div className="w-16 h-16 bg-surface rounded-[1rem] shadow-lg flex items-center justify-center border border-outline/50 rotate-[-12deg] overflow-hidden p-2 bg-white">
+        <Image src="/logos/google.png" alt="Google Logo" width={48} height={48} className="object-contain w-12 h-12" />
+      </div>
+    </div>
+    
+    <div className="absolute top-[0%] left-[50%] -translate-x-1/2 animate-float" style={{ animationDelay: '1.2s' }}>
+      <div className="w-20 h-20 bg-surface rounded-[1.5rem] shadow-md flex items-center justify-center border border-outline/50 rotate-[5deg] overflow-hidden p-3 bg-white">
+        <Image src="/logos/bny.png" alt="BNY Logo" width={56} height={56} className="object-contain w-14 h-14" />
+      </div>
+    </div>
 
-  <div className="absolute top-[15%] right-[10%] animate-float" style={{ animationDelay: '1.5s' }}>
-  <div className="w-20 h-20 bg-surface rounded-[1.5rem] shadow-lg flex items-center justify-center border border-outline/50 rotate-[20deg] overflow-hidden">
-  <Image src="/logos/logo4.png" alt="Company Logo" width={48} height={48} className="object-contain w-10 h-10" />
-  </div>
-  </div>
+    <div className="absolute top-[5%] right-[20%] animate-float" style={{ animationDelay: '0.8s' }}>
+      <div className="w-16 h-16 bg-surface rounded-[1rem] shadow-lg flex items-center justify-center border border-outline/50 rotate-[15deg] overflow-hidden p-2 bg-white">
+        <Image src="/logos/unify.png" alt="Unify Apps Logo" width={48} height={48} className="object-contain w-12 h-12" />
+      </div>
+    </div>
 
-  <div className="absolute top-[60%] right-[15%] animate-float" style={{ animationDelay: '0.5s' }}>
-  <div className="w-24 h-24 bg-surface rounded-[1.8rem] shadow-xl flex items-center justify-center border border-outline/50 rotate-[-15deg] overflow-hidden">
-  <Image src="/logos/logo5.png" alt="Company Logo" width={64} height={64} className="object-contain w-12 h-12" />
-  </div>
-  </div>
+    {/* Middle-ish outer ring */}
+    <div className="absolute top-[25%] left-[0%] animate-float" style={{ animationDelay: '1.5s' }}>
+      <div className="w-20 h-20 bg-surface rounded-[1.5rem] shadow-md flex items-center justify-center border border-outline/50 rotate-[-8deg] overflow-hidden p-3 bg-white">
+        <Image src="/logos/logo4.png" alt="Netflix Logo" width={56} height={56} className="object-contain w-14 h-14" />
+      </div>
+    </div>
+
+    <div className="absolute top-[30%] right-[0%] animate-float" style={{ animationDelay: '2.1s' }}>
+      <div className="w-20 h-20 bg-surface rounded-[1.5rem] shadow-xl flex items-center justify-center border border-outline/50 rotate-[10deg] overflow-hidden p-3 bg-white">
+        <Image src="/logos/logo3.png" alt="Meta Logo" width={56} height={56} className="object-contain w-14 h-14" />
+      </div>
+    </div>
+
+    {/* Bottom Row */}
+    <div className="absolute top-[75%] left-[10%] animate-float" style={{ animationDelay: '1.8s' }}>
+      <div className="w-24 h-24 bg-surface rounded-[1.8rem] shadow-lg flex items-center justify-center border border-outline/50 rotate-[-15deg] overflow-hidden p-4 bg-white">
+        <Image src="/logos/sprinklr.png" alt="Sprinklr Logo" width={64} height={64} className="object-contain w-16 h-16" />
+      </div>
+    </div>
+
+    <div className="absolute top-[90%] left-[50%] -translate-x-1/2 animate-float" style={{ animationDelay: '2.5s' }}>
+      <div className="w-16 h-16 bg-surface rounded-[1rem] shadow-md flex items-center justify-center border border-outline/50 rotate-[8deg] overflow-hidden p-2 bg-white">
+        <Image src="/logos/obsidian.png" alt="Obsidian Capital Logo" width={48} height={48} className="object-contain w-12 h-12" />
+      </div>
+    </div>
+
+    <div className="absolute top-[75%] right-[10%] animate-float" style={{ animationDelay: '0.3s' }}>
+      <div className="w-24 h-24 bg-surface rounded-[1.8rem] shadow-xl flex items-center justify-center border border-outline/50 rotate-[12deg] overflow-hidden p-4 bg-white">
+        <Image src="/logos/wf.png" alt="Wells Fargo Logo" width={64} height={64} className="object-contain w-16 h-16" />
+      </div>
+    </div>
+
+    {/* Fillers */}
+    <div className="absolute top-[50%] left-[10%] -translate-y-1/2 animate-float" style={{ animationDelay: '0.9s' }}>
+      <div className="w-16 h-16 bg-surface rounded-[1rem] shadow-md flex items-center justify-center border border-outline/50 rotate-[20deg] overflow-hidden bg-white">
+        <Image src="/logos/logo2.png" alt="Amazon Logo" width={48} height={48} className="object-contain w-10 h-10" />
+      </div>
+    </div>
+
+    <div className="absolute top-[55%] right-[15%] animate-float" style={{ animationDelay: '1.7s' }}>
+      <div className="w-16 h-16 bg-surface rounded-[1rem] shadow-md flex items-center justify-center border border-outline/50 rotate-[-20deg] overflow-hidden bg-white">
+        <Image src="/logos/logo1.png" alt="Google Logo 2" width={48} height={48} className="object-contain w-10 h-10" />
+      </div>
+    </div>
+
+    <div className="absolute top-[90%] left-[25%] animate-float" style={{ animationDelay: '2.2s' }}>
+      <div className="w-16 h-16 bg-surface rounded-[1rem] shadow-md flex items-center justify-center border border-outline/50 rotate-[15deg] overflow-hidden bg-white">
+        <Image src="/logos/logo5.png" alt="Facebook Logo" width={48} height={48} className="object-contain w-10 h-10" />
+      </div>
+    </div>
   </div>
  </div>
  <div className="flex-1 space-y-6 order-1 md:order-2">
@@ -101,7 +148,7 @@ export default function LandingPage() {
  Built to crack <br/> <span className="text-[#10B981]">MNCs, FANG & MANG</span>
  </h2>
  <p className="text-lg text-on-surface-variant">
- Don't just solve problems blindly. Grindboard provides structured module tracking for Data Structures, Algorithms, System Design, and Machine Learning. Keep your eyes on the prize and prepare methodically for top-tier tech interviews.
+  Get direct access to exclusive interview notes and authentic questions from software engineers placed at JP Morgan Chase, DeShaw, and top MNCs like FANG & MANG. Keep your eyes on the prize and prepare methodically for top-tier tech interviews.
  </p>
  <ul className="space-y-3 pt-4">
  {[
@@ -127,15 +174,15 @@ export default function LandingPage() {
  <p className="text-lg text-on-surface-variant">We've combined the best elements of gamification with serious study tools to make the grind addictive.</p>
  </div>
  
- <div className="grid md:grid-cols-3 gap-6">
+ <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
  {/* Feature 1 */}
  <div className="bg-surface border border-outline p-8 rounded-2xl shadow-sm hover:shadow-md transition-all group">
  <div className="w-12 h-12 bg-[#FEF3C7] text-[#D97706] rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
  <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>local_fire_department</span>
  </div>
- <h3 className="text-xl font-bold text-on-background mb-3">Streaks & XP</h3>
+ <h3 className="text-xl font-bold text-on-background mb-3">Streaks & Gamification</h3>
  <p className="text-on-surface-variant leading-relaxed">
- Log your daily LeetCode problems, CP contests, or study hours to earn XP. Maintain your global streak and level up your profile like an RPG.
+ Log your daily LeetCode problems, CP contests, or study hours. Maintain your global streak and level up your profile like an RPG.
  </p>
  </div>
  
@@ -146,7 +193,7 @@ export default function LandingPage() {
  </div>
  <h3 className="text-xl font-bold text-on-background mb-3">Community Leaderboards</h3>
  <p className="text-on-surface-variant leading-relaxed">
- Nothing beats friendly competition. Join groups, compare your XP, and see who's dominating the weekly hustle on the global leaderboard.
+ Nothing beats friendly competition. Join groups, compare your ratings, and see who's dominating the weekly hustle on the global leaderboard.
  </p>
  </div>
 
@@ -158,6 +205,17 @@ export default function LandingPage() {
  <h3 className="text-xl font-bold text-on-background mb-3">Contest Radar</h3>
  <p className="text-on-surface-variant leading-relaxed">
  Never miss a Codeforces round or LeetCode weekly again. Track upcoming contests, sync them, and log your results to impact your global rank.
+ </p>
+ </div>
+
+ {/* Feature 4 */}
+ <div className="bg-surface border border-outline p-8 rounded-2xl shadow-sm hover:shadow-md transition-all group">
+ <div className="w-12 h-12 bg-[#D1FAE5] text-[#059669] rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+ <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>payments</span>
+ </div>
+ <h3 className="text-xl font-bold text-on-background mb-3">Campus Contests</h3>
+ <p className="text-on-surface-variant leading-relaxed">
+ We host exclusive, high-stakes programming contests directly on your university campus. Compete locally, earn massive recognition, and win cash prizes.
  </p>
  </div>
  </div>

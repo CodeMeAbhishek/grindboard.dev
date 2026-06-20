@@ -4,6 +4,8 @@ import { createClient } from "@/lib/supabase/server";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
  title: "Admin Panel — Grindboard",
  description: "System overview, user management, and broadcast announcements",
@@ -32,33 +34,36 @@ export default async function AdminPage() {
  name: u.name || "Unknown",
  cfRating: u.cfRating,
  lcRating: u.lcRating,
- xp: u.xpTotal,
  isAdmin: u.role === "ADMIN",
  initials: (u.name || "U").split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase()
  }));
 
- const modules = await prisma.module.findMany({
- include: {
- topics: true,
- enrollments: true
- }
- });
+  const modules = await prisma.module.findMany({
+    orderBy: { orderIndex: "asc" },
+    include: {
+      topics: {
+        orderBy: { orderIndex: "asc" },
+        include: {
+          materials: {
+            orderBy: { orderIndex: "asc" }
+          }
+        }
+      },
+      enrollments: true
+    }
+  });
 
- const adminModules = modules.map((m) => ({
- id: m.id,
- name: m.name,
- topics: m.topics.length,
- enrolled: m.enrollments.length,
- color: m.color || "bg-primary"
- }));
+  const adminModules = modules.map((m) => ({
+    id: m.id,
+    name: m.name,
+    topics: m.topics,
+    enrolled: m.enrollments.length,
+    color: m.color || "bg-primary"
+  }));
 
  const activeUsers = dbUsers.length;
- const totalXP = dbUsers.reduce((sum, u) => sum + u.xpTotal, 0);
- const avgXp = activeUsers > 0 ? Math.round(totalXP / activeUsers) : 0;
- 
  const stats = {
- activeUsers,
- avgXp
+ activeUsers
  };
 
  return <AdminClient initialUsers={adminUsers} initialModules={adminModules} stats={stats} />;

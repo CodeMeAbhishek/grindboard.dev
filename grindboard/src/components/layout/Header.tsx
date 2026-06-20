@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { QuickLogModal } from "@/components/modals/QuickLogModal";
 import { createClient } from "@/lib/supabase/client";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
@@ -24,7 +23,6 @@ interface Notification {
 }
 
 export function Header({ userId, userAvatarUrl, userName }: HeaderProps) {
-  const [showQuickLog, setShowQuickLog] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -205,7 +203,10 @@ export function Header({ userId, userAvatarUrl, userName }: HeaderProps) {
       )}
     >
       <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: pathname === "/contests" ? "'FILL' 1" : "'FILL' 0" }}>calendar_today</span>
-      Contests
+      <div className="flex items-start">
+        Contests
+        <span className="w-1.5 h-1.5 bg-red-500 rounded-full ml-0.5 mt-0.5 shadow-[0_0_6px_rgba(239,68,68,0.8)]" />
+      </div>
     </Link>
     <Link 
       href="/leaderboard"
@@ -269,17 +270,6 @@ export function Header({ userId, userAvatarUrl, userName }: HeaderProps) {
      </div>
    )}
  </div>
-
- <button
- id="quick-log-btn"
- onClick={() => setShowQuickLog(true)}
- className="bg-primary text-white font-label-mono text-sm px-4 py-2 rounded hover:bg-[#059669] transition-colors flex items-center gap-1.5"
- >
- <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
- add_circle
- </span>
- Quick Log
- </button>
 
         <div className="relative" ref={profileRef}>
           <button 
@@ -384,19 +374,8 @@ export function Header({ userId, userAvatarUrl, userName }: HeaderProps) {
      </div>
    )}
  </div>
- <button
- onClick={() => setShowQuickLog(true)}
- className="bg-primary text-white font-label-mono text-xs px-3 py-1.5 rounded flex items-center gap-1 hover:bg-[#059669] transition-colors"
- >
- <span className="material-symbols-outlined text-sm">add</span>
- Quick Log
- </button>
- </div>
+  </div>
  </header>
-
- {showQuickLog && (
- <QuickLogModal onClose={() => setShowQuickLog(false)} />
- )}
  </>
  );
 }

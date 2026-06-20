@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { CodeforcesIcon, LeetCodeIcon } from "@/components/icons/PlatformIcons";
 
 interface LeaderUser {
   id: string;
+  username: string | null;
   name: string;
   avatarUrl: string | null;
   cfHandle: string | null;
@@ -123,17 +125,19 @@ export function LeaderboardClient({ initialData }: LeaderboardClientProps) {
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
                         <div className="flex items-center gap-3">
-                          {user.avatarUrl ? (
-                            <img src={user.avatarUrl} alt="" className="w-8 h-8 rounded-full border border-outline" />
-                          ) : (
-                            <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
-                              {user.name[0]}
-                            </div>
-                          )}
+                          <Link href={`/u/${user.username || user.id}`} className="hover:ring-2 hover:ring-primary/50 rounded-full transition-all block">
+                            {user.avatarUrl ? (
+                              <img src={user.avatarUrl} alt="" className="w-8 h-8 rounded-full border border-outline" />
+                            ) : (
+                              <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
+                                {user.name[0]}
+                              </div>
+                            )}
+                          </Link>
                           <div className="flex flex-col">
-                            <span className={`font-medium ${user.isCurrentUser ? "text-primary" : "text-on-background"}`}>
+                            <Link href={`/u/${user.username || user.id}`} className={`font-medium hover:underline ${user.isCurrentUser ? "text-primary" : "text-on-background"}`}>
                               {user.name}
-                            </span>
+                            </Link>
                             <span className="text-xs text-on-surface-variant font-label-mono">
                               @{tab === "CODEFORCES" ? user.cfHandle : user.lcHandle}
                             </span>
@@ -207,7 +211,7 @@ export function LeaderboardClient({ initialData }: LeaderboardClientProps) {
                 </div>
                 
                 <div className="flex-1">
-                  <div className="font-bold text-on-background text-lg">{currentUser.name}</div>
+                  <Link href={`/u/${currentUser.username || currentUser.id}`} className="font-bold text-on-background text-lg hover:underline">{currentUser.name}</Link>
                   <div className="text-on-surface-variant text-sm flex items-center gap-1.5 mt-1">
                     <span className="font-label-mono font-medium text-on-background">
                       {tab === "CODEFORCES" ? currentUser.cfRating : currentUser.lcRating}

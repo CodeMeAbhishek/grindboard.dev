@@ -1,0 +1,1484 @@
+{
+  "title": "Dhirubhai Ambani University - Summer Internship Chronicles",
+  "drive": "25-26",
+  "note": "Student IDs and candidate names have been redacted/anonymized for privacy. All technical content, questions, and interview experiences are preserved verbatim.",
+  "companies": [
+    {
+      "company": "Google",
+      "role": "Software Engineer Intern",
+      "stipend": "1.35 Lakh per month",
+      "number_of_selects": 6,
+      "selection_process": "Resume Shortlisting → Online Assessment → Technical Interviews",
+      "candidates": [
+        {
+          "candidate_label": "Candidate G1",
+          "summary": "There were two technical rounds. In each round, you were asked either one moderate-to-difficult question or one easy warm-up followed by a moderate question.",
+          "rounds": [
+            {
+              "round_name": "Round 1",
+              "questions": [
+                {
+                  "question_title": "Entity Size Calculation (File System)",
+                  "question": "You are given a class Entity defined as follows:\nclass Entity { type: file | directory; size: // if it is a file; EntityIds: // list of child Entity IDs if it is a directory };\nYou are provided with multiple Entity IDs, where each Entity can either be a file or a directory. If it is a file, its size will be given. If it is a directory, you will be given the Entity IDs of its children. You need to implement a function that, given an Entity ID, returns the total size of that Entity.",
+                  "answer": "Use a DFS (Depth-First Search) approach to recursively calculate the total size. To optimize, memoize the size of already visited Entity IDs to avoid recomputation."
+                }
+              ]
+            },
+            {
+              "round_name": "Round 2",
+              "questions": [
+                {
+                  "question_title": "Warm-up: String Score",
+                  "question": "Implement a function to calculate the score of a given string. The score of a string is defined as the sum of absolute differences between adjacent characters in the string. Example: For string \"abc\", Score = |'a' - 'b'| + |'b' - 'c'|."
+                },
+                {
+                  "question_title": "Minimum Score Anagram from Dictionary",
+                  "question": "You are given a function that returns the Hash Value of a string in O(1) time. Two strings are anagrams of each other if one string can be rearranged to get another string. Two strings will have the same Hash Value (e.g. god, dog). Given a dictionary containing N words, implement a function that, given a string as input, returns the string with the minimum score from the dictionary that is also an anagram of the given string.",
+                  "answer": "Precompute and store the minimum score for each Hash Value in the dictionary. For a given input string, simply return the precomputed result corresponding to its Hash Value."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate G2",
+          "summary": "There were two rounds, both around 45 minutes each. Only DSA questions were asked, no system design, HR/behavioral, etc. Mentioned that Google does not ask Dynamic Programming to their interns; expect questions from linear data structures (arrays, stacks, queues, binary search, sliding window) and non-linear data structures (graphs, trees).",
+          "rounds": [
+            {
+              "round_name": "Round 1: Tree-Based Problem (45 minutes)",
+              "questions": [
+                {
+                  "question_title": "Count Islands in Binary Tree",
+                  "question": "Given a binary tree where each node contains either a 0 or a 1, find the number of 'islands' in the tree. An island is defined as a connected group of 1s, where nodes are considered connected if they are directly linked (parent-child relationships, treating the tree as an undirected graph) - i.e. the number of connected components consisting only of 1s in the tree.",
+                  "approach": "Used DFS traversal to identify and count components. Starting from the root, traverse the tree; whenever a 1 is encountered that hasn't been visited, check if it has a child which was visited and had a 1 (if yes, the 1 is part of the same island as its child); otherwise, if both children are zero, a new island starts from that node and the counter is incremented.",
+                  "complexity": {
+                    "time": "O(N), where N is the number of nodes, as each node is visited exactly once",
+                    "space": "O(N) for DFS due to the recursion stack"
+                  },
+                  "follow_up": {
+                    "question": "Modify the solution to return the distinct sizes of these islands in a set (unique island sizes, without duplicates).",
+                    "approach": "Extended the DFS to also calculate the size of each island during traversal. Whenever an island was ending (a 0 encountered), calculate the size of the islands below and add them to the set; otherwise (node is a one), do not add anything to the set.",
+                    "complexity": {
+                      "time": "Still O(N), as size calculation is done within the same traversal",
+                      "space": "O(N)"
+                    }
+                  },
+                  "outcome": "Was able to code this up successfully during the round."
+                }
+              ]
+            },
+            {
+              "round_name": "Round 2: Triplet Counting in Sorted Arrays (45 minutes)",
+              "questions": [
+                {
+                  "question_title": "Triplet Counting in Sorted Arrays",
+                  "question": "Given three sorted arrays A, B, and C (each of size N), and an integer D, count the number of triplets (ai from A, bj from B, ck from C) such that |ai - bj| <= D, |bj - ck| <= D, and |ck - ai| <= D.",
+                  "approaches_tried": [
+                    "Initial proposal: nested loops over two arrays and binary search on the third (fix ai and bj, binary search on C) - O(N^2 log N).",
+                    "Asked for a better approach: considered two-pointer/sliding window on all three arrays, got stuck, proposed something closer to O(N log N log N) involving binary searches for ranges on multiple arrays."
+                  ],
+                  "expected_solution": "O(N) using a sliding window approach, leveraging the sorted nature of the arrays. Hint: consider the minimum and maximum values across the three elements in the triplet and ensure they differ by at most D. One optimal way is to combine all arrays (using B as the 'middle') and use two pointers to find valid windows, advancing pointers minimally to achieve O(N) time.",
+                  "complexity": {
+                    "time": "O(N)",
+                    "space": "O(1), no extra space beyond variables"
+                  },
+                  "outcome": "Was not able to fully code it during the round but explained it verbally after the hint; interviewer seemed satisfied with the understanding. Result: Unknown."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate G3",
+          "summary": "2 technical rounds, both focused on DSA.",
+          "rounds": [
+            {
+              "round_name": "Round 1 (45 minutes)",
+              "notes": "Started with introduction and casual talk about CP practice to set a friendly tone.",
+              "questions": [
+                {
+                  "question_title": "9 Boxes Target Sum (Bitmasking)",
+                  "question": "There is a game with 9 boxes arranged in a row, each containing a positive integer from [1, 10^9]. Initially some boxes are open and some closed. The score of the setup equals the sum of integers of open boxes. In a move you can open a box but not close any box. Determine whether there exists a set of moves such that the score equals a target Sum; if it exists, print the setup (which boxes should be opened). If multiple solutions exist, select the one with minimum number of open boxes.",
+                  "solution": "Generated all possible sets of moves; for each move checked whether the boxes which were open were already open and if the setup satisfied all conditions, then compared with the existing answer and stored the minimum one.",
+                  "concepts": ["Bitmasking"]
+                }
+              ]
+            },
+            {
+              "round_name": "Round 2 (55 minutes)",
+              "questions": [
+                {
+                  "question_title": "Valid Precedence Order from Strings",
+                  "question": "Given m strings each containing lower and upper case alphabets where the precedence order of English alphabets was forgotten and the new precedence is to be defined using these strings (each string denotes the precedence order), determine whether these strings denote a valid precedence order or not. Sum of lengths of all strings is upper bounded by 10^6.",
+                  "solution": "Topological sort problem. Suggested a brute force first, then explained the optimal solution and implemented it. Interviewer asked clarifying questions about implementation details throughout.",
+                  "concepts": ["Topological Sort", "Kahn's Algorithm"],
+                  "outcome": "Wrote the code, dry ran it on a test case successfully, completed and explained the code; had informal conversation with interviewer for 10-15 minutes afterward."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate G4",
+          "summary": "There were 2 technical rounds, each mainly focused on DSA.",
+          "rounds": [
+            {
+              "round_name": "First Round",
+              "questions": [
+                {
+                  "question_title": "Entity Size Calculation (same as Candidate G1)",
+                  "note": "Same base question as Candidate G1's Round 1."
+                },
+                {
+                  "question_title": "Follow-up: File System Validity Check",
+                  "question": "Given a File system, check whether it follows the rules of a general File System. First provide a general characteristic of a File System, then check for the given system.",
+                  "answer": "Since the root node is unknown, apply a BFS from every node not yet covered. If a loop is encountered, the system does not follow the rules. If there are multiple roots after this process, it also means it does not follow the rules. A Disjoint Set Union (DSU) or similar data structure can be used to maintain the root."
+                }
+              ]
+            },
+            {
+              "round_name": "Second Round",
+              "questions": [
+                {
+                  "question_title": "Longest Consecutive Character Chain Mapping",
+                  "question": "Given a 2 x n vector of characters containing a one-to-one mapping of characters, print the longest consecutive sequence. Example: A->B, B->C, F->G. Answer: A->B->C.",
+                  "answer": "Use a memoization vector to store the next consecutive biggest chain character, and keep track of the starting character of the chain. Any time an already-built chain is encountered, attach to it instead of re-traversing that part."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate G5",
+          "questions": [
+            {
+              "question_title": "Two Sum with Even Index Difference",
+              "question": "Given a 0-indexed integer array nums and an integer target, return indices i and j such that: nums[i] + nums[j] == target, |i-j| % 2 == 0 (the absolute difference is even), and i != j. Return [i, j]; if multiple valid pairs exist, return any; if none exists, return [-1, -1].\nConstraints: 2 <= nums.length <= 2x10^5; -10^9 <= nums[i] <= 10^9; -10^9 <= target <= 10^9.",
+              "follow_up": "Can you come up with an O(n) algorithm?",
+              "hint": "Since |i-j| must be even, i and j must both be even OR both be odd. Treat this as two separate 'Two Sum' problems: one checking only elements at even indices, one checking only elements at odd indices."
+            },
+            {
+              "question_title": "Other DSA Question",
+              "question": "How does unordered_map or unordered_set actually work? How do they store data?"
+            },
+            {
+              "question_title": "Safe Queries in Corrupted Database System",
+              "question": "Managing a system with n databases and m unique queries (0 to m-1). Given a log of operations where each database executes a list of queries, and a security incident has occurred. A list of initial_corrupted_queries is identified. Corruption spreads as follows: (1) If a database executes any query from initial_corrupted_queries, that entire database becomes corrupted. (2) Once a database is corrupted, all other queries executed on that database are considered unsafe (collateral damage), even if not originally in the corrupted list. (3) A query is Safe only if it is not in initial_corrupted_queries AND was never executed on a corrupted database. Return a sorted list of all Safe query IDs.\nInput: n (number of databases), m (total unique queries), db_logs (list of lists; i-th list contains query IDs executed by i-th database), initial_corrupted_queries.\nConstraints: 1 <= n, m <= 10^5; sum of lengths of all db_logs <= 2x10^5; 0 <= query_id < m.\nOutput: sorted list of safe query IDs.",
+              "solution": "DFS or BFS: start traversal from all initially corrupted queries. If a Query is infected, traverse to all Databases connected to it. If a Database gets infected, traverse to all other Queries connected to it. Any Query node not visited during this traversal is 'Safe.'"
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate G6",
+          "rounds": [
+            {
+              "round_name": "Round 1",
+              "summary": "Purely DSA-based technical round. Interviewer focused on tree data structures, problem-solving approach, and logical clarity rather than just code.",
+              "questions": [
+                {
+                  "question_title": "Count Islands in Binary Tree",
+                  "question": "Tree-based problem: each node contains a binary value (0 or 1). An island is a group of connected nodes with value 1. Find the total number of islands present in the tree.",
+                  "approach": "Used DFS, traversed the tree recursively. Whenever a node with value 1 that was not visited was encountered: started a DFS from that node, marked all connected 1 nodes as visited, counted it as one island. This ensured each island was counted exactly once.",
+                  "outcome": "Interviewer was satisfied with traversal logic, correct handling of visited nodes, and time/space complexity explanation.",
+                  "follow_up": {
+                    "question": "Instead of just counting islands, determine the different sizes of islands present in the tree (e.g. island sizes like {1,3,5}).",
+                    "approach": "Planned to maintain a counter for the size of the current island during DFS; after completing DFS for one island, store its size in a set; repeat for all islands.",
+                    "outcome": "Was able to explain the logic clearly but couldn't fully code this part due to time constraints."
+                  }
+                }
+              ]
+            },
+            {
+              "round_name": "Round 2",
+              "round_flow": "Self-introduction, technical problem discussion, follow-up optimization, company-related questions.",
+              "questions": [
+                {
+                  "question_title": "Minimum Time Message Delivery in Router Network",
+                  "question": "Routers connected as a graph. One router is the source, another is the target. Initially only the source router has the message. At time=1, a router can send the message to only one adjacent router. Find the minimum time required to deliver the message to the target router.",
+                  "approach": "Modeled routers as nodes, connections as edges. Used BFS since the problem required minimum time/hops to reach the target. Maintained a queue for BFS traversal and a visited structure to avoid cycles. Each BFS level represented one unit of time.",
+                  "outcome": "Was able to solve and code this question successfully.",
+                  "follow_up": {
+                    "question": "Harder extension: routers connected as a graph, source and target given, initially only source has the message. Each router can forward the message to at most k adjacent routers per unit time (k given). Determine the minimum time to deliver the message to the target router.",
+                    "approach": "Model the network as a graph. Use a queue to simulate message propagation; each queue entry stores (current_router, time), starting with (source, 0). For each router, try forwarding to up to k unvisited neighbors, pushing them into the queue with time+1. Mark routers as visited when first reached. Stop as soon as the target router is reached; the associated time is the minimum required time."
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Sprinklr",
+      "role": "Product Engineer Intern",
+      "stipend": "1.5 Lakh per month",
+      "number_of_selects": 6,
+      "selection_process": "CPI above 7 → Online Assessment → 2 Technical Interviews + 1 HR round",
+      "candidates": [
+        {
+          "candidate_label": "Candidate S1",
+          "summary": "Students with 6.5+ CPI got shortlisted for an online assessment with three DSA questions; good CP practice helps clear this round.",
+          "rounds": [
+            {
+              "round_name": "1st Technical Interview Round",
+              "notes": "Started with introduction; interviewer asked about a DBMS project from the resume, then shared 2 DSA questions, asking the candidate to read carefully and explain what each question asks first.",
+              "questions": [
+                {
+                  "question_title": "Remove Linked List Elements Present in Array",
+                  "question": "Given a singly linked list and an array of numbers, modify the linked list such that no element in the linked list is present in the given array.",
+                  "approaches": [
+                    "Brute force: check every linked list element against the array - O(N x M).",
+                    "Optimized: sort the array, then binary search for each linked list element - O(N log N + M log N).",
+                    "Hashmap approach: similar time complexity but extra O(N) space; mentioned unordered_map can reduce average-case complexity to O(log N) for searching (worst case O(N))."
+                  ]
+                },
+                {
+                  "question_title": "Rotting Oranges (Multi-source BFS)",
+                  "question": "Given an n x m grid with fresh and rotten oranges, in one unit of time a fresh orange becomes rotten if it shares a side with a rotten one. Determine the minimum time for every orange to become rotten.",
+                  "approach": "Initially all rotten oranges act as sources - multi-source BFS technique. Mentioned the corner case that it might not always be possible to rot every orange (a fresh orange could remain isolated), which the interviewer was expecting.",
+                  "tip": "Always mention the brute force solution first even if you know the optimal one immediately, to avoid creating the impression you already knew the question."
+                }
+              ],
+              "implementation_notes": "Asked to code both approaches in a compiler of choice (some interviewers require notepad/docs instead). Used a lambda checker function in the second question's implementation; interviewer asked follow-up questions about it."
+            },
+            {
+              "round_name": "2nd Technical Interview Round",
+              "notes": "Started with introduction and detailed project explanation (~10 minutes), then two Hard DSA problems.",
+              "questions": [
+                {
+                  "question_title": "Wildcard/Regex Matching Variation",
+                  "question": "A variation of the wildcard matching / regular expression matching problem (similar to LeetCode).",
+                  "approach": "Started with brute force, quickly moved to dynamic programming approach. Interviewer stopped the candidate after a few lines of code and asked for time/space complexity instead.",
+                  "complexity": {
+                    "time": "O(N x M)",
+                    "space": "O(N x M)"
+                  }
+                },
+                {
+                  "question_title": "Shortest Path Visiting All Nodes",
+                  "question": "Given an undirected, connected graph of n nodes, return the length of the shortest path that visits every node. You may start/stop at any node, revisit nodes multiple times, and reuse edges.",
+                  "approach": "Discussed observations; interviewer gave time to think given the difficulty. Interviewer revealed constraint N <= 15, prompting consideration of bitmasking techniques, but that alone wasn't sufficient. Interviewer hinted to think of it as a graph problem since the phrasing obscured that. Was not able to reach the final optimal solution; mentioned brute force techniques and discussed time/space complexity of those.",
+                  "optimal_solution": "BFS + Bitmasking."
+                }
+              ]
+            },
+            {
+              "round_name": "3rd HR Round",
+              "summary": "Resume-driven round (~15 minutes) focused on understanding the candidate's profile in depth.",
+              "topics_covered": [
+                "Self-introduction and resume follow-up questions.",
+                "Explaining and justifying soft skills listed on resume with real situations/experiences.",
+                "Discussion of projects - role, technologies used, learning outcomes.",
+                "Preference between backend and frontend development (answered backend, citing interest and background)."
+              ]
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate S2",
+          "rounds": [
+            {
+              "round_name": "1st Technical Round Interview Experience",
+              "summary": "Interviewer greeting, self-introduction, basic DBMS questions (normalization), then asked about Operating Systems knowledge (candidate had limited OS knowledge at the time, so the interviewer skipped ahead but later questions revolved around OS topics). Interviewer explained OS basics, then asked four questions related to OS task management/optimization. Screen-shared and wrote code in MS Word for the first three questions; completed two fully, half of the third due to time. Last two questions were discussion-only (ideas/approaches). Ended with candidate asking about the company and the interviewer's role.",
+              "tip": "Practice LRU and LFU cache problems - they can be helpful and might be asked.",
+              "questions": [
+                {
+                  "question_title": "Q1: Normalization",
+                  "question": "What is normalization in databases? What are the different types (normal forms)?"
+                },
+                {
+                  "question_title": "Q2: Task Scheduling - FCFS",
+                  "question": "Given n tasks, each with a start time and execution time, the task manager follows First Come First Serve (FCFS) scheduling. Determine the time at which all tasks will complete."
+                },
+                {
+                  "question_title": "Q3: Task Scheduling - Non-Preemptive Priority",
+                  "question": "Given n tasks, each with start time, execution time, and priority. The task manager follows priority scheduling (ties broken by FCFS) with a non-preemptive rule (once a task starts, it must run to completion). Determine the time at which all tasks will complete."
+                },
+                {
+                  "question_title": "Q4: Task Scheduling - Preemptive Priority",
+                  "question": "Given n tasks, each with start time, execution time, and priority. The task manager follows priority scheduling (ties broken by FCFS) with a preemptive rule (a higher-priority task arriving can interrupt a running task, which resumes later). Determine the time at which all tasks will complete."
+                },
+                {
+                  "question_title": "Q5: Starvation Problem",
+                  "question": "In the preemptive priority scheduling above, a low-priority task arriving early might never execute because higher-priority tasks keep arriving. What is this issue called, and what strategies prevent it (e.g. aging, fair scheduling)?"
+                }
+              ]
+            },
+            {
+              "round_name": "2nd Technical Round Interview Experience",
+              "summary": "Straightforward DSA round, no other topics. Introductions, then two coding questions shared via screen on Google Docs. Solved both; asked about time/space complexities afterward.",
+              "questions": [
+                {
+                  "question_title": "Q1: Chocolate Distribution With Prime Requirement",
+                  "question": "You have n friends and want to give each friend exactly c chocolates on your birthday, where c must be prime. There are q factories, each providing chocolate packs of sizes between a and b (inclusive). Determine if it's possible to choose a valid pack size x such that a <= x <= b for some factory, and x/n = c where c is prime.\nExample: n=5, q=2, factory ranges [5,10], [20,30]. Pick x=25 from [20,30]: 25/5=5 (prime). Output: YES."
+                },
+                {
+                  "question_title": "Q2: Subarrays With Frequency Constraint",
+                  "question": "Given a string of lowercase English letters and an integer k, find the number of subarrays in which the frequency of every character is at most k.\nExample: s=\"abab\", k=1. Valid subarrays: \"a\",\"b\",\"a\",\"b\",\"ab\",\"ba\". Answer = 6."
+                }
+              ]
+            },
+            {
+              "round_name": "3rd Round: HR Round Interview Experience",
+              "summary": "HR introduction, then candidate's brief self-introduction (similar to resume). Asked what the candidate knew about Sprinklr and what the company does (helped by having watched the pre-placement talk). Mentioned seniors working at Sprinklr and asked if the candidate had spoken with them. Asked an interesting question: 'What will you do in the meantime if you get selected?' (answered: talk to seniors and learn the related tech stack). Ended with candidate asking about the company's current tech stack."
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate S3",
+          "summary": "Before the OA, the company shortlisted students based on CPI (mostly excluding those below 6-7 CPI or with little coding background). Around 200 students gave the OA, which had high-quality questions requiring good DSA/CP knowledge (a GCD function question, a tree problem, an easy DSA question, and a tough CP question). 30 students were shortlisted for interviews. All interviews were online on Microsoft Teams.",
+          "rounds": [
+            {
+              "round_name": "Round 1 (DSA Round)",
+              "summary": "Started with self-introduction and discussion of technical/non-technical interests (2-3 mins).",
+              "questions": [
+                {
+                  "question_title": "Tricky Binary Search Problem",
+                  "question": "A binary search problem that was hard to recognize as binary search, similar to LeetCode 'Capacity to Ship Packages Within D Days'.",
+                  "outcome": "Solved in about 20 minutes with a mere hint; explained thinking and implemented by sharing screen."
+                },
+                {
+                  "question_title": "Stack-based Problem",
+                  "question": "An average difficulty problem about a Stack.",
+                  "outcome": "Recognized it could be implemented using a stack quickly; implementation took about 20-22 minutes."
+                }
+              ],
+              "duration_notes": "Overall round took about 40-45 minutes; candidate was selected for round 2."
+            },
+            {
+              "round_name": "Round 2 (DSA and Technical Round)",
+              "summary": "Generic introduction (2-3 mins), then project discussion (7-10 mins).",
+              "questions": [
+                {
+                  "question_title": "Tree DP Problem (Hard)",
+                  "question": "A very difficult tree dynamic programming problem.",
+                  "approach": "After thinking for about 20 minutes, gave an implementation using multiple multisets, which was not optimal but the interviewer let the candidate implement it anyway since it was challenging. Interviewer was satisfied with the way of thinking and implementation.",
+                  "note": "Candidate asked the interviewer for the original optimal solution at the end but the interviewer was not able to explain it clearly, suggesting it might have been similar to the candidate's approach."
+                }
+              ],
+              "duration_notes": "Round took about 45 minutes; candidate was selected for round 3 (final round)."
+            },
+            {
+              "round_name": "Round 3 (HR and Behavioural Round)",
+              "summary": "Started with introduction; interviewer probed details of whatever was mentioned in the introduction (advice: never give false statements about your skills in the introduction). Asked about soft skills mentioned in the resume with supporting instances/events. Asked about Sprinklr's goal, tagline, and why the candidate wanted to join. Discussion turned to projects. At the end, asked about backend vs frontend preference (answered comfortable with both but stronger interest/background in backend).",
+              "duration_notes": "About 15 minutes long.",
+              "outcome": "Rejected."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Goldman Sachs",
+      "role": "Software Engineer Intern",
+      "stipend": "1.62 Lakh per month",
+      "number_of_selects": 9,
+      "selection_process": "Online Assessment → Technical Interviews",
+      "candidates": [
+        {
+          "candidate_label": "Candidate GS1",
+          "summary": "There were 3 technical rounds. Overall experience across all 3 rounds: not asked a single DSA question; all questions were based on system design, improvisation/optimization, DBMS, and general knowledge.",
+          "rounds": [
+            {
+              "round_name": "Round 1",
+              "summary": "Started with introduction; asked about projects, why they were made, and which was the candidate's favorite and why.",
+              "questions": [
+                {
+                  "question_title": "Parking Allotment System Design",
+                  "question": "Design a parking allotment system, most optimal, used for cars of three sizes (small, medium, large). Asked to write pseudocode on paper."
+                },
+                {
+                  "question_title": "OOPs in Java",
+                  "question": "A little bit about OOPs in Java specifically."
+                }
+              ]
+            },
+            {
+              "round_name": "Round 2",
+              "questions": [
+                {
+                  "question_title": "Why Practice CP?",
+                  "question": "A unique question: 'WHY do I practice CP? How does it help me?' Answered from personal experience; interviewer raised a few counterpoints."
+                },
+                {
+                  "question_title": "Thoughts on AI",
+                  "question": "Brief of thoughts on AI and how it integrates with day-to-day life, and what new innovative ways AI can be used."
+                },
+                {
+                  "question_title": "DBMS Project Schema and Complex Queries",
+                  "question": "Asked about the DBMS project; asked to make a rough schema for it and later 3 complex SQL queries involving joins, aggregation, and indexes. Had to write the SQL queries on paper."
+                }
+              ]
+            },
+            {
+              "round_name": "Round 3",
+              "summary": "Started with brief introduction; interviewer described what the company expected from students for the role, overall friendly tone.",
+              "questions": [
+                {
+                  "question_title": "DBMS Project ER Diagram and Scaling",
+                  "question": "Asked again about the DBMS project; asked to draw the ER diagram and mappings. Deep conversation about different ways to scale it to a much higher level, points where it would fail, and possible improvements."
+                },
+                {
+                  "question_title": "Task Management System Design",
+                  "question": "Design a Task Management system; explain how the alarm/reminder functionality would work, how load on the system can be reduced, and what additional functionality could be added."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate GS2",
+          "rounds": [
+            {
+              "round_name": "Round 1",
+              "summary": "Small introduction and general questions; discussed internships mentioned in resume; explained both projects (5-10 minutes each).",
+              "questions": [
+                {
+                  "question_title": "Parking Garage System",
+                  "question": "Design a parking garage system where cars (small, medium, large) arrive and leave. The system should track the number of cars of each size currently parked and notify when the parking is full."
+                }
+              ]
+            },
+            {
+              "round_name": "Round 2",
+              "summary": "Self-introduction; discussed projects again in detail, including why a particular tech stack was chosen for one project.",
+              "questions": [
+                {
+                  "question_title": "25 Horses Puzzle",
+                  "question": "There are 25 horses and no timer. You can race only 5 horses at a time, and each race gives you the ranking of those 5. Find the minimum number of races needed to determine the top 3 fastest horses."
+                },
+                {
+                  "question_title": "Technical Questions",
+                  "question": "Favorite subject (answered DBMS). Difference between SQL and NoSQL databases."
+                }
+              ]
+            },
+            {
+              "round_name": "Round 3",
+              "summary": "Started with introduction and a quick summary of what was covered in previous rounds.",
+              "questions": [
+                {
+                  "question_title": "Word Suggestion System (Trie/Tree)",
+                  "question": "Given a dictionary of words, design a system that, when a user types a word or prefix, suggests matching words if they exist; otherwise shows 'word not available'.",
+                  "notes": "Asked to explain both brute force and optimal (Trie-based) approaches; wrote the code on paper."
+                }
+              ]
+            }
+          ],
+          "overall_notes": "Interview focused mainly on projects, problem-solving, and core CS concepts like DBMS and DSA. Environment was friendly and interactive."
+        },
+        {
+          "candidate_label": "Candidate GS3",
+          "verdict": "Selected",
+          "online_assessment": {
+            "format": "MCQs, writing-based questions, and 3 coding problems.",
+            "mcq_section": "Covered OOPs, DBMS, basic problem-solving, programming logic, DSA fundamentals, language ability, and questions aimed at evaluating teamwork attitude. Overall difficulty: Easy to Medium.",
+            "coding_section": "2 questions Easy to Medium, 1 question Tough. Focused on DSA, implementation, and logical thinking."
+          },
+          "rounds": [
+            {
+              "round_name": "Round 1 (45 mins)",
+              "summary": "Casual and chill introduction. Asked to explain a DSA-based project (a Placement Manager project). Interviewer focused heavily on DSA concepts: comparing different data structures, time/space optimizations, identifying possible mistakes in the implementation, suggesting improvements and additional features."
+            },
+            {
+              "round_name": "Round 2 (40 mins)",
+              "summary": "Brief introduction and continued discussion on project and DSA concepts.",
+              "questions": [
+                {
+                  "question_title": "25 Horses Puzzle",
+                  "question": "Find the fastest 3 horses among 25 horses with limited races - tested logical thinking and problem-solving under pressure."
+                }
+              ],
+              "additional_questions": "HR + situational questions: AI tools used and how, how to manage a team, philosophical/opinion-based questions."
+            },
+            {
+              "round_name": "Round 3 (40 mins)",
+              "summary": "Started with introduction and resume discussion; again focused on projects and DSA concepts.",
+              "questions": [
+                {
+                  "question_title": "Parking Garage System",
+                  "question": "A parking garage system where cars (small, medium, large) arrive and leave. The system should track the number of cars of each size currently parked and notify when the parking is full."
+                }
+              ],
+              "follow_up_discussion": "Core DSA concepts, design thinking, optimization approaches."
+            }
+          ],
+          "overall_experience": "Entire process strongly focused on DSA core concepts (very important), DBMS & OOPs basics, logical and puzzle-solving skills, project understanding and explanation, and communication skills.",
+          "tips": [
+            "Be confident and think out loud while solving problems.",
+            "Clearly explain your approach, even if unsure.",
+            "Show your thought process.",
+            "Stay calm and maintain a friendly, chill interaction with the interviewer."
+          ]
+        },
+        {
+          "candidate_label": "Candidate GS4",
+          "verdict": "Selected",
+          "stipend_note": "162500 Rs per month",
+          "number_of_rounds": 3,
+          "rounds": [
+            {
+              "round_name": "Round 1 (Easy) - Duration: ~45 minutes",
+              "questions": [
+                {
+                  "question_title": "Single Element in a Sorted Array",
+                  "advice": "Deeply ask and confirm the question - whether the array is sorted, how many single elements exist, size constraints, etc.",
+                  "approach": "Started with a map approach, then switched to XOR of all elements since only one single element was present. Then asked to provide a solution given the array is sorted - came up with classical binary search."
+                },
+                {
+                  "question_title": "Two Sum",
+                  "question": "A simple Two Sum question. Main discussion was about sets and maps (normal and unordered) and their time complexities."
+                },
+                {
+                  "question_title": "Cycle in a Linked List",
+                  "question": "Detect a cycle in a linked list, given that if a cycle exists, the tail connects to the head of the list.",
+                  "approach": "Directly came up with the fast and slow runner approach. Asked to optimize to O(N/2): an approach where the slow pointer stores the address in a set - if the fast pointer reaches a node with an address in the set, the cycle is confirmed; if it safely reaches null, no cycle.",
+                  "better_approach_needed": "Store the first node address in p1 and the second node address in p2. If fast == p1 || fast == p2 at any point, the cycle is confirmed."
+                },
+                {
+                  "question_title": "Maximum Depth of Binary Tree",
+                  "question": "Standard maximum depth of binary tree question."
+                }
+              ],
+              "non_dsa_part": [
+                "Asked about projects and how to choose which projects to add to the resume.",
+                "Asked about most used hooks in React.js (candidate was familiar with web dev).",
+                "Asked about one project - what it mainly does and how the mentioned React.js hooks were useful."
+              ]
+            },
+            {
+              "round_name": "Round 2 (Medium) - Duration: 30 minutes",
+              "questions": [
+                {
+                  "question_title": "One Edit Distance Check",
+                  "question": "Given 2 strings a and b, determine if it's possible to make the strings equal after exactly one edit operation (edit/remove/insert one character).",
+                  "approach_evolution": "Came up with a working but messy approach with many conditions. Asked to simplify by working with string sizes first: let a be the larger string and b the smaller; a.size() - b.size() <= 1. If sizes equal: Hamming distance should be <= 1. Else: find a character in a which can be removed to get a == b via loops; if found return true, else false."
+                },
+                {
+                  "question_title": "Custom Dictionary Order Sorting",
+                  "question": "Given a 26-size array 'order' with lowercase alphabets (one time each) representing dictionary order, sort a list of strings according to this custom order.",
+                  "approach": "Used a custom sorting lambda function in C++: explained normal sort logic first, then assigned weight to characters (smaller index of occurrence in order = more weight). For two strings a and b in the lambda: find the first differing character; if found, return weight(a[diff_index]) > weight(b[diff_index]); else return a.size() <= b.size()."
+                }
+              ],
+              "non_dsa_part": [
+                "Asked about a project - what it does and how it is useful.",
+                "Asked: what consequences arise if the project has thousands of concurrently active users, and where the issue would occur specifically (answered: querying operation would suffer most, requiring better indexing for efficiency)."
+              ]
+            },
+            {
+              "round_name": "Round 3 (Medium-Hard) - Duration: 18 minutes",
+              "summary": "No DSA asked.",
+              "non_dsa_part": [
+                "Introduction and general chat.",
+                "Discussion on one chosen project.",
+                "Random questions to test communication: which AI coding assistant is used and how, ChatGPT vs Claude comparison.",
+                "How the project was prepared, development timeline, feature additions post-release.",
+                "[Critical] Database selection reasoning: why NoSQL (MongoDB) was chosen over SQL (PostgreSQL) - this took a major part of the discussion.",
+                "Asked about another project made in a winter coding program mentioned in the resume."
+              ],
+              "advice": "Technical reasoning over database selection is very important - which kind of operations SQL is better for vs NoSQL, and WHY a particular database was chosen as primary in the project."
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate GS5",
+          "rounds": [
+            {
+              "round_name": "Round 1",
+              "summary": "Interviewer asked about types of data structures (linear and non-linear); named Trees as a non-linear example. Asked: if designing a chat channel, which data structure to use - initially confused between tree and graph, answered Tree, then explained the hierarchical pattern of the chat channel.",
+              "questions": [
+                {
+                  "question_title": "Count Intersecting Elements of Two Arrays",
+                  "question": "Given two arrays, find the number of intersecting elements.",
+                  "approach": "Storing elements in a map and comparing, achievable in O(n)."
+                }
+              ],
+              "additional": "Asked about a DBMS project with cross-questioning on details of the project."
+            },
+            {
+              "round_name": "Round 2",
+              "summary": "Started with casual talk about academics, sports, and positions of responsibility, then moved to a DSA question with increasing difficulty.",
+              "questions": [
+                {
+                  "question_title": "Track Students Exiting/Entering Repeatedly",
+                  "question": "Designing a system to punish students who go out and come inside the college for more than 5 times. What data structure to use?",
+                  "approach": "Answered unordered map: update a counter corresponding to the student's ID each time they go out or come in (e.g. mp[id]++). Check the count for a student; if count/2 >= 5, the student should be penalized.",
+                  "follow_up": {
+                    "question": "Now punish only those students who go out and come in more than 5 times during a certain time period, e.g. 6:00 PM to 9:00 PM.",
+                    "approach": "Instead of map<int,int>, use map<int, pair<int,int>> or map<tuple<int,int,int>> to also store the time in 24-hour format (e.g. 6:50 PM stored as 1850), plus a flag indicating whether the student left or entered."
+                  }
+                }
+              ],
+              "additional": "Asked about the project, then the interview concluded."
+            },
+            {
+              "round_name": "Round 3",
+              "summary": "More of an HR + Technical round focused on testing confidence. Asked to explain a favorite project, whether it was coursework or personal (interviewer was impressed). Asked 'why should we hire you' - answered calmly: 'I think I'm fit for this role.' Interviewer debated briefly then smiled. Round was short, about 15 minutes."
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate GS6",
+          "summary": "OA round consisted of average quality DSA questions: 3 questions, 1 fairly tough, the other two easy (similar to LeetCode medium). There were also aptitude questions with probability and permutations/combinations questions, plus a descriptive HR-type question. Shortlist was based on both DSA and aptitude performance. 34 students were shortlisted for interviews. All interviews were offline at the placement block, 8am-4pm continuously.",
+          "rounds": [
+            {
+              "round_name": "Round 1 (DSA and technical round)",
+              "summary": "Introduction and discussion of technical/non-technical interests (2-3 mins). Very basic DSA questions: finding the height of a tree, checking if any two elements sum to X (implementable with a map), and a LeetCode-style linked-list question (easy).",
+              "additional_topics": [
+                "Basic DBMS: how are queries optimized in DBMS (answer: indexing, after a few wrong attempts); asked about indexing in detail.",
+                "Basic OOPs: what is OOPs, OOP languages and examples, the 4 pillars of OOPs explained in detail."
+              ],
+              "duration_notes": "Round took 45-50 minutes; not very tough, checked basics of DSA, OOPs, and DBMS. Selected for round 2."
+            },
+            {
+              "round_name": "Round 2 (Technical Round and somewhat HR round)",
+              "summary": "Generic introduction (2-3 mins). Asked about projects, specifically the DBMS project in very detail - asked to draw the whole ER diagram and explain it (8-10 mins). Asked about normal forms, BCNF, differences between normal forms, RDBMS.",
+              "additional": [
+                "Asked to write a medium-level SQL query with proper syntax.",
+                "Asked about future aspirations and why Goldman; pushed back on competitive programming, suggesting CP enthusiasts don't perform well in industry - candidate responded confidently that they should be given the chance to prove otherwise.",
+                "Asked a puzzle which the candidate was able to solve."
+              ],
+              "advice": "Never emphasize being passionate about CP in a banking company interview, especially Goldman, based on this interviewer's apparent bias against it.",
+              "duration_notes": "Medium difficulty round requiring deep DBMS knowledge and good articulation. About 30-35 minutes. Selected for round 3."
+            },
+            {
+              "round_name": "Round 3 (Technical and Behavioural Round)",
+              "summary": "Basic introduction, then detailed discussion of projects (personal vs course projects). Asked about AI and its impact; candidate expressed interest in AI/ML and the underlying mathematical concepts.",
+              "questions": [
+                {
+                  "question_title": "Employee In/Out Tracking System Design",
+                  "question": "Design a class for maintaining the incoming and outgoing of employees in an office, tracking how much time an employee stays outside, and the system must warn employees that leave more than 3 times a day.",
+                  "constraints": "Required to design using OOPs concepts and necessary data structures within 5-7 minutes, writing the full class code on paper."
+                }
+              ],
+              "duration_notes": "About 15-20 minutes, not too tough.",
+              "outcome": "Rejected.",
+              "reflection": "Felt the need to have a good personal project, suggested making one apart from course projects."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Unify Apps",
+      "role": "Product Engineer Intern",
+      "stipend": "50k per month",
+      "ctc": "20 LPA (all base)",
+      "selection_process": "Online Assessment → 2 Technical Interviews",
+      "candidates": [
+        {
+          "candidate_label": "Candidate U1",
+          "rounds": [
+            {
+              "round_name": "Round 1 (DSA)",
+              "summary": "Started with introduction. An easy question first, but code had to be syntactically correct when written in Google Docs (interviewer pasted the code into an online coding platform to verify it works, which added pressure).",
+              "questions": [
+                {
+                  "question_title": "Find Median in a Stream",
+                  "question": "A hard question to find the median of a number flow (classic 'Find Median in a Stream' problem)."
+                },
+                {
+                  "question_title": "Trie-based Question",
+                  "question": "A question on tries to close out the round."
+                }
+              ]
+            },
+            {
+              "round_name": "Round 2 (Dev + DSA)",
+              "duration": "1 hour 40 minutes",
+              "summary": "All developer concepts mentioned in the resume were asked, with the interviewer gradually increasing depth on each topic until the candidate was unable to answer. Also asked questions about a project that could only be answered if the candidate had built it themselves.",
+              "questions": [
+                {
+                  "question_title": "Design Circular Queue (LeetCode-style)",
+                  "question": "A LeetCode-style problem at the end requiring multiple functions for a particular task (e.g. similar to 'Design Circular Queue')."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate U2",
+          "note": "Questions only (no narrative experience provided).",
+          "rounds": [
+            {
+              "round_name": "Question 1 (OS, OOPs, Java based - Easy-Medium)",
+              "questions": [
+                "What is process, thread, and the core difference between them?",
+                "Deadlocks related information (conditions).",
+                "Semaphores related info.",
+                "Core OOPs questions in Java: given code, find errors; given code, identify whether it represents encapsulation/abstraction/polymorphism/inheritance."
+              ]
+            },
+            {
+              "round_name": "Question 2 (Medium)",
+              "question_title": "Longest Nice Subarray (Bitwise AND)",
+              "question": "Given an array nums of positive integers, a subarray is 'nice' if the bitwise AND of every pair of elements in different positions in the subarray is equal to 0. Return the length of the longest nice subarray. Subarrays of length 1 are always nice.\nExpected time: O(n), n = array size and n < 10^9.\nExample: nums = [1,3,8,48,10]. Output: 3."
+            },
+            {
+              "round_name": "Question 3 (Classic-Medium)",
+              "question_title": "Subarray Sum Equals K",
+              "question": "Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals k. Can handle negative elements.\nExample: nums = [1,2,3], k = 3. Output: 2. Expected time: O(n)."
+            },
+            {
+              "round_name": "Question 4 (Easy-Med)",
+              "question_title": "Rightmost Node in Last Level (Complete Binary Tree)",
+              "question": "Given the root of a complete binary tree A, return the value of the rightmost node in the last level of the binary tree in log(n) time."
+            },
+            {
+              "round_name": "Question 5 (Projects based - Medium-Hard)",
+              "questions": [
+                "How to expand the existing project with respect to database - exactly how would you do that?",
+                "Overflow of OOPs project, how it works.",
+                "Backend questions involving APIs, Auth, and their problems.",
+                "Future visions for the projects made."
+              ]
+            }
+          ],
+          "tips": [
+            "Subtle introduction.",
+            "No boring gaps while thinking about a solution - say what you're thinking (improves logic capture faster).",
+            "Ask for help anytime - shows a sense of confidence.",
+            "Ask for feedback at the end - creates a sense of acceptance of mistakes and scope for improvement."
+          ]
+        },
+        {
+          "candidate_label": "Candidate U3",
+          "rounds": [
+            {
+              "round_name": "Round 1 Interview Experience",
+              "questions": [
+                {
+                  "question_title": "Bitwise OR of All Subarrays of Size K",
+                  "question": "Find the bitwise OR of all subarrays (windows) of size k.\nExample: array [1,2,3,8,7], k=2 -> output [3,3,11,15].\nExpected time: O(n). Expected space: O(1)."
+                }
+              ],
+              "core_subject_questions": {
+                "dbms": ["What are ACID properties?"],
+                "oop": [
+                  "What is runtime polymorphism?",
+                  "What is compile-time polymorphism?",
+                  "What are the four pillars of Object-Oriented Programming?"
+                ],
+                "os": [
+                  "What is virtual memory?",
+                  "What is the purpose of RAM?",
+                  "What is paging?",
+                  "What are the different types of CPU scheduling?",
+                  "What are threads?",
+                  "Why do we use locks?"
+                ]
+              },
+              "additional_question": {
+                "question_title": "Minimum Completion Time with Dependencies (Topological Sort)",
+                "question": "You are given an infinite number of CPUs and a list of tasks. Each task has a finish time and dependencies on other tasks; if task A depends on task B, B must complete before A starts. Assign tasks to CPUs to minimize the maximum time to complete all tasks. Return this minimum possible time, or -1 if the dependency graph contains a cycle.",
+                "hint": "Model as a directed graph; if a directed cycle exists, return -1. This is a topological-sort based problem with additional logic to compute minimum completion time. Basic example: a chain Task1 -> Task2 -> Task3 must execute in order; total time is the sum of finish times."
+              }
+            },
+            {
+              "round_name": "Round 2 Interview Experience",
+              "questions": [
+                {
+                  "question_title": "DP Problem (CSES-style, smaller constraints)",
+                  "question": "A medium-to-hard DP question, exactly the same as a known CSES problem, but with much smaller string constraints than the CSES version in the interview.",
+                  "note": "Because of smaller constraints, a Trie-based solution (required for the CSES version due to higher constraints) was not expected; a hashmap-based approach combined with DP was acceptable."
+                }
+              ],
+              "project_discussion": {
+                "oop_project": [
+                  "Why a particular logic or design approach was used.",
+                  "What alternative approaches could have been used.",
+                  "How parts of the project were modified or improved.",
+                  "How the design could be extended or optimized."
+                ],
+                "dbms_project": [
+                  "Questions related to the Entity Relationship (ER) diagram.",
+                  "Queries related to the database design.",
+                  "How certain queries were implemented.",
+                  "Why a particular schema or relationship was chosen.",
+                  "Possible alternative designs and improvements."
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate U4",
+          "rounds": [
+            {
+              "round_name": "Round 1 - Interview Experience",
+              "summary": "Introduction first; interviewer mentioned the interview would be 30 minutes only, and asked only 1 question.",
+              "questions": [
+                {
+                  "question_title": "Meeting Room III (LeetCode-style)",
+                  "question": "Same as a known LeetCode 'Meeting Rooms III' style problem; had recently appeared as a LeetCode Daily challenge before the interview.",
+                  "outcome": "Was able to solve it; interviewer asked for a dry run, which was explained easily and the interviewer was satisfied."
+                }
+              ]
+            },
+            {
+              "round_name": "Round 2 - Interview Experience",
+              "summary": "Introduction first; interviewer stated the round would start with DSA then move to project discussion.",
+              "questions": [
+                {
+                  "question_title": "Minimum Lakes Flooded (Simulation)",
+                  "question": "Given an array of length n where each element represents a lake number. Initially all lakes are empty. For array=[1,3,0,0,1,8]: arr[i] != 0 means rain on that lake - the lake fills completely if empty, or floods if already filled. arr[0]=1 means lake 1 fills completely (all lakes empty before this). arr[i]=0 means no rain, and you may remove water from any currently filled lake. After processing all n indexes, determine the minimum number of times lakes flooded.",
+                  "outcome": "Gave brute force first; interviewer asked to optimize; achieved partial optimization but was not able to do it fully."
+                }
+              ],
+              "project_discussion": {
+                "mern_stack_project": [
+                  "SQL vs NoSQL DB.",
+                  "How indexing works in MongoDB.",
+                  "If you were the first person in the world to discover indexing in a DB, how would you do it?",
+                  "Browser is single threaded - how can it handle multiple tasks?",
+                  "If you have to prioritize work (scheduling), what would you use and which is the best way?"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate U5",
+          "rounds": [
+            {
+              "round_name": "Round 1 - Interview Experience",
+              "summary": "Introduction first; interviewer asked the candidate to choose any DSA topic they were comfortable with (candidate said comfortable with all topics, which was appreciated). Given a question based on Disjoint Set Union (DSU); solved completely in logic with only a small mistake related to public/private access in OOPs, which was pointed out and corrected. Followed by good OOPs concept questions. Selected for round two.",
+              "questions": [
+                {
+                  "question_title": "Count Unreachable Node Pairs",
+                  "question": "Given an undirected graph with n nodes (0 to n-1) and a list of edges, two nodes are unreachable from each other if no path connects them. Compute the total number of unordered pairs of nodes (u,v) where u and v are not reachable from each other.\nInput: n (number of nodes), edges (list of undirected edges).\nExample: n=5, edges={{0,1},{2,3}}. Connected components: {0,1} size 2; {2,3} size 2; {4} size 1. Unreachable pairs: {0,1}-{2,3}=4; {0,1}-{4}=2; {2,3}-{4}=2; Total=8."
+                }
+              ]
+            },
+            {
+              "round_name": "Round 2 - Interview Experience",
+              "summary": "Started with introduction, then 2-3 questions from OS and DBMS: multithreading (OS); difference between SQL and NoSQL databases and use cases for each (DBMS). Then discussed projects, mostly about the authentication system.",
+              "questions": [
+                {
+                  "question_title": "Count Number of Nice Subarrays",
+                  "question": "A LeetCode-style 'Count Number of Nice Subarrays' coding question.",
+                  "outcome": "Wrote the code, explained the full logic step by step; code checked on 2-3 test cases, all passed."
+                },
+                {
+                  "question_title": "Logic-only Tree Question",
+                  "question": "One more DSA question related to trees, asked to explain the approach without writing code."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate U6",
+          "rounds": [
+            {
+              "round_name": "Round 1 (DSA)",
+              "summary": "2 LeetCode Medium questions; started with brute force approach moving to optimal for each, and was asked to only write the solution for the optimal approach.",
+              "questions": [
+                {
+                  "question_title": "Number of Subarrays Whose Sum is Odd",
+                  "question": "Find the number of subarrays whose sum is odd."
+                },
+                {
+                  "question_title": "Maximum Product Subarray",
+                  "question": "Find the maximum product of a subarray."
+                }
+              ]
+            },
+            {
+              "round_name": "Round 2 (Resume)",
+              "summary": "Asked almost everything written in the resume.",
+              "topics": [
+                {
+                  "topic": "Project Introduction",
+                  "details": "Explained a DSA-related project briefly, including all features. Asked why a linked list was used as the data structure (explained it was chosen because the project was made when just starting with DSA, the best option known at the time). Then asked to suggest an optimal data structure: progression from BST to AVL to B/B++ tree, explaining how each data structure improves on the prior one's time complexity, how data is stored in each, and rotation techniques to convert BST to AVL."
+                },
+                {
+                  "topic": "Double Hashing",
+                  "question": "What is Double Hashing?",
+                  "notes": "Had no immediate idea; asked for a little time. Explained problems with normal hashing and where double hashing is used in Blockchain, but the interviewer wanted a DSA-specific answer. Candidate had no further idea; interviewer explained it (answer: number of hash tables increases, therefore you hash the hash tables too)."
+                },
+                {
+                  "topic": "Merge Sort vs Quick Sort",
+                  "question": "Which algorithm is better - Merge Sort or Quick Sort?",
+                  "answer_given": "Merge Sort, based on worst-case time complexity.",
+                  "interviewer_note": "Agreed it's fine, but noted Merge Sort has an additional constant factor in time complexity that can make it slower than Quick Sort as data increases."
+                },
+                {
+                  "topic": "Blockchain",
+                  "question": "Explain what blockchain is (since it was listed as an area of interest).",
+                  "topics_covered": ["Why blockchain is needed.", "Structure of blockchain.", "How double hashing works here.", "Proof of Work.", "Mining."]
+                },
+                {
+                  "topic": "OS Questions",
+                  "questions": ["Multiprocessing vs Multithreading.", "Pagination (Paging)."]
+                },
+                {
+                  "topic": "DBMS",
+                  "question": "What is ACID in a database?"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Wells Fargo",
+      "role": "Software Engineer Intern (implied)",
+      "candidates": [
+        {
+          "candidate_label": "Candidate WF1",
+          "rounds": [
+            {
+              "round_name": "Interview Round 1",
+              "summary": "Started with general introduction.",
+              "questions": [
+                {
+                  "question_title": "OOP Explanation",
+                  "question": "What is Object Oriented Programming?",
+                  "answer": "Explained OOP and the 4 pillars; no counter-questioning followed."
+                },
+                {
+                  "question_title": "Minimum Cuts for Palindrome Substrings",
+                  "question": "Given a string of length n, find the minimum cuts required to make substrings palindromes. Length of string (n) = maximum possible integer value.",
+                  "approach": "Started by explaining brute force, then optimized and coded it in Google Docs. Constraints were described as very tough (random constraints given when asked)."
+                },
+                {
+                  "question_title": "Detect Loop in Singly Linked List",
+                  "question": "Given a singly linked list, determine whether it contains a loop.",
+                  "note": "Very standard question; explained approach and wrote code in Google Docs without counter-questioning."
+                },
+                {
+                  "question_title": "Pagination",
+                  "question": "What is Pagination?"
+                }
+              ],
+              "non_dsa_questions": [
+                "Have you done any project in ML/AI? (answered no, and denied having knowledge of it - was still asked what an LLM is and answered with whatever knowledge was available.)",
+                "Asked about course subjects.",
+                "Basic Computer Networks question: what is UDP? (candidate had not revised CN and admitted this.)",
+                "What is the Agile Model & Waterfall model in software development?"
+              ],
+              "closing_notes": "Asked general questions about tools/technologies currently used by the interviewer; was hoping for a mention of Java/Spring Boot to relate to a personal Spring Boot project, but instead the interviewer suggested exploring some Spring Boot libraries. Also told: 'Next project, you should make on AI/ML, as we are moving towards the AI side in Wells Fargo.'",
+              "outcome": "Not selected for the second round; candidate felt it was due to lack of AI/ML knowledge."
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate WF2",
+          "verdict": "Selected (12 out of 25)",
+          "stipend": "90000/- per month",
+          "online_assessment": {
+            "sections": [
+              "One moderate DSA question (based on DP).",
+              "MCQs (English).",
+              "MCQs (finance, stocks, business).",
+              "Two easy coding questions."
+            ],
+            "note": "Crucial to perform well in all sections; several people who solved all coding questions were not shortlisted because they lagged in MCQ sections. Coding questions were easy, so shortlisting depended crucially on the Finance and Business section."
+          },
+          "rounds": [
+            {
+              "round_name": "Round 1: DSA + Fundamentals",
+              "summary": "General introduction, two DSA-based questions (explain approach only, no coding), then fundamental CS questions, then brief project discussion.",
+              "dsa_questions": [
+                {
+                  "question_title": "Detect Cycle in Linked List + Find Start of Cycle",
+                  "question": "How to detect a cycle in a linked list, with a follow-up on how to find the start of the cycle.",
+                  "approach": "Tortoise and Hare algorithm (slow and fast pointers) - simple and standard."
+                },
+                {
+                  "question_title": "Trie-based Question",
+                  "question": "A classic prefix tree (Trie) based question - explained high-level implementation and time/space complexity verbally, no coding required."
+                }
+              ],
+              "fundamental_cs_questions": [
+                "What is OOPs? What is the difference between class and object?",
+                "Several classic questions on pointers.",
+                "What's shallow vs deep copy?",
+                "What's a segmentation fault?",
+                "What's normalization (explain all four types from 1NF to BCNF)?",
+                "What's partitioning vs sharding? Explain the difference.",
+                "How would you optimize queries (i.e. explain indexing)?",
+                "Clustered vs non-clustered indexing.",
+                "Explain inheritance and polymorphism.",
+                "What is a race condition?",
+                "Mutex, semaphores, the 4 conditions of deadlock.",
+                "Where inheritance/polymorphism were used in the candidate's projects.",
+                "WHERE vs HAVING in SQL."
+              ],
+              "duration_notes": "Lengthy but quite easy round."
+            },
+            {
+              "round_name": "Round 2: DSA + Behavioural round",
+              "summary": "Mixture of CS Fundamentals + HR/Behavioural round. Asked for an introduction, favorite curriculum subject (DSA), then discussion topics followed.",
+              "topics": [
+                "Linear vs non-linear data structures, where to use which.",
+                "Difference between arrays and linked lists; when to use a linked list vs not; advantage of linked list over arrays.",
+                "Explain merge sort (high level only, no coding).",
+                "More pointer questions.",
+                "Race condition, mutex, semaphores again.",
+                "Favorite project discussion (DBMS project) with example queries implemented.",
+                "What is AI?",
+                "Supervised vs unsupervised learning, deep learning, reinforcement learning (basic definitions only).",
+                "What is generative AI and LLMs, and different types of prompting used."
+              ],
+              "closing_notes": "Asked the interviewer how Wells Fargo is integrating AI with day-to-day products, leading to a ~15 minute discussion on the topic.",
+              "duration_notes": "Almost 50 minutes due to the AI discussion. Interviewer was polite and friendly."
+            },
+            {
+              "round_name": "HR Round",
+              "summary": "Basically a formality. Basic HR questions: interests, why Wells Fargo, what was learned from the day's interviews. Candidates shortlisted based on CGPA at the end."
+            }
+          ],
+          "what_to_prepare": "Focus more on fundamental CS topics and AI rather than DSA, as more questions come from there. Also practice Business/Finance/Stocks related MCQs for the OA."
+        },
+        {
+          "candidate_label": "Candidate WF3",
+          "verdict": "Selected (12 out of 25)",
+          "stipend": "90000/- per month",
+          "online_assessment": {
+            "notes": "Questions from strings, fairly easy (a Longest Common Prefix style question, finding frequency of characters, one Infinite Knapsack question in the first section). Also English and finance questions (candlestick chart reading explained in-question). Compiler was old - some functions like push_back were unavailable; had to use emplace()."
+          },
+          "rounds": [
+            {
+              "round_name": "Round 1",
+              "summary": "Started with introduction, then a target subset sum question (common GFG question), then finding the first max and second max in an array (coded both on Google Docs). Then moved to fundamentals based on listed course subjects.",
+              "fundamental_questions": [
+                "What is Deadlock?",
+                "Tell me about Scheduler algorithms and give examples and explain them.",
+                "Tell me the difference between TCP/UDP.",
+                "Where is UDP used?",
+                "Protocol used in MAIL.",
+                "Tell me about LLM.",
+                "How do you prevent Hallucinations in LLM and why do LLMs hallucinate?",
+                "Given an Excel sheet, what steps would you take to do data analysis in it (library names, process, and why they're used)?",
+                "What is reinforcement learning?",
+                "What is Deep Learning?",
+                "What plotting libraries have you used? (Matplotlib.)",
+                "Which company owns Matplotlib? (Candidate gave a wrong answer here, said Matlab.)",
+                "Any other alternative to Matplotlib?"
+              ],
+              "closing_questions_asked_by_candidate": [
+                "Feedback on the interview.",
+                "Asked about a hackathon the interviewer recently won (found via LinkedIn beforehand).",
+                "Asked about a publicly known AI initiative the company was developing with a cloud provider."
+              ],
+              "outcome": "Recommended for round 2."
+            },
+            {
+              "round_name": "Round 2",
+              "summary": "Started with introduction, moved towards projects. This round was taken by a VP and was heavily project based. Candidate had mentioned a project with a professor on quantum mechanics (probabilistic forecasting/quantum-related). Asked to explain the entire project, its aims, qubits, quantum-logic gates, and the difference between normal chips and quantum computer chips. Could not answer everything correctly but diverted to known areas (e.g. quantum computers needing very low temperatures, how information is stored, why quantum computers are needed) and the interviewer was satisfied.",
+              "additional_project_discussion": [
+                "Asked about other projects in detail: tech stack used and why.",
+                "Difference between Virtual Machine and Docker containers, what are containers in Docker, what is Docker."
+              ],
+              "interviewer_goal": "Mainly checking if the candidate had real knowledge of the projects listed and put in genuine work, not just copied them.",
+              "advice": "Learn your projects thoroughly and only list what you actually know; speak confidently in the interview.",
+              "closing": "Asked again about the company's AI initiative and for feedback on the interview."
+            },
+            {
+              "round_name": "Round 3",
+              "summary": "An HR round, mostly a formality. Asked CPI, what was learned about Wells Fargo, and if there were any questions (asked if there was a CPI-based selection criterion; was told results would be out shortly)."
+            }
+          ],
+          "overall_advice": "Interviews are not extremely hard for Wells Fargo, but keep good pointers - most selected candidates had 8+ CPI, and discussing AI/ML/GenAI/LLMs aligns well with the company's direction. For OA, borrow a Windows machine if facing portal issues on Mac; timing is crucial for the finance section."
+        },
+        {
+          "candidate_label": "Candidate WF4",
+          "verdict": "Selected (12 out of 25)",
+          "stipend": "90000/- per month",
+          "online_assessment": {
+            "sections": [
+              "Coding question (moderate, math and greedy).",
+              "MCQs (English Grammar and Comprehension passages).",
+              "MCQs (Stock Market, Business analysis, finance - knowledge of finance/stock/candlestick graphs would be helpful).",
+              "2 coding questions (very easy and simple)."
+            ],
+            "tips": "Coding questions were relatively easy for most candidates. The MCQ section (especially stock market/finance) played a key role in shortlisting. You cannot go back to previous questions, so be careful before moving ahead."
+          },
+          "rounds": [
+            {
+              "round_name": "Round 1",
+              "summary": "Started with a brief introduction, then moved directly to projects mentioned in the resume. Asked about a software engineering course project: tech stack, problem being solved, follow-up technical questions on JWT authentication implementation, token verification, and where the token is stored. Since a payment gateway integration was mentioned, asked what to do if it started failing (answered based on general error handling/fallback approaches since the failure scenario wasn't fully implemented).",
+              "additional_project_discussion": "Discussed a project on probabilistic forecasting of oceanographic data (e.g. significant wave height, sea level anomaly) - asked technical details like training process and data source (5-10 minutes).",
+              "dbms_discussion": "Asked about locks, their types, and why they are needed; explained ACID properties, shared/exclusive locks, two-phase locking, and how they help handle concurrency issues and prevent deadlocks. Asked about joins and the difference between outer join and full outer join.",
+              "dsa_question": {
+                "question_title": "Palindrome Check",
+                "question": "Check whether a string is a palindrome."
+              },
+              "duration_notes": "Round lasted 45-50 minutes; not very difficult, focused on clarity of concepts and understanding of one's own work."
+            },
+            {
+              "round_name": "Round 2",
+              "summary": "A managerial round, much less focused on technical details, conducted by a Director of Technology. Started with the interviewer introducing their department/responsibilities. Instead of standard questions, directly asked: 'Who are you as a person, not in terms of technical details?' Candidate discussed interests, passions, and roles of responsibility (e.g. treasurer of a student body, sports committee event organization, business club involvement). A detailed 5-10 minute discussion on event management followed, including pitching a sponsorship idea interactively.",
+              "project_discussion": "Asked about the current ML-based forecasting project, focused on applications and real-world use cases rather than technical depth; asked whether the same approach could be applied to other domains (answered: changing the training dataset could enable applications like stock market prediction).",
+              "general_discussion": "Asked to suggest a general topic for discussion; had a conversation on global issues and a major financial sector merger.",
+              "duration_notes": "35 minutes long.",
+              "tips": "Not a typical DSA/technical round; focused heavily on soft skills, general knowledge, and presentation of experiences. Not preparable through coding platforms; develops through exposure to real situations, awareness of current events, and clear communication. Involvement in clubs/committees/responsibility roles is helpful as it reflects naturally in such discussions."
+            },
+            {
+              "round_name": "Round 3",
+              "summary": "An HR round, relatively short due to time constraints. Standard questions: CPI, hometown, knowledge of Wells Fargo, why join the company. Candidates given the opportunity to ask questions at the end."
+            }
+          ],
+          "overall_experience": "Comparatively easier than companies like Google or Sprinklr. Focus was not just on technical knowledge but also on understanding of projects, clear communication, and self-presentation. Basic AI/ML/GenAI understanding can be helpful given the company's expansion in those areas."
+        },
+        {
+          "candidate_label": "Candidate WF5",
+          "verdict": "Selected (12 out of 25)",
+          "stipend": "90000/- per month",
+          "online_assessment": {
+            "sections": [
+              {
+                "section": "Section 1 - DSA",
+                "question_title": "Minimum Cost to Travel K Km with Priced Buses",
+                "question": "There are 10 buses available infinitely everywhere, with prices given in an array of size 10 where prices[i] = price of the i-th bus per i km (1-indexed; the i-th bus moves i km for price prices[i]). Given an integer k (km to travel), return the minimum cost of traveling k km.",
+                "approach": "Computed minimum cost for traveling each 1 to 10 km, then initialized cur=10 and used a loop: while(k >= cur): ans += (k/cur)*mincost[cur], k %= cur, --cur."
+              },
+              "MCQs (English).",
+              "MCQs (finance, stocks, business).",
+              {
+                "section": "Two easy coding questions",
+                "questions": [
+                  {
+                    "question_title": "First Negative Number in Each Window of Size K",
+                    "question": "Return an array of the first negative number in every continuous subarray of size k; if no negative number, return 0 for that subarray.\nExample: [-11,2,3,4,-5,-7,6,8], k=3 -> [-11,0,-5,-5,-5,-7].",
+                    "approach": "Computed the index of the first negative number after (and including) each index; for positives, the index of the first negative number after it. For i=0 to n-k+1, if the difference between that computed index and i is less than k, push that number into the answer; else append 0."
+                  },
+                  {
+                    "question_title": "Count Consonants in a String",
+                    "question": "Return the number of consonants in a given string (both capital and small letters)."
+                  }
+                ]
+              }
+            ],
+            "note": "Crucial to perform well in all sections; people who solved all three coding sections were not shortlisted if they lagged in MCQ sections. Coding was easy, so shortlisting depended crucially on Finance/Business performance."
+          },
+          "rounds": [
+            {
+              "round_name": "Interview Round 1",
+              "summary": "Started with introduction.",
+              "questions": [
+                "What is the difference between AI and ML? (Answered: ML is a subset of AI; AI is the broad concept of simulating human intelligence.)",
+                "What is the difference between SQL and PL/pgSQL? (Answered: SQL is a query language for pure DBMS queries; PL/pgSQL allows complex programming in stored functions in PostgreSQL.)",
+                "What is the difference between Schema and Database? (Answered: a database is the container that stores data; a schema is the structure describing how data is stored.)",
+                "Can a database have multiple schemas?",
+                "3 SQL query-writing questions (explained how they work): finding the 2nd highest salary of all employees; top 3 employees by salary with salary lower than or equal to the 2nd highest; highest-salary employee with salary lower than the 2nd highest, working under a specific manager. Used WHERE, HAVING, ORDER BY, GROUP BY, OFFSET, LIMIT together; tested understanding of execution order.",
+                "Basic DSA: bubble sort, what is stack/queue/linked list and their practical uses (no extensive coding)."
+              ],
+              "duration_notes": "45-50 minutes."
+            },
+            {
+              "round_name": "Interview Round 2",
+              "summary": "Introduction first, then the whole round based on the resume. Asked about a DBMS project and a software project: what they were about, difficulties faced and how they were tackled, plus a non-college personal project. Discussed achievements listed in the resume. Since a software project was in the finance domain, asked about handling API limits, real-time pricing, and multi-currency portfolio management (candidate worked on the backend).",
+              "closing_question_asked": "How should I further work on the project discussed?",
+              "duration_notes": "25-30 minutes."
+            },
+            {
+              "round_name": "Round 3 HR Round",
+              "summary": "Formal round. Asked about family and academic background, CPI, why Wells Fargo, and how the candidate thinks the company can help their career. Asked if there were any questions; asked what kind of projects to expect if selected (answer: depends on team allocation, but likely GenAI or agentic AI related work)."
+            }
+          ],
+          "overall_experience": "Good and not very hard - have fundamentals strong, be confident, use real-life practical examples, understand how code/queries actually work, and know your projects deeply since round 2 covers them in depth."
+        },
+        {
+          "candidate_label": "Candidate WF6",
+          "verdict": "Selected",
+          "stipend": "90k per month",
+          "location": "Hyderabad/Bangalore",
+          "online_assessment": {
+            "structure_note": "Fixed time slot per section; cannot move backward or skip ahead within or between sections.",
+            "time_per_section": [
+              "One Coding Question (1 hr) - 1 question.",
+              "English Section (20 mins) - 12 questions.",
+              "Aptitude/Business Section (30 mins) - 15 questions (candidate lacked time here and had to guess a few in the last 5 minutes).",
+              "Easy Coding Questions (40 mins) - 2 questions."
+            ],
+            "main_coding_question": "Based on Dijkstra's algorithm in graphs.",
+            "easy_coding_questions": "Q1: given an array, return the number of primes in it (with a story wrapper); Q2 was similar. Both approximately Codeforces 800-rated difficulty.",
+            "english_section": "Around 3 comprehension passages requiring interpretation of sentence meaning or synonyms of selected words.",
+            "business_section": "Questions from histogram data, tabular data, and candlestick data (used in stocks; introductory knowledge provided, but prior familiarity with high/low/open/close helps).",
+            "advice": "Focus LeetCode medium-level, repetitive-pattern questions from DP, Graph, and Tree for OA prep. Practice timing for the English and Business sections specifically. Every section carries roughly equal weightage, so prepare accordingly - even candidates who solved the main coding question were not always shortlisted, while some who only partially solved it were."
+          },
+          "rounds": [
+            {
+              "round_name": "Round 1: Technical",
+              "interviewer_role": "Lead Software Engineer",
+              "summary": "Started with introduction and discussion of projects done, then which languages were known (Python/Java experience asked about specifically, as the company has soft prerequisites for either). Discussed 3 of 4 resume projects in detail, including what was done in each and possible improvements.",
+              "coding_question": {
+                "question_title": "Fibonacci Sequence",
+                "question": "Write the Fibonacci sequence given n as input.",
+                "format": "Screen shared, any compiler allowed."
+              },
+              "cs_fundamental_questions": [
+                "What do you understand by OOPs?",
+                "What software did you use for backend testing? (Answer: Postman.)",
+                "HTTP response status codes for 400, 401, 404 (learn all from 1xx to 5xx).",
+                "SDLC and testing methods (requirements/SRS to testing phase, unit/mutation/GUI testing).",
+                "Difference between structured and unstructured data, and follow-up on columnar databases (related to a Big Data Processing elective).",
+                "What are microservices and how were they implemented?",
+                "What is a Linked List?",
+                "What is an API? What is REST API?"
+              ],
+              "duration_notes": "40-45 minutes. Mostly resume-based questions if projects were interesting; for others, deeper DSA questions were used instead."
+            },
+            {
+              "round_name": "Round 2: Behavioural",
+              "interviewer_role": "Director of Technology",
+              "summary": "Completely behavioral round. Asked about a favorite project and why it was built, current features, and how it would be scaled up (answered with both vertical and horizontal scaling ideas). Asked how the candidate keeps up with modern technologies and whether any specific websites/sources are followed. Discussed AI use in the current generation and feasibility for tech giants, the concept of 'vibe-coding' and opinions on it, goals for the next 1 and 5 years, and why join Wells Fargo.",
+              "duration_notes": "20-25 minutes.",
+              "advice": "Try to frame answers using the STAR method."
+            },
+            {
+              "round_name": "HR Round",
+              "summary": "A simple 2-minute round: name, programme, CPI, why Wells Fargo."
+            }
+          ],
+          "timeline": {
+            "profile_open": "10/3",
+            "oa": "23/3",
+            "interviews": "10/4",
+            "results": "14/4",
+            "offer_letter": "7/5"
+          },
+          "overall_summary": "Experience depends heavily on the interviewer; thoroughly understand everything written in the resume, especially each project, and have good coding experience for deep DSA questions if asked. Maintain good CPI, improve soft and tech skills, brush up CS fundamentals (OOPs, DBMS, CN, Software Engineering).",
+          "post_credit_note": "Initial result selected the top 8 students by CPI. After 2 weeks, everyone who reached the HR round was selected (13 students total) - so a borderline CPI does not necessarily rule out selection."
+        },
+        {
+          "candidate_label": "Candidate WF7",
+          "verdict": "Selected",
+          "stipend": "90000/- per month",
+          "online_assessment": {
+            "sections": "4 sections, different questions per candidate, generally easy: 1 moderate DSA question, 2 easy DSA questions, an English aptitude section, and a mathematical aptitude section with comprehension questions about the stock market and money-related cases.",
+            "shortlisting_basis": "Mostly the aptitude questions and CPI, as almost everyone got the coding questions correct."
+          },
+          "rounds": [
+            {
+              "round_name": "Interview Round 1: Technical",
+              "summary": "Interviewer had the resume open and read through it, asking basic questions about listed projects (what they did and how they worked, nothing in detail). Noticed Python was listed as a known language and was insistent on using Python for the rest of the interview.",
+              "questions": [
+                {
+                  "question_title": "File Manipulation in Python (CSV/XLX Processing)",
+                  "question": "Given a unix folder with an unknown number of csv and xlx files, each potentially containing an unknown number of pages (some empty), iterate through the pages and discard empty ones. Also separate and put similar columns into separate csv files as output.",
+                  "format": "Asked to write Python code in a notepad.",
+                  "outcome": "The answer was definitely not fully correct, but the interviewer focused on whether the candidate knew how every function/syntax written actually functions and whether they were used correctly."
+                },
+                {
+                  "question_title": "First Non-Repeating Character",
+                  "question": "Output the first non-repeating character of a string.",
+                  "note": "Interviewer wanted this solved in Python, but candidate solved it in C++."
+                },
+                {
+                  "question_title": "Intersection of Two Arrays",
+                  "question": "Find the intersection of 2 arrays."
+                }
+              ],
+              "additional_questions": [
+                "DBMS queries using aggregate functions (recommend brushing up on these before interviews).",
+                "Basic OOPs: what is a class and what is an object? What is Inheritance? (Given an example of an inherited class structure and asked which attributes/member functions could be accessed.)",
+                "GenAI: difference between traditional AI and modern AI; what is zero-shot prompting and one-shot prompting; how do modern LLMs keep in check that they don't produce sensitive/offensive/dangerous output?"
+              ],
+              "duration_notes": "1:15-1:25 hours. Questions were pretty easy except the first one; overall knowledge tested across a broad spectrum."
+            },
+            {
+              "round_name": "Interview Round 2: Resume Based",
+              "interviewer_role": "Team leader of a software team",
+              "summary": "Started with introduction and reasons for choosing this career field. Detailed and in-depth questions about listed projects (e.g. why a specific datatype was used to store medical reports in a DBMS-based project). Asked: 'How do you keep up with current technology and advancements?' (answered: small personal projects and reading research articles, plus an unlisted ongoing course project explained on the spot).",
+              "key_points_for_this_round": [
+                "Confidence in yourself and your project work; don't be shy or underconfident.",
+                "Good, fluent communication - put points across effectively and politely."
+              ],
+              "duration_notes": "20-25 minutes."
+            },
+            {
+              "round_name": "Interview Round 3: HR Round",
+              "summary": "A typical 10-12 minute HR round: personal life background, family, ambitions, future plans, and why Wells Fargo specifically. Basic questions to check communication skills and personality."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Obsidian Capital",
+      "role": "Software Engineer Intern (Summer 2026)",
+      "stipend": "INR 1,00,000 / month",
+      "number_of_selects": "2 (for Internship) + 0 (for Full time)",
+      "selection_process": "Round 1: Resume shortlisting (CPI wasn't the main criteria) → Round 2: Personal Projects + System Design + DSA → Round 3: Systems/Performance Reasoning Round (use of AI was allowed)",
+      "candidates": [
+        {
+          "candidate_label": "Candidate OC1",
+          "verdict": "Selected for Internship",
+          "rounds": [
+            {
+              "round_name": "Round 2: Personal Projects + System Design + DSA",
+              "summary": "Started with introduction; project-related discussion (interviewers were impressed by OS-related projects and an orderbook project).",
+              "questions": [
+                {
+                  "question_title": "URL Safety Check with Memory Constraint (Bloom Filter)",
+                  "question": "Given a list of URLs, decide which one is safe and which one isn't, under a memory constraint.",
+                  "solution": "Use a bloom filter."
+                }
+              ]
+            },
+            {
+              "round_name": "Round 3: Systems/Performance Reasoning Round",
+              "summary": "Given a C++ program with simple logic; the task was to improve its performance.",
+              "concepts_discussed": ["Cache locality", "Loop unrolling", "Templates", "Branch prediction", "Vectorization and SIMD basics"],
+              "approach": "Used an AI assistant to look for performance improvements related to the concepts above, then was asked about the prompt used, the concepts applied, and why/how the changes improve performance. Also used Compiler Explorer to convert the code to assembly and demonstrate use of SIMD and loop unrolling, which impressed the interviewers.",
+              "reference_program_description": "A C++ market-data processing benchmark program: defines a polymorphic MarketDataBase base class with QuoteMD, TradeMD, and ImbalanceMD derived classes, each implementing a process() virtual function. Main generates 200,000 random market data objects via unique_ptr, then repeatedly (6 times) iterates through the feed calling the virtual process() method in a hot loop, accumulating a checksum, and times the operation. Includes a self_test(), a Timer struct using high_resolution_clock, a do_not_optimize() helper using inline assembly/volatile to prevent compiler optimization removal, and random number generation helpers (rand_int, rand_price) seeded with a fixed mt19937_64 generator. The interview task was to identify and apply performance improvements (e.g. replacing virtual dispatch with cache-friendlier patterns, loop unrolling, vectorization) to this hot path."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "BNY",
+      "full_name": "Bank of New York",
+      "role": "SDE Intern",
+      "stipend": "75k per month",
+      "number_of_selects": 6,
+      "selection_process": "Online Assessment → 2 Interviews",
+      "candidates": [
+        {
+          "candidate_label": "Candidate B1",
+          "rounds": [
+            {
+              "round_name": "Round 1",
+              "summary": "Started with a brief introduction.",
+              "questions": [
+                "Questions about Git/GitHub (commands through CLI).",
+                "OOPs questions (Encapsulation & Polymorphism).",
+                "Data Structure questions (Linear/Non-linear)."
+              ],
+              "coding_question": {
+                "question_title": "Reverse Words in a String",
+                "question": "Reverse the order of words in a string.\nInput: \"Hello there\"\nOutput: \"there Hello\""
+              }
+            },
+            {
+              "round_name": "Round 2 (Can be said as HR round)",
+              "summary": "Resume was reviewed line by line by the interviewer.",
+              "questions": [
+                "Discussion about life goals.",
+                "Why do you want to join?",
+                "What do you know about BNY?",
+                "Why would we select you from all others?",
+                "Discussion about a rural internship experience (tasks performed and impact).",
+                "Discussion about a project from the resume."
+              ],
+              "puzzle": {
+                "question_title": "Bridge and Torch Puzzle",
+                "question": "4 people (A, B, C, D) want to cross a bridge at night, taking 1, 2, 5, and 10 minutes respectively to cross. There is only one torch, and the bridge cannot be crossed without it. No more than two people can be on the bridge at a time, and when two cross together, they move at the slower person's pace. What is the minimum time for all to cross?"
+              }
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate B2",
+          "online_assessment": {
+            "format": "Designed to test fundamental DSA knowledge and problem-solving skills, approximately 3-4 DSA-based coding questions.",
+            "difficulty": "Ranged from easy-to-medium to a few medium-to-hard challenges.",
+            "shortlisting": "Based on OA performance, 37 candidates were shortlisted for interviews."
+          },
+          "interview_format_notes": "Conducted offline at the placement block; shortlisted candidates were kept in a common room while interviews took place in separate cabins, leading to consistent sharing of questions/puzzles among waiting candidates.",
+          "rounds": [
+            {
+              "round_name": "Round 1: Technical Interview (Core CS & Projects)",
+              "focus_areas": ["Core CS concepts", "Data Structures and Algorithms (DSA)", "Project details"],
+              "summary": "Significant time spent on a DBMS project: architecture, contribution, and underlying concepts.",
+              "live_query": "Given a simple SQL query scenario and asked to write the correct statement on the spot.",
+              "dsa_problem": {
+                "question_title": "Subsets Summing to Target",
+                "question": "A medium-level DSA problem concerning the generation of subsets of a given array that sum up to a specific target value.",
+                "outcome": "Solved successfully, explaining the chosen approach (likely recursion) and writing clean, working code on paper."
+              },
+              "closing": "Brief discussion of other projects."
+            },
+            {
+              "round_name": "Round 2: HR and Behavioral Interview",
+              "summary": "Focus shifted to behavioral fit, career aspirations, and motivation.",
+              "topics": [
+                "Motivation and fit: interest in the company, understanding of its work, alignment of goals with the company's mission.",
+                "Career goals: short-term and long-term aspirations and how the role fits.",
+                "Classic puzzle: the bridge-and-torch puzzle with four people and varying crossing times (repeated across multiple candidates).",
+                "Self-assessment: 'Why should we select you?'"
+              ]
+            }
+          ]
+        },
+        {
+          "candidate_label": "Candidate B3",
+          "summary": "OA round consisted of only 4 DSA questions, described as very balanced and similar to a LeetCode contest: one very easy, 2 medium, and one hard (involving the meet-in-the-middle technique). 37 students were shortlisted for interviews. All interviews were offline at the placement block, 8am-4pm continuously.",
+          "rounds": [
+            {
+              "round_name": "Round 1 (DSA and technical round)",
+              "summary": "Introduction and discussion of technical/non-technical interests (2-3 mins). Started with a basic warm-up DSA question.",
+              "questions": [
+                {
+                  "question_title": "Expression Add Operators Variant",
+                  "question": "A recursion-based question very similar to a known LeetCode 'Expression Add Operators' style problem, but the interview version only used '+' and '-' operators, making it easier while sharing the same recursion/backtracking based solution approach."
+                },
+                {
+                  "question_title": "Longest Common Prefix Across Multiple Strings",
+                  "question": "Given multiple strings, find the largest common prefix amongst all of them.",
+                  "approach_evolution": "Gave a naive solution first; asked to optimize, then gave a solution using the Trie data structure, defining the Trie classes and coding the question on paper (pseudo-code level acceptable)."
+                }
+              ],
+              "additional_topics": "Asked about a DBMS project, then given 2-3 tables and asked to write an SQL query (with proper syntax) to fetch relevant data.",
+              "duration_notes": "Good round in terms of DSA questions, about 45-50 minutes. Selected for the final round."
+            },
+            {
+              "round_name": "Round 2 (DSA + Technical + HR round)",
+              "summary": "Introduction and discussion of technical/non-technical interests (2-3 mins). Interviewer asked questions from the resume line-by-line, including a rural internship, soft skills mentioned, and positions of responsibility stated. Then discussed a project in detail and basic DBMS concepts.",
+              "puzzles": "Two puzzles asked, both standard/well-known puzzles (advice given to review standard puzzle lists before interviews, especially for banking companies).",
+              "questions": [
+                {
+                  "question_title": "Sorting an Array in O(n) Time",
+                  "question": "Is it possible to sort an array in O(n) time complexity?",
+                  "answer": "Possible if the number of distinct data members is very limited, as in the 'Sort Colors' style problem - mentioned the Dutch flag algorithm and also briefly mentioned radix sort (acknowledged only surface-level knowledge of the latter). Interviewer was impressed by the response."
+                }
+              ],
+              "hr_questions": [
+                "Self-assessment: 'Why should we select you?'",
+                "Motivation and fit: interest in the company, understanding of its work, alignment of goals.",
+                "Career goals: short and long-term aspirations and how the role fits."
+              ],
+              "outcome": "Selected.",
+              "general_advice": "Fluency in English is not a necessity but always helps; students not comfortable speaking English should start improving as early as possible."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "general_cross_company_observations": {
+    "recurring_dsa_themes": [
+      "Tree/graph traversal (DFS/BFS), especially 'count connected components / islands' style problems on trees and grids.",
+      "Two Sum and its variants (parity constraints, sorted arrays).",
+      "Sliding window / two-pointer techniques on sorted arrays.",
+      "Trie-based problems (autocomplete, longest common prefix, anagram lookups).",
+      "Linked list cycle detection (Tortoise and Hare).",
+      "Bitmasking for small N constraint problems.",
+      "Topological sort / Kahn's algorithm for ordering and dependency problems.",
+      "Dynamic programming (tree DP, edit distance, string matching variants).",
+      "Classic puzzles (25 horses, bridge and torch) especially at banking/finance companies."
+    ],
+    "recurring_cs_fundamentals_themes": [
+      "OOPs: four pillars, polymorphism (compile-time vs runtime), encapsulation, abstraction, inheritance.",
+      "DBMS: normalization/normal forms, ACID properties, indexing, locks (shared/exclusive, two-phase locking), joins, partitioning vs sharding, SQL query writing (WHERE/HAVING/GROUP BY/ORDER BY/LIMIT/OFFSET).",
+      "OS: process vs thread, deadlocks, semaphores/mutex, race conditions, scheduling algorithms (FCFS, priority preemptive/non-preemptive), paging, virtual memory.",
+      "Networking: TCP vs UDP, basic protocols.",
+      "AI/ML/GenAI literacy increasingly expected, especially at Wells Fargo: supervised/unsupervised learning, deep learning, reinforcement learning, LLMs, prompting types, hallucination causes."
+    ],
+    "general_advice_themes": [
+      "Always state the brute-force approach before jumping to the optimal one, even if you know the optimal solution immediately.",
+      "Think out loud during problem solving; communicate your approach as you go.",
+      "Know your resume projects in extreme depth - interviewers frequently dig deep into projects, especially in later/behavioral rounds.",
+      "Practice standard logic puzzles, especially before interviews at banking/finance firms.",
+      "Aptitude and finance/business MCQ sections in OAs can be just as decisive as coding sections, particularly at Wells Fargo and Goldman Sachs.",
+      "Some interviewers (e.g. at Goldman Sachs) may be skeptical of heavy competitive programming involvement at banking companies - frame CP experience carefully in that context.",
+      "AI/ML awareness and a willingness to discuss it is increasingly valued, especially at Wells Fargo."
+    ]
+  }
+}

@@ -25,14 +25,14 @@ export async function GET(request: Request) {
  });
 
  let totalNewActivities = 0;
- let totalXPGained = 0;
+
  let syncedUsers = 0;
 
  for (const user of usersToSync) {
  try {
  const result = await syncUserProgress(user.id);
  totalNewActivities += result.newActivities;
- totalXPGained += result.xpGained;
+
  syncedUsers++;
  } catch (err) {
  console.error(`Failed to sync user ${user.id}:`, err);
@@ -42,8 +42,7 @@ export async function GET(request: Request) {
  return NextResponse.json({
  success: true,
  syncedUsers,
- totalNewActivities,
- totalXPGained
+ totalNewActivities
  });
 
  } catch (error: any) {

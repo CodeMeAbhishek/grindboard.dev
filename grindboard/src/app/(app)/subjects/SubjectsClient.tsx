@@ -1,18 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getModuleColor, getModuleIcon } from "@/lib/gamification";
 import { timeAgo } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { CodeforcesIcon, LeetCodeIcon, GeeksForGeeksIcon } from "@/components/icons/PlatformIcons";
 
 export interface Subject {
  id: string;
  name: string;
  enrolled: boolean;
  streak: number;
- weeklyXP: number;
- weeklyGoal: number;
  lastActiveDate: Date | null;
+ progressPercentage: number;
+ totalMaterials: number;
+ completedMaterials: number;
 }
 
 interface SubjectsClientProps {
@@ -20,9 +23,49 @@ interface SubjectsClientProps {
  initialSubjects: Subject[];
 }
 
-function SubjectCard({ subject, onToggle }: { subject: Subject; onToggle: (id: string) => void }) {
- const pct = Math.min(100, Math.round((subject.weeklyXP / subject.weeklyGoal) * 100));
- const color = getModuleColor(subject.name);
+const COMING_SOON_SUBJECTS = [
+  "GATE Preparation",
+  "Machine Learning",
+  "Web Development"
+];
+
+function ComingSoonSubjectCard({ name }: { name: string }) {
+  const color = getModuleColor(name);
+  const icon = getModuleIcon(name);
+  
+  return (
+    <article className="bg-surface border border-outline border-dashed shadow-sm rounded-xl p-sm flex flex-col gap-3 relative overflow-hidden h-full opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-not-allowed">
+      <div className="flex justify-between items-start">
+        <div className="flex items-center gap-3">
+          <div
+            className="w-10 h-10 rounded-lg flex items-center justify-center border border-outline"
+            style={{ backgroundColor: `${color}15` }}
+          >
+            <span className="material-symbols-outlined text-xl" style={{ color }}>
+              {icon}
+            </span>
+          </div>
+          <h3 className="font-bold text-on-background text-base leading-tight">{name}</h3>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-3 mt-auto">
+        <div className="mt-2">
+          <button
+            disabled
+            className="w-full bg-surface-container-high text-on-surface-variant text-sm font-bold py-2 rounded border border-outline cursor-not-allowed"
+          >
+            Coming Soon
+          </button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function SubjectCard({ subject, onEnroll }: { subject: Subject, onEnroll: (id: string) => void }) {
+  const router = useRouter();
+  const color = getModuleColor(subject.name);
  const icon = getModuleIcon(subject.name);
 
  const accentMap: Record<string, string> = {
@@ -35,108 +78,142 @@ function SubjectCard({ subject, onToggle }: { subject: Subject; onToggle: (id: s
  };
  const accent = accentMap[color] ?? accentMap["#10B981"];
 
- const progressColor =
- pct >= 100
- ? "#10B981"
- : pct >= 50
- ? "#10B981"
- : pct < 20
- ? "#EF4444"
- : "#F59E0B";
 
- return (
- <article className="bg-surface border border-outline shadow-panel rounded-xl p-sm flex flex-col gap-3 relative overflow-hidden group hover:border-opacity-60 transition-colors">
- {/* Hover top accent */}
- <div
- className="absolute top-0 left-0 w-full h-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
- style={{ backgroundColor: color }}
- />
 
- {/* Header */}
- <div className="flex justify-between items-start">
- <div className="flex items-center gap-3">
- <div
- className="w-10 h-10 rounded-lg flex items-center justify-center border border-outline"
- style={{ backgroundColor: `${color}15` }}
- >
- <span className="material-symbols-outlined text-xl" style={{ color }}>
- {icon}
- </span>
- </div>
- <h3 className="font-bold text-on-background text-base leading-tight">{subject.name}</h3>
- </div>
- <Link
- href={`/subjects/${subject.id}`}
- className="text-[#E5E5E5] group-hover:text-on-surface-variant transition-colors"
- >
- <span className="material-symbols-outlined text-sm">open_in_new</span>
- </Link>
- </div>
+  const isCP = subject.name.toLowerCase().includes("competitive programming") || subject.name === "CP";
+  const isDSA = subject.name.toLowerCase().includes("dsa") || subject.name.toLowerCase().includes("data structure");
 
- {/* Badges */}
- <div className="flex gap-2 flex-wrap font-label-mono text-xs">
- {subject.enrolled && subject.streak > 0 && (
- <span className={`px-2 py-1 rounded border flex items-center gap-1 ${accent}`}>
- <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
- local_fire_department
- </span>
- {subject.streak}-Day Streak
- </span>
- )}
- <span className="bg-surface-container text-on-surface-variant px-2 py-1 rounded border border-outline flex items-center gap-1">
- <span className="material-symbols-outlined text-sm">military_tech</span>
- {subject.weeklyXP} XP This Wk
- </span>
- </div>
+  return (
+    <Link href={`/subjects/${subject.id}`} className="group block outline-none h-full">
+      <article className="bg-surface border border-outline shadow-panel rounded-xl p-sm flex flex-col gap-3 relative overflow-hidden transition-all duration-300 hover:border-primary/40 hover:shadow-lg h-full">
+        {/* Hover top accent */}
+        <div
+          className="absolute top-0 left-0 w-full h-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+          style={{ backgroundColor: color }}
+        />
 
- {/* Progress */}
- <div className="mt-auto pt-3 border-t border-outline flex justify-between items-end">
- <div className="flex flex-col gap-1 flex-1 mr-4">
- <div className="flex justify-between text-xs font-label-mono text-on-surface-variant">
- <span>Weekly Goal</span>
- <span style={{ color: progressColor }}>{pct}%</span>
- </div>
- <div className="h-1.5 w-full bg-outline rounded-full overflow-hidden">
- <div
- className="h-full rounded-full transition-all duration-500"
- style={{ width: `${pct}%`, backgroundColor: progressColor }}
- />
- </div>
- </div>
+        {/* Header */}
+        <div className="flex justify-between items-start">
+          <div className="flex items-center gap-3">
+            <div
+              className="w-10 h-10 rounded-lg flex items-center justify-center border border-outline group-hover:scale-105 transition-transform"
+              style={{ backgroundColor: `${color}15` }}
+            >
+              <span className="material-symbols-outlined text-xl" style={{ color }}>
+                {icon}
+              </span>
+            </div>
+            <h3 className="font-bold text-on-background text-base leading-tight group-hover:text-primary transition-colors">{subject.name}</h3>
+          </div>
+          <div className="w-8 h-8 rounded-full bg-surface-container border border-outline flex items-center justify-center text-on-surface-variant group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
+            <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </div>
+        </div>
 
- {!subject.enrolled ? (
- <button
- onClick={() => onToggle(subject.id)}
- className="bg-[#F0FDF4] text-primary border border-primary/30 text-xs px-3 py-1 rounded font-label-mono hover:bg-primary hover:text-white transition-all"
- >
- Enroll
- </button>
- ) : (
- <span className="text-xs text-on-surface-variant italic">
- {subject.lastActiveDate ? timeAgo(subject.lastActiveDate) : "never active"}
- </span>
- )}
- </div>
- </article>
- );
+        {/* Badges and Progress */}
+        <div className="flex flex-col gap-3">
+          <div className="flex gap-2 flex-wrap font-label-mono text-xs">
+            {subject.enrolled && subject.streak > 0 && (
+              <span className={`px-2 py-1 rounded border flex items-center gap-1 ${accent}`}>
+                <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
+                  local_fire_department
+                </span>
+                {subject.streak}-Day Streak
+              </span>
+            )}
+            
+            {isCP && (
+              <span className="px-2 py-1 rounded border border-outline bg-surface-container flex items-center gap-1.5 text-on-surface-variant">
+                <CodeforcesIcon className="w-3.5 h-3.5" />
+                <span className="font-semibold text-on-background">{subject.totalMaterials} Qs</span>
+              </span>
+            )}
+
+            {isDSA && (
+              <span className="px-2 py-1 rounded border border-outline bg-surface-container flex items-center gap-1.5 text-on-surface-variant">
+                <GeeksForGeeksIcon className="w-3.5 h-3.5" />
+                <LeetCodeIcon className="w-3.5 h-3.5 -ml-0.5" />
+                <span className="font-semibold text-on-background ml-0.5">{subject.totalMaterials} Qs</span>
+              </span>
+            )}
+          </div>
+
+          {/* Progress Bar or Enroll Button */}
+          {subject.enrolled ? (
+            <div className="flex flex-col gap-1.5 mt-1">
+              <div className="flex justify-between items-center text-xs font-label-mono">
+                <span className="text-on-surface-variant">Progress</span>
+                <span className="text-on-background font-bold">{subject.progressPercentage}%</span>
+              </div>
+              <div className="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+                <div 
+                  className="h-full rounded-full transition-all duration-500 ease-out" 
+                  style={{ width: `${subject.progressPercentage}%`, backgroundColor: color }}
+                />
+              </div>
+              <span className="text-[10px] text-on-surface-variant text-right">
+                {subject.completedMaterials} / {subject.totalMaterials} completed
+              </span>
+            </div>
+          ) : (
+            <div className="mt-2">
+              <button
+                onClick={async (e) => {
+                  e.preventDefault(); // Prevent Link navigation
+                  e.stopPropagation();
+                  
+                  // Optimistically update UI
+                  onEnroll(subject.id);
+
+                  await fetch('/api/modules/enroll', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ moduleId: subject.id })
+                  });
+                  router.refresh();
+                }}
+                className="w-full bg-primary text-white text-sm font-bold py-2 rounded hover:bg-primary/90 transition-colors"
+              >
+                Enroll Now
+              </button>
+            </div>
+          )}
+        </div>
+
+        {subject.enrolled && (
+          <div className="mt-auto pt-3 border-t border-outline flex justify-between items-end">
+            <span className="text-xs text-on-surface-variant italic">
+              {subject.lastActiveDate ? timeAgo(subject.lastActiveDate) : "never active"}
+            </span>
+          </div>
+        )}
+      </article>
+    </Link>
+  );
 }
 
 export function SubjectsClient({ userId, initialSubjects }: SubjectsClientProps) {
  const [subjects, setSubjects] = useState(initialSubjects);
  const [search, setSearch] = useState("");
- const [filter, setFilter] = useState<"all" | "enrolled">("all");
 
- function toggleEnroll(id: string) {
- setSubjects((prev) =>
- prev.map((s) => (s.id === id ? { ...s, enrolled: !s.enrolled } : s))
- );
- }
+ // Update local state when initialSubjects changes from router.refresh()
+ useEffect(() => {
+   setSubjects(initialSubjects);
+ }, [initialSubjects]);
+
+ const handleEnroll = (id: string) => {
+   setSubjects(current => 
+     current.map(s => s.id === id ? { ...s, enrolled: true } : s)
+   );
+ };
 
  const filtered = subjects.filter((s) => {
- const matchSearch = s.name.toLowerCase().includes(search.toLowerCase());
- const matchFilter = filter === "all" || s.enrolled;
- return matchSearch && matchFilter;
+ return s.name.toLowerCase().includes(search.toLowerCase());
  });
+
+ const filteredComingSoon = COMING_SOON_SUBJECTS.filter((s) => 
+   s.toLowerCase().includes(search.toLowerCase()) && !subjects.some(sub => sub.name === s)
+ );
 
  return (
  <div className="space-y-6">
@@ -149,28 +226,6 @@ export function SubjectsClient({ userId, initialSubjects }: SubjectsClientProps)
  <p className="text-on-surface-variant mt-0.5 text-sm">
  Manage your academic and technical grind paths.
  </p>
- </div>
- <div className="flex gap-2">
- <button
- onClick={() => setFilter("all")}
- className={`px-4 py-2 rounded font-label-mono text-sm border transition-all ${
- filter === "all"
- ? "bg-[#F0FDF4] text-primary border-primary/30"
- : "bg-surface text-on-surface-variant border-outline hover:text-on-background"
- }`}
- >
- All
- </button>
- <button
- onClick={() => setFilter("enrolled")}
- className={`px-4 py-2 rounded font-label-mono text-sm border transition-all ${
- filter === "enrolled"
- ? "bg-[#F0FDF4] text-primary border-primary/30"
- : "bg-surface text-on-surface-variant border-outline hover:text-on-background"
- }`}
- >
- Enrolled
- </button>
  </div>
  </header>
 
@@ -193,9 +248,12 @@ export function SubjectsClient({ userId, initialSubjects }: SubjectsClientProps)
  {/* Grid */}
  <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
  {filtered.map((subject) => (
- <SubjectCard key={subject.id} subject={subject} onToggle={toggleEnroll} />
+ <SubjectCard key={subject.id} subject={subject} onEnroll={handleEnroll} />
  ))}
- {filtered.length === 0 && (
+ {filteredComingSoon.map((name) => (
+  <ComingSoonSubjectCard key={name} name={name} />
+ ))}
+ {filtered.length === 0 && filteredComingSoon.length === 0 && (
  <div className="col-span-full text-center py-12 text-on-surface-variant">
  <span className="material-symbols-outlined text-4xl mb-2 block">search_off</span>
  No subjects found

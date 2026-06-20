@@ -62,7 +62,6 @@ model User {
   cfHandle      String?  @map("cf_handle")
   lcHandle      String?  @map("lc_handle")
   linkedin      String?
-  xpTotal       Int      @default(0) @map("xp_total")
   globalStreak  Int      @default(0) @map("global_streak")
   freezeCount   Int      @default(0) @map("freeze_count")
   lastSyncAt    DateTime? @map("last_sync_at")
@@ -81,12 +80,12 @@ model User {
 
   enrollments   Enrollment[]
   activities    Activity[]
-  goals         Goal[]
   streaks       Streak[]
   eventResults  EventResult[]
   userBadges    UserBadge[]
   announcements Announcement[]
   userTopics    UserTopic[]
+  userMaterials UserMaterial[]
   posts         Post[]
   comments      Comment[]
   likes         Like[]
@@ -108,7 +107,6 @@ model Module {
   topics      Topic[]
   enrollments Enrollment[]
   activities  Activity[]
-  goals       Goal[]
   streaks     Streak[]
 
   @@map("modules")
@@ -124,6 +122,7 @@ model Topic {
 
   module      Module  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   userTopics  UserTopic[]
+  materials   Material[]
 
   @@map("topics")
 }
@@ -141,11 +140,39 @@ model UserTopic {
   @@map("user_topics")
 }
 
+model Material {
+  id          String   @id @default(uuid())
+  topicId     String   @map("topic_id")
+  title       String
+  url         String
+  type        String   @default("LINK") // LINK, YOUTUBE, PDF
+  orderIndex  Int      @default(0) @map("order_index")
+  metadata    Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  topic       Topic          @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  userMaterials UserMaterial[]
+
+  @@map("materials")
+}
+
+model UserMaterial {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  materialId  String   @map("material_id")
+  completedAt DateTime @default(now()) @map("completed_at")
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  material    Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, materialId])
+  @@map("user_materials")
+}
+
 model Enrollment {
   id          String   @id @default(uuid())
   userId      String   @map("user_id")
   moduleId    String   @map("module_id")
-  weeklyXpGoal Int     @default(500) @map("weekly_xp_goal")
   enrolledAt  DateTime @default(now()) @map("enrolled_at")
 
   user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -162,7 +189,6 @@ model Activity {
   type        ActivityType
   source      ActivitySource @default(MANUAL)
   externalId  String?        @map("external_id")
-  xpEarned    Int            @default(0) @map("xp_earned")
   // LC fields
   lcDifficulty LCDifficulty? @map("lc_difficulty")
   lcProblemName String?      @map("lc_problem_name")
@@ -184,25 +210,7 @@ model Activity {
   @@map("activities")
 }
 
-model Goal {
-  id          String    @id @default(uuid())
-  userId      String    @map("user_id")
-  moduleId    String?   @map("module_id")
-  title       String
-  description String?
-  targetValue Int       @map("target_value")
-  currentValue Int      @default(0) @map("current_value")
-  metricType  String    @default("count") @map("metric_type") // count | hours | topics | pages
-  deadline    DateTime?
-  archived    Boolean   @default(false)
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
 
-  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  module      Module? @relation(fields: [moduleId], references: [id], onDelete: SetNull)
-
-  @@map("goals")
-}
 
 model Streak {
   id                String    @id @default(uuid())
@@ -242,7 +250,6 @@ model EventResult {
   userId     String   @map("user_id")
   rank       Int?
   score      Float?
-  xpEarned   Int      @default(0) @map("xp_earned")
   metadata   Json?    // CF: ratingChange, LC: solved, GATE: percentile
   loggedAt   DateTime @default(now()) @map("logged_at")
 
@@ -259,7 +266,6 @@ model Badge {
   name        String
   description String
   icon        String   @default("workspace_premium")
-  xpReward    Int      @default(0) @map("xp_reward")
   imageUrl    String?  @map("image_url")
   createdAt   DateTime @default(now()) @map("created_at")
 

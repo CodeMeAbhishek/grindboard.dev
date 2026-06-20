@@ -1,0 +1,278 @@
+{
+  "sheet": {
+    "total_problems": 31,
+    "problems": [
+      {
+        "rank": 1,
+        "title": "Erase First or Second Letter",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1917/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Strings"],
+        "is_star": true
+      },
+      {
+        "rank": 2,
+        "title": "Quests",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1914/C?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 3,
+        "title": "Collecting Game",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1904/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Binary Search", "Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 4,
+        "title": "Yarik and Array",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1899/C?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms", "Two Pointers"],
+        "is_star": true
+      },
+      {
+        "rank": 5,
+        "title": "250 Thousand Tons of TNT",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1899/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "is_star": true
+      },
+      {
+        "rank": 6,
+        "title": "Deja Vu",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1891/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "is_star": true
+      },
+      {
+        "rank": 7,
+        "title": "Building an Aquarium",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1873/E?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Binary Search"],
+        "is_star": true
+      },
+      {
+        "rank": 8,
+        "title": "2D Traveling",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1869/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "is_star": true
+      },
+      {
+        "rank": 9,
+        "title": "Cardboard for Pictures",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1850/E?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Binary Search"],
+        "is_star": true
+      },
+      {
+        "rank": 10,
+        "title": "Tenzing and Books",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1842/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 11,
+        "title": "Maximum Sum",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1946/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 12,
+        "title": "Counting Orders",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1827/A?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Two Pointers"],
+        "is_star": true
+      },
+      {
+        "rank": 13,
+        "title": "Lunatic Never Content",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1826/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "is_star": true
+      },
+      {
+        "rank": 14,
+        "title": "Sort the Subarray",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1821/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 15,
+        "title": "JoJo's Incredible Adventures",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1820/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Strings", "Two Pointers"],
+        "is_star": true
+      },
+      {
+        "rank": 16,
+        "title": "Subsequence Addition (Hard Version)",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1807/G2?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 17,
+        "title": "Li Hua and Pattern",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1797/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 18,
+        "title": "Teleporters (Easy Version)",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1791/G1?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 19,
+        "title": "Negatives and Positives",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1791/E?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 20,
+        "title": "GCD Partition",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1780/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 21,
+        "title": "Coprime",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1742/D?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 22,
+        "title": "Kill Demodogs",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1731/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 23,
+        "title": "Difference of GCDs",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1708/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "is_star": true
+      },
+      {
+        "rank": 24,
+        "title": "AND Sorting",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1682/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "is_star": true
+      },
+      {
+        "rank": 25,
+        "title": "A Perfectly Balanced String?",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1673/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms", "Strings"],
+        "is_star": true
+      },
+      {
+        "rank": 26,
+        "title": "Eating Candies",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1669/F?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Binary Search", "Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 27,
+        "title": "Subtract Operation",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1656/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms", "Two Pointers"],
+        "is_star": true
+      },
+      {
+        "rank": 28,
+        "title": "Fun with Even Subarrays",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1631/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms"],
+        "is_star": true
+      },
+      {
+        "rank": 29,
+        "title": "Paint the Array",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1618/C?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "is_star": true
+      },
+      {
+        "rank": 30,
+        "title": "Kalindrome Array",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1610/B?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "topics": ["Greedy Algorithms", "Two Pointers"],
+        "is_star": true
+      },
+      {
+        "rank": 31,
+        "title": "Yet Another Card Deck",
+        "codeforces_url": "https://codeforces.com/problemset/problem/1511/C?utm=codolio",
+        "site": "codeforces",
+        "rating": 1100,
+        "is_star": true
+      }
+    ]
+  }
+}

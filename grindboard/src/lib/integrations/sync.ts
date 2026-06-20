@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { getCFRecentSubmissions, getCFRating } from "./codeforces";
 import { getLCRecentSubmissions, getLCProblemDifficulty } from "./leetcode";
-import { calcCFXP, calcLCXP } from "@/lib/gamification";
+
 
 export async function syncUserProgress(userId: string) {
  const user = await prisma.user.findUnique({
@@ -18,7 +18,6 @@ export async function syncUserProgress(userId: string) {
  if (!user) throw new Error("User not found");
 
  const existingExternalIds = new Set(user.activities.map(a => a.externalId));
- let xpGained = 0;
  let newActivities = 0;
 
  // 1. Sync Codeforces
@@ -41,8 +40,6 @@ export async function syncUserProgress(userId: string) {
  const extId = `CF_${sub.id}`;
  if (existingExternalIds.has(extId)) continue; // Skip existing
 
- // For CF, xp is based on rating or division. Defaulting to 40 for standard practice.
- const xp = calcCFXP(0, 3); // Mock division 3 for practice
 
  await prisma.activity.create({
  data: {
@@ -51,7 +48,6 @@ export async function syncUserProgress(userId: string) {
  type: "CODEFORCES",
  source: "CODEFORCES_API",
  externalId: extId,
- xpEarned: xp,
  cfContestId: sub.problem.contestId,
  notes: sub.problem.name,
  metadata: { index: sub.problem.index },
@@ -59,7 +55,6 @@ export async function syncUserProgress(userId: string) {
  }
  });
  existingExternalIds.add(extId);
- xpGained += xp;
  newActivities++;
  }
  }
@@ -73,11 +68,10 @@ export async function syncUserProgress(userId: string) {
  const extId = `LC_${sub.id || sub.timestamp}`;
  if (existingExternalIds.has(extId)) continue; // Skip existing
 
- // Fetch problem difficulty to calculate accurate XP
+ // Fetch problem difficulty
  let diffStr = await getLCProblemDifficulty(sub.titleSlug);
  if (!diffStr) diffStr = "EASY"; // Fallback
  
- const xp = calcLCXP(diffStr as "EASY" | "MEDIUM" | "HARD");
 
  await prisma.activity.create({
  data: {
@@ -86,7 +80,6 @@ export async function syncUserProgress(userId: string) {
  type: "LEETCODE",
  source: "LEETCODE_API",
  externalId: extId,
- xpEarned: xp,
  lcDifficulty: diffStr as any,
  lcProblemName: sub.title,
  notes: sub.title,
@@ -94,17 +87,15 @@ export async function syncUserProgress(userId: string) {
  }
  });
  existingExternalIds.add(extId);
- xpGained += xp;
  newActivities++;
  }
  }
 
- // 3. Update User Total XP and Last Sync Time
- if (xpGained > 0 || newActivities > 0) {
+ // 3. Update User Last Sync Time
+ if (newActivities > 0) {
  await prisma.user.update({
  where: { id: user.id },
  data: {
- xpTotal: { increment: xpGained },
  lastSyncAt: new Date()
  }
  });
@@ -116,5 +107,5 @@ export async function syncUserProgress(userId: string) {
  });
  }
 
- return { newActivities, xpGained };
+ return { newActivities };
 }

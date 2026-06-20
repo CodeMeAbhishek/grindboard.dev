@@ -1,0 +1,285 @@
+{
+  "total_problems": 31,
+  "last_edited": "Jun 19, 2026",
+  "problems": [
+    {
+      "index": 1,
+      "name": "Halloumi Boxes",
+      "codeforces_id": "1903/A",
+      "url": "https://codeforces.com/problemset/problem/1903/A",
+      "rating": 800,
+      "tags": ["Greedy Algorithms"],
+      "is_star_question": true
+    },
+    {
+      "index": 2,
+      "name": "Line Trip",
+      "codeforces_id": "1901/A",
+      "url": "https://codeforces.com/problemset/problem/1901/A",
+      "rating": 800,
+      "tags": ["Greedy Algorithms"],
+      "is_star_question": true
+    },
+    {
+      "index": 3,
+      "name": "Cover in Water",
+      "codeforces_id": "1900/A",
+      "url": "https://codeforces.com/problemset/problem/1900/A",
+      "rating": 800,
+      "tags": ["Greedy Algorithms", "Strings"],
+      "is_star_question": true
+    },
+    {
+      "index": 4,
+      "name": "Game with Integers",
+      "codeforces_id": "1899/A",
+      "url": "https://codeforces.com/problemset/problem/1899/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 5,
+      "name": "Jagged Swaps",
+      "codeforces_id": "1896/A",
+      "url": "https://codeforces.com/problemset/problem/1896/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 6,
+      "name": "Doremy's Paint 3",
+      "codeforces_id": "1890/A",
+      "url": "https://codeforces.com/problemset/problem/1890/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 7,
+      "name": "Don't Try to Count",
+      "codeforces_id": "1881/A",
+      "url": "https://codeforces.com/problemset/problem/1881/A",
+      "rating": 800,
+      "tags": ["Strings"],
+      "is_star_question": true
+    },
+    {
+      "index": 8,
+      "name": "How Much Does Daytona Cost?",
+      "codeforces_id": "1878/A",
+      "url": "https://codeforces.com/problemset/problem/1878/A",
+      "rating": 800,
+      "tags": ["Greedy Algorithms"],
+      "is_star_question": true
+    },
+    {
+      "index": 9,
+      "name": "Goals of Victory",
+      "codeforces_id": "1877/A",
+      "url": "https://codeforces.com/problemset/problem/1877/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 10,
+      "name": "Target Practice",
+      "codeforces_id": "1873/C",
+      "url": "https://codeforces.com/problemset/problem/1873/C",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 11,
+      "name": "Ambitious Kid",
+      "codeforces_id": "1866/A",
+      "url": "https://codeforces.com/problemset/problem/1866/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 12,
+      "name": "Sequence Game",
+      "codeforces_id": "1862/B",
+      "url": "https://codeforces.com/problemset/problem/1862/B",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 13,
+      "name": "United We Stand",
+      "codeforces_id": "1859/A",
+      "url": "https://codeforces.com/problemset/problem/1859/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 14,
+      "name": "Buttons",
+      "codeforces_id": "1858/A",
+      "url": "https://codeforces.com/problemset/problem/1858/A",
+      "rating": 800,
+      "tags": ["Greedy Algorithms"],
+      "is_star_question": true
+    },
+    {
+      "index": 15,
+      "name": "Array Coloring",
+      "codeforces_id": "1857/A",
+      "url": "https://codeforces.com/problemset/problem/1857/A",
+      "rating": 800,
+      "tags": ["Greedy Algorithms"],
+      "is_star_question": true
+    },
+    {
+      "index": 16,
+      "name": "Desorting",
+      "codeforces_id": "1853/A",
+      "url": "https://codeforces.com/problemset/problem/1853/A",
+      "rating": 800,
+      "tags": ["Greedy Algorithms"],
+      "is_star_question": true
+    },
+    {
+      "index": 17,
+      "name": "Forbidden Integer",
+      "codeforces_id": "1845/A",
+      "url": "https://codeforces.com/problemset/problem/1845/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 18,
+      "name": "Grasshopper on a Line",
+      "codeforces_id": "1837/A",
+      "url": "https://codeforces.com/problemset/problem/1837/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 19,
+      "name": "Unit Array",
+      "codeforces_id": "1834/A",
+      "url": "https://codeforces.com/problemset/problem/1834/A",
+      "rating": 800,
+      "tags": ["Greedy Algorithms"],
+      "is_star_question": true
+    },
+    {
+      "index": 20,
+      "name": "Twin Permutations",
+      "codeforces_id": "1831/A",
+      "url": "https://codeforces.com/problemset/problem/1831/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 21,
+      "name": "Blank Space",
+      "codeforces_id": "1829/B",
+      "url": "https://codeforces.com/problemset/problem/1829/B",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 22,
+      "name": "Coins",
+      "codeforces_id": "1814/A",
+      "url": "https://codeforces.com/problemset/problem/1814/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 23,
+      "name": "Walking Master",
+      "codeforces_id": "1806/A",
+      "url": "https://codeforces.com/problemset/problem/1806/A",
+      "rating": 800,
+      "tags": ["Greedy Algorithms"],
+      "is_star_question": true
+    },
+    {
+      "index": 24,
+      "name": "We Need the Zero",
+      "codeforces_id": "1805/A",
+      "url": "https://codeforces.com/problemset/problem/1805/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 25,
+      "name": "Prepend and Append",
+      "codeforces_id": "1791/C",
+      "url": "https://codeforces.com/problemset/problem/1791/C",
+      "rating": 800,
+      "tags": ["Two Pointers"],
+      "is_star_question": true
+    },
+    {
+      "index": 26,
+      "name": "Serval and Mocha's Array",
+      "codeforces_id": "1789/A",
+      "url": "https://codeforces.com/problemset/problem/1789/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 27,
+      "name": "One and Two",
+      "codeforces_id": "1788/A",
+      "url": "https://codeforces.com/problemset/problem/1788/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 28,
+      "name": "Make it Beautiful",
+      "codeforces_id": "1783/A",
+      "url": "https://codeforces.com/problemset/problem/1783/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 29,
+      "name": "Everybody Likes Good Arrays!",
+      "codeforces_id": "1777/A",
+      "url": "https://codeforces.com/problemset/problem/1777/A",
+      "rating": 800,
+      "tags": ["Greedy Algorithms"],
+      "is_star_question": true
+    },
+    {
+      "index": 30,
+      "name": "Extremely Round",
+      "codeforces_id": "1766/A",
+      "url": "https://codeforces.com/problemset/problem/1766/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    },
+    {
+      "index": 31,
+      "name": "Two Permutations",
+      "codeforces_id": "1761/A",
+      "url": "https://codeforces.com/problemset/problem/1761/A",
+      "rating": 800,
+      "tags": [],
+      "is_star_question": true
+    }
+  ]
+}

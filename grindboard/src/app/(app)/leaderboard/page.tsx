@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
  title: "Leaderboard — Grindboard",
- description: "Global group rankings by XP, streaks, and problems solved",
+ description: "Global group rankings by rating, streaks, and problems solved",
 };
 
 export default async function LeaderboardPage() {
@@ -26,6 +26,7 @@ export default async function LeaderboardPage() {
   const users = await prisma.user.findMany({
     select: {
       id: true,
+      username: true,
       name: true,
       avatarUrl: true,
       cfHandle: true,
@@ -40,6 +41,7 @@ export default async function LeaderboardPage() {
 
   const leaderboardData = users.map((u) => ({
     id: u.id,
+    username: u.username,
     name: u.name || "Unknown User",
     avatarUrl: u.avatarUrl,
     cfHandle: u.cfHandle,

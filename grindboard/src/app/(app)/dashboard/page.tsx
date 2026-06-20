@@ -31,6 +31,9 @@ export default async function DashboardPage() {
  },
  streaks: {
  include: { module: true },
+ },
+ enrollments: {
+ include: { module: true },
  }
  },
  });
@@ -61,6 +64,9 @@ export default async function DashboardPage() {
  },
  streaks: {
  include: { module: true },
+ },
+ enrollments: {
+ include: { module: true },
  }
  },
  });
@@ -77,11 +83,18 @@ export default async function DashboardPage() {
     include: { user: true, module: true },
   });
 
-  const upcomingEvents = await prisma.event.findMany({
-    where: { scheduledAt: { gte: new Date() } },
-    orderBy: { scheduledAt: "asc" },
-    take: 3,
+  const now = new Date();
+  const nextCF = await prisma.event.findFirst({
+    where: { scheduledAt: { gte: now }, type: "CP" },
+    orderBy: { scheduledAt: "asc" }
   });
 
-  return <DashboardClient user={dbUser} feed={recentActivities} upcomingEvents={upcomingEvents} />;
+  const nextLC = await prisma.event.findFirst({
+    where: { scheduledAt: { gte: now }, type: "LEETCODE" },
+    orderBy: { scheduledAt: "asc" }
+  });
+
+  const upcomingContests = [nextLC, nextCF].filter(Boolean);
+
+  return <DashboardClient user={dbUser} feed={recentActivities} upcomingContests={upcomingContests} />;
 }

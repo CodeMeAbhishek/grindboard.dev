@@ -12,12 +12,12 @@ export default function PrivacyPage() {
 
  <h2 className="text-2xl font-bold mt-8 mb-4">2. How We Use Your Data</h2>
  <p className="text-on-surface-variant mb-4">
- Your data is used solely to provide the core functionality of the platform: computing your XP, updating your streak, ranking you on the community leaderboard, and providing analytics on your personal dashboard.
+ Your data is used solely to provide the core functionality of the platform: updating your streak, ranking you on the community leaderboard, and providing analytics on your personal dashboard.
  </p>
 
  <h2 className="text-2xl font-bold mt-8 mb-4">3. Data Sharing</h2>
  <p className="text-on-surface-variant mb-4">
- We do not sell or share your personal data with third parties. Your public profile, including your XP, streak, and badges, is visible to other users on the platform leaderboard unless you choose to make your account private.
+ We do not sell or share your personal data with third parties. Your public profile, including your streak and badges, is visible to other users on the platform leaderboard unless you choose to make your account private.
  </p>
 
  <h2 className="text-2xl font-bold mt-8 mb-4">4. Data Deletion</h2>

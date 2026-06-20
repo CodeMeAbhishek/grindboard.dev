@@ -111,9 +111,7 @@ export default async function HistoryPage({
                 </div>
                 
                 <div className="flex items-center justify-between sm:flex-col sm:items-end mt-4 sm:mt-0">
-                  <div className="font-label-mono text-base text-primary font-bold">
-                    +{activity.xpEarned} XP
-                  </div>
+
                   <span className="text-xs text-on-surface-variant mt-1">
                     {new Date(activity.createdAt).toLocaleDateString(undefined, { 
                       year: 'numeric', month: 'short', day: 'numeric', 

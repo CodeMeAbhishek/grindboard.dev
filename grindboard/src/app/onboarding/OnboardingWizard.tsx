@@ -174,7 +174,7 @@ export default function OnboardingWizard({ initialName }: { initialName: string 
  {step === 3 && (
  <div className="animate-in fade-in slide-in-from-right-4 duration-500">
  <h2 className="text-xl font-semibold mb-2 text-on-background ">Link your accounts</h2>
- <p className="text-on-surface-variant text-sm mb-6">Provide at least one handle to automatically track your progress and earn XP.</p>
+ <p className="text-on-surface-variant text-sm mb-6">Provide at least one handle to automatically track your progress.</p>
  
  <div className="space-y-4">
  <div>

@@ -1,0 +1,272 @@
+{
+  "problems": [
+    {
+      "rank": 1,
+      "title": "Three Activities",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1914/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 2,
+      "title": "Make Almost Equal With Mod",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1909/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "is_star": true
+    },
+    {
+      "rank": 3,
+      "title": "Plus Minus Permutation",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1872/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "is_star": true
+    },
+    {
+      "rank": 4,
+      "title": "Assembly via Minimums",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1857/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 5,
+      "title": "Vika and the Bridge",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1848/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Binary Search", "Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 6,
+      "title": "Contrast Value",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1832/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 7,
+      "title": "Playing in a Casino",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1808/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "is_star": true
+    },
+    {
+      "rank": 8,
+      "title": "Dora and Search",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1793/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Two Pointers"],
+      "is_star": true
+    },
+    {
+      "rank": 9,
+      "title": "Matryoshkas",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1790/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 10,
+      "title": "Scuza",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1742/E?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Binary Search", "Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 11,
+      "title": "Removing Smallest Multiples",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1734/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 12,
+      "title": "Friends and the Restaurant",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1729/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Greedy Algorithms", "Two Pointers"],
+      "is_star": true
+    },
+    {
+      "rank": 13,
+      "title": "Virus",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1704/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 14,
+      "title": "Mirror Grid",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1703/E?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "is_star": true
+    },
+    {
+      "rank": 15,
+      "title": "Binary Deque",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1692/E?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Binary Search", "Two Pointers"],
+      "is_star": true
+    },
+    {
+      "rank": 16,
+      "title": "Stone Age Problem",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1679/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "is_star": true
+    },
+    {
+      "rank": 17,
+      "title": "Dolce Vita",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1671/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Binary Search", "Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 18,
+      "title": "Differential Sorting",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1635/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 19,
+      "title": "Make Them Equal",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1633/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1600,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 20,
+      "title": "Grandma Capa Knits a Scarf",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1582/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Greedy Algorithms", "Strings"],
+      "is_star": true
+    },
+    {
+      "rank": 21,
+      "title": "Pleasant Pairs",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1541/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "is_star": true
+    },
+    {
+      "rank": 22,
+      "title": "Stable Groups",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1539/C?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 23,
+      "title": "Prinzessin der Verurteilung",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1536/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Strings"],
+      "is_star": true
+    },
+    {
+      "rank": 24,
+      "title": "Palindrome Game (easy version)",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1527/B1?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "is_star": true
+    },
+    {
+      "rank": 25,
+      "title": "Same Differences",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1520/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["HashMap and Set"],
+      "is_star": true
+    },
+    {
+      "rank": 26,
+      "title": "AND 0, Sum Big",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1514/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "is_star": true
+    },
+    {
+      "rank": 27,
+      "title": "Flip the Bits",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1504/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 28,
+      "title": "M-arrays",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1497/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "topics": ["Greedy Algorithms"],
+      "is_star": true
+    },
+    {
+      "rank": 29,
+      "title": "Cat Cycle",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1487/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "is_star": true
+    },
+    {
+      "rank": 30,
+      "title": "Districts Connection",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1433/D?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "is_star": true
+    },
+    {
+      "rank": 31,
+      "title": "Rock and Lever",
+      "codeforces_url": "https://codeforces.com/problemset/problem/1420/B?utm=codolio",
+      "site": "codeforces",
+      "rating": 1200,
+      "is_star": true
+    }
+  ]
+}

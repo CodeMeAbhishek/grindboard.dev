@@ -1,9 +1,12 @@
-import { PrismaClient } from "@prisma/client";
+import { config } from "dotenv";
+config({ path: ".env.local" });
+
+import * as fs from "fs";
+import * as path from "path";
 import { BADGE_DEFINITIONS, DEFAULT_MODULES } from "../src/lib/gamification";
 
-const prisma = new PrismaClient();
-
 async function main() {
+  const { prisma } = await import("../src/lib/prisma");
   console.log("🌱 Seeding Grindboard database...");
 
   // ── 1. Seed Modules ──────────────────────────────────────────
@@ -35,8 +38,8 @@ async function main() {
       name: "Grindboard Admin",
       supabaseId: "seed-admin-placeholder-id",
       role: "ADMIN",
-      xpTotal: 99999,
-      globalStreak: 365,
+      lcRating: 1500,
+      cfRating: 1200,
     },
   });
   console.log("✅ Admin user seeded:", admin.email);
@@ -78,24 +81,72 @@ async function main() {
     if (!module) continue;
 
     for (let i = 0; i < topics.length; i++) {
-      await prisma.topic.upsert({
-        where: {
-          // Use a composite approach — check by module + name
-          id: `${module.id}-${i}`, // This won't work, skip upsert and just create if not exists
-        },
-        update: {},
-        create: {
-          moduleId: module.id,
-          name: topics[i],
-          orderIndex: i,
-        },
-      }).catch(() => {
-        // Ignore duplicate if already exists
+      // Find existing topic by module ID and name
+      let topic = await prisma.topic.findFirst({
+        where: { moduleId: module.id, name: topics[i] }
       });
-      topicCount++;
+
+      if (!topic) {
+        topic = await prisma.topic.create({
+          data: {
+            moduleId: module.id,
+            name: topics[i],
+            orderIndex: i,
+          },
+        });
+        topicCount++;
+      }
     }
   }
-  console.log("✅ Topics seeded:", topicCount);
+  console.log(`✅ Default topics ensured (seeded or existed): ${topicCount} new`);
+
+  // ── 5. Seed Codeforces 800 Material ──────────────────────────
+  const cpModule = await prisma.module.findUnique({ where: { name: "Competitive Programming" } });
+  if (cpModule) {
+    let cf800Topic = await prisma.topic.findFirst({
+      where: { moduleId: cpModule.id, name: "800 Rating" }
+    });
+
+    if (!cf800Topic) {
+      cf800Topic = await prisma.topic.create({
+        data: {
+          moduleId: cpModule.id,
+          name: "800 Rating",
+          orderIndex: 0, // Put it at the top for CP
+        }
+      });
+      console.log("✅ Created '800 Rating' Topic under CP");
+    }
+
+    try {
+      const cf800Data = JSON.parse(fs.readFileSync(path.join(__dirname, "data", "cf_800.json"), "utf8"));
+      let materialCount = 0;
+      for (let i = 0; i < cf800Data.problems.length; i++) {
+        const p = cf800Data.problems[i];
+        
+        // check if material exists
+        const existingMaterial = await prisma.material.findFirst({
+          where: { topicId: cf800Topic.id, title: p.name }
+        });
+
+        if (!existingMaterial) {
+          await prisma.material.create({
+            data: {
+              topicId: cf800Topic.id,
+              title: p.name,
+              url: p.url,
+              type: "LINK",
+              orderIndex: p.index,
+            }
+          });
+          materialCount++;
+        }
+      }
+      console.log(`✅ Seeded ${materialCount} new materials to '800 Rating'`);
+    } catch (e) {
+      console.warn("⚠️ Could not load or seed cf_800.json", e);
+    }
+  }
 
   console.log("\n🎉 Seed complete!");
   console.log("   Admin: admin@grindboard.dev");

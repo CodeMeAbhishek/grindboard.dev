@@ -27,9 +27,14 @@ export default async function SubjectDetailPage({ params }: { params: Promise<{ 
  const module = await prisma.module.findUnique({
  where: { id: id },
  include: {
- topics: {
- orderBy: { orderIndex: "asc" }
- },
+  topics: {
+    orderBy: { orderIndex: "asc" },
+    include: {
+      materials: {
+        orderBy: { orderIndex: "asc" }
+      }
+    }
+  },
  }
  });
 
@@ -49,9 +54,14 @@ export default async function SubjectDetailPage({ params }: { params: Promise<{ 
  where: { moduleId: module.id }
  });
 
- const userTopics = await prisma.userTopic.findMany({
- where: { userId: dbUser.id, topicId: { in: module.topics.map((t) => t.id) } }
- });
+  const userTopics = await prisma.userTopic.findMany({
+    where: { userId: dbUser.id, topicId: { in: module.topics.map((t) => t.id) } }
+  });
+
+  const materialIds = module.topics.flatMap(t => t.materials.map(m => m.id));
+  const userMaterials = await prisma.userMaterial.findMany({
+    where: { userId: dbUser.id, materialId: { in: materialIds } }
+  });
 
  const activities = await prisma.activity.findMany({
  where: { userId: dbUser.id, moduleId: module.id },
@@ -63,9 +73,6 @@ export default async function SubjectDetailPage({ params }: { params: Promise<{ 
  startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
  startOfWeek.setHours(0, 0, 0, 0);
 
- const weeklyActivities = activities.filter((a) => a.createdAt >= startOfWeek);
- const weeklyXP = weeklyActivities.reduce((sum, a) => sum + a.xpEarned, 0);
- const totalXP = activities.reduce((sum, a) => sum + a.xpEarned, 0);
 
  const subjectData = {
  id: module.id,
@@ -73,21 +80,28 @@ export default async function SubjectDetailPage({ params }: { params: Promise<{ 
  description: module.description || "",
  icon: module.icon,
  streak: streak?.current || 0,
- totalXP: totalXP,
- weeklyXP: weeklyXP,
- weeklyGoal: enrollment?.weeklyXpGoal || 500,
  enrolledUsers: enrolledCount,
- topics: module.topics.map((t) => ({
- id: t.id,
- name: t.name,
- completed: userTopics.some((ut) => ut.topicId === t.id),
- xp: 100
- })),
+ isEnrolled: !!enrollment,
+  topics: module.topics.map((t) => {
+    const materials = t.materials.map((m) => ({
+      id: m.id,
+      title: m.title,
+      url: m.url,
+      type: m.type,
+      completed: userMaterials.some((um) => um.materialId === m.id),
+      metadata: m.metadata || null
+    }));
+    return {
+      id: t.id,
+      name: t.name,
+      completed: userTopics.some((ut) => ut.topicId === t.id),
+      materials
+    };
+  }),
  activities: activities.map((a) => ({
  id: a.id,
  type: a.type,
  label: a.notes || a.lcProblemName || `Activity ${a.type}`,
- xp: a.xpEarned,
  createdAt: a.createdAt
  }))
  };

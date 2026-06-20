@@ -1,0 +1,253 @@
+{
+    "total_problems": 31,
+    "problems": [
+      {
+        "number": 1,
+        "title": "Forked!",
+        "codeforces_id": "1904/A",
+        "rating": 900,
+        "topic": null,
+        "link": "https://codeforces.com/problemset/problem/1904/A"
+      },
+      {
+        "number": 2,
+        "title": "Chemistry",
+        "codeforces_id": "1883/B",
+        "rating": 900,
+        "topic": "Strings",
+        "link": "https://codeforces.com/problemset/problem/1883/B"
+      },
+      {
+        "number": 3,
+        "title": "Vasilije in Cacak",
+        "codeforces_id": "1878/C",
+        "rating": 900,
+        "topic": null,
+        "link": "https://codeforces.com/problemset/problem/1878/C"
+      },
+      {
+        "number": 4,
+        "title": "Jellyfish and Undertale",
+        "codeforces_id": "1875/A",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1875/A"
+      },
+      {
+        "number": 5,
+        "title": "Make It Zero",
+        "codeforces_id": "1869/A",
+        "rating": 900,
+        "topic": null,
+        "link": "https://codeforces.com/problemset/problem/1869/A"
+      },
+      {
+        "number": 6,
+        "title": "Longest Divisors Interval",
+        "codeforces_id": "1855/B",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1855/B"
+      },
+      {
+        "number": 7,
+        "title": "Balanced Round",
+        "codeforces_id": "1850/D",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1850/D"
+      },
+      {
+        "number": 8,
+        "title": "Comparison String",
+        "codeforces_id": "1837/B",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1837/B"
+      },
+      {
+        "number": 9,
+        "title": "Permutation Swap",
+        "codeforces_id": "1828/B",
+        "rating": 900,
+        "topic": null,
+        "link": "https://codeforces.com/problemset/problem/1828/B"
+      },
+      {
+        "number": 10,
+        "title": "Odd Queries",
+        "codeforces_id": "1807/D",
+        "rating": 900,
+        "topic": null,
+        "link": "https://codeforces.com/problemset/problem/1807/D"
+      },
+      {
+        "number": 11,
+        "title": "Not Dividing",
+        "codeforces_id": "1794/B",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1794/B"
+      },
+      {
+        "number": 12,
+        "title": "Mainak and Array",
+        "codeforces_id": "1726/A",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1726/A"
+      },
+      {
+        "number": 13,
+        "title": "NIT Destroys the Universe",
+        "codeforces_id": "1696/B",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1696/B"
+      },
+      {
+        "number": 14,
+        "title": "AvtoBus",
+        "codeforces_id": "1679/A",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1679/A"
+      },
+      {
+        "number": 15,
+        "title": "Make It Increasing",
+        "codeforces_id": "1675/B",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1675/B"
+      },
+      {
+        "number": 16,
+        "title": "Deletive Editing",
+        "codeforces_id": "1666/D",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1666/D"
+      },
+      {
+        "number": 17,
+        "title": "Array Cloning Technique",
+        "codeforces_id": "1665/B",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1665/B"
+      },
+      {
+        "number": 18,
+        "title": "Make AP",
+        "codeforces_id": "1624/B",
+        "rating": 900,
+        "topic": null,
+        "link": "https://codeforces.com/problemset/problem/1624/B"
+      },
+      {
+        "number": 19,
+        "title": "Odd Grasshopper",
+        "codeforces_id": "1607/B",
+        "rating": 900,
+        "topic": null,
+        "link": "https://codeforces.com/problemset/problem/1607/B"
+      },
+      {
+        "number": 20,
+        "title": "AB Balance",
+        "codeforces_id": "1606/A",
+        "rating": 900,
+        "topic": "Strings",
+        "link": "https://codeforces.com/problemset/problem/1606/A"
+      },
+      {
+        "number": 21,
+        "title": "Make it Divisible by 25",
+        "codeforces_id": "1593/B",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1593/B"
+      },
+      {
+        "number": 22,
+        "title": "Luntik and Subsequences",
+        "codeforces_id": "1582/B",
+        "rating": 900,
+        "topic": null,
+        "link": "https://codeforces.com/problemset/problem/1582/B"
+      },
+      {
+        "number": 23,
+        "title": "Mocha and Math",
+        "codeforces_id": "1559/A",
+        "rating": 900,
+        "topic": null,
+        "link": "https://codeforces.com/problemset/problem/1559/A"
+      },
+      {
+        "number": 24,
+        "title": "Exciting Bets",
+        "codeforces_id": "1543/A",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1543/A"
+      },
+      {
+        "number": 25,
+        "title": "Bad Boy",
+        "codeforces_id": "1537/B",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1537/B"
+      },
+      {
+        "number": 26,
+        "title": "Odd Divisor",
+        "codeforces_id": "1475/A",
+        "rating": 900,
+        "topic": null,
+        "link": "https://codeforces.com/problemset/problem/1475/A"
+      },
+      {
+        "number": 27,
+        "title": "Strange Partition",
+        "codeforces_id": "1471/A",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1471/A"
+      },
+      {
+        "number": 28,
+        "title": "Sum of Medians",
+        "codeforces_id": "1440/B",
+        "rating": 900,
+        "topic": "Greedy Algorithms",
+        "link": "https://codeforces.com/problemset/problem/1440/B"
+      },
+      {
+        "number": 29,
+        "title": "Three Indices",
+        "codeforces_id": "1380/A",
+        "rating": 900,
+        "topic": null,
+        "link": "https://codeforces.com/problemset/problem/1380/A"
+      },
+      {
+        "number": 30,
+        "title": "01 Game",
+        "codeforces_id": "1373/B",
+        "rating": 900,
+        "topic": null,
+        "link": "https://codeforces.com/problemset/problem/1373/B"
+      },
+      {
+        "number": 31,
+        "title": "Multiply by 2, divide by 6",
+        "codeforces_id": "1374/B",
+        "rating": 900,
+        "topic": null,
+        "link": "https://codeforces.com/problemset/problem/1374/B"
+      }
+    ]
+  }

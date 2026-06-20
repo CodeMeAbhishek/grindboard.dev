@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { calcLCXP, calcCFXP, XP_VALUES } from "@/lib/gamification";
 import { createClient } from "@/lib/supabase/server";
 
 export async function POST(req: NextRequest) {
@@ -23,23 +22,6 @@ export async function POST(req: NextRequest) {
  const body = await req.json();
  const { type, moduleId, notes, lcDifficulty, lcProblemName, cfRating, studyHours, metadata } = body;
 
- // Calculate XP
- let xpEarned = 0;
- if (type === "LEETCODE" && lcDifficulty) {
- xpEarned = calcLCXP(lcDifficulty);
- } else if (type === "CODEFORCES") {
- const rating = parseInt(cfRating ?? "1500");
- const division = rating >= 1600 ? 2 : 3;
- xpEarned = calcCFXP(0, division);
- } else if (type === "STUDY" && studyHours) {
- xpEarned = Math.round(parseFloat(studyHours) * XP_VALUES.STUDY_HOUR);
- } else if (type === "GATE_MOCK") {
- xpEarned = XP_VALUES.GATE_MOCK;
- } else if (type === "TOPIC_COMPLETE") {
- xpEarned = XP_VALUES.TOPIC_COMPLETE;
- } else {
- xpEarned = 10; // default generic XP
- }
 
  const today = new Date();
  today.setHours(0, 0, 0, 0);
@@ -68,7 +50,6 @@ export async function POST(req: NextRequest) {
  userId: dbUser.id,
  moduleId: moduleId ?? null,
  type,
- xpEarned,
  lcDifficulty: lcDifficulty ?? null,
  lcProblemName: lcProblemName ?? null,
  cfRating: cfRating ? parseInt(cfRating) : null,
@@ -78,17 +59,16 @@ export async function POST(req: NextRequest) {
  },
  });
 
- // Update user XP & Streak
+ // Update user Streak
  await prisma.user.update({
  where: { id: dbUser.id },
  data: { 
- xpTotal: { increment: xpEarned },
  globalStreak: newStreak,
  lastSyncAt: new Date()
  },
  });
 
- return NextResponse.json({ success: true, activity, xpEarned, newStreak }, { status: 201 });
+ return NextResponse.json({ success: true, activity, newStreak }, { status: 201 });
  } catch (error) {
  console.error("POST /api/activities error:", error);
  return NextResponse.json({ error: "Failed to create activity" }, { status: 500 });

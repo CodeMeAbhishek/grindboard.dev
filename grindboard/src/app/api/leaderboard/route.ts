@@ -8,7 +8,6 @@ export async function GET() {
  id: true,
  name: true,
  avatarUrl: true,
- xpTotal: true,
  globalStreak: true,
  role: true,
  createdAt: true,
@@ -16,7 +15,7 @@ export async function GET() {
  select: { activities: true },
  },
  },
- orderBy: { xpTotal: "desc" },
+ orderBy: { lcRating: "desc" }, // Use lcRating as fallback since xpTotal is removed
  take: 50,
  });
 
